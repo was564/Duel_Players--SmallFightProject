@@ -151,7 +151,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -419,6 +419,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8344437400459074036, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
       propertyPath: m_Name
@@ -536,6 +541,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 263362982795597928, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504015694528140583, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8034790696101170765, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8344437400449690508, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
       propertyPath: m_ApplyRootMotion
