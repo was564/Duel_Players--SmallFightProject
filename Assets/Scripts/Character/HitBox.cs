@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitArea : MonoBehaviour
+public class HitBox : MonoBehaviour
 {
     
     private CharacterAnimator _animator;

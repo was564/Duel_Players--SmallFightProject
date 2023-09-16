@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackArea : MonoBehaviour
+public class AttackBox : MonoBehaviour
 {
-    private CharacterAreaController _myCharacter;
+    private CharacterJudgeBoxController _myCharacter;
     private BoxCollider _attackAreaCollision2D;
     
     [SerializeField]
@@ -13,11 +13,11 @@ public class AttackArea : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _myCharacter = this.GetComponentInParent<CharacterAreaController>();
+        _myCharacter = this.GetComponentInParent<CharacterJudgeBoxController>();
         _attackAreaCollision2D = this.GetComponent<BoxCollider>();
         DisableAttackArea();
         
-        _myCharacter.addAttackAreaByAttackName(AttackNameForUnique, this);
+        _myCharacter.BindAttackBoxByAttackName(AttackNameForUnique, this);
     }
 
     public void DisableAttackArea()
