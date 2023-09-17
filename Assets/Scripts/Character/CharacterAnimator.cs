@@ -46,11 +46,11 @@ public class CharacterAnimator : MonoBehaviour
         _animator.SetBool("PunchKey", false);
     }
 
-    public void animateByAttackNameInBehavior(Behavior.AttackName attackName)
+    public void animateByAttackNameInBehavior(BehaviorEnumSet.AttackName attackName)
     {
         switch (attackName)
         {
-            case Behavior.AttackName.Punch:
+            case BehaviorEnumSet.AttackName.Punch:
                 Punch();
                 break;
         }

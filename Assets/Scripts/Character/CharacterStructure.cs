@@ -51,7 +51,7 @@ public class CharacterStructure : MonoBehaviour
             if(!_activatedPassiveStateSet.Remove(0));
         }
         */
-        BehaviorByInput();
+        DecideBehaviorByInput();
     }
     
     // Switch가 아닌 Command Pattern을 써도 좋으나 필요가 있는가
@@ -66,59 +66,42 @@ public class CharacterStructure : MonoBehaviour
     // 답 2 : Input 클래스를 따로 만들고 Process를 포함 시키면 된다. 좋을지도..?
     // 상담해보기 (굳이 안해도 될 듯)
     // 나중에 나온 답 : FSM에 직접 전달하자 (사실상 State가 Process를 진행한다)
-    public void BehaviorByInput() 
+    public void DecideBehaviorByInput()
     {
-        while (true)
+        int inputCount = 0;
+        while (!_inputManager.isEmptyQueue())
         {
-            if (_inputManager.isEmptyQueue()) return;
-            Behavior.Button input = _inputManager.DequeueInputQueue();
+            inputCount++;
+            BehaviorEnumSet.Button input = _inputManager.DequeueInputQueue();
             _commandProcessor.EnqueueInput(input, Time.time);
             // _commandProcessor.JudgeCommand();
             
             
             switch (input)
             {
-                case Behavior.Button.Idle:
+                case BehaviorEnumSet.Button.Idle:
                     break;
-                case Behavior.Button.Crouch:
+                case BehaviorEnumSet.Button.Crouch:
                     break;
-                case Behavior.Button.Jump:
+                case BehaviorEnumSet.Button.Jump:
                     break;
-                case Behavior.Button.Right:
+                case BehaviorEnumSet.Button.Right:
                     break;
-                case Behavior.Button.Left:
+                case BehaviorEnumSet.Button.Left:
                     break;
-                case Behavior.Button.Punch:
-                    Behavior.AttackName attackName = JudgeAttackNameOnlyPunch();
+                case BehaviorEnumSet.Button.Punch:
+                    BehaviorEnumSet.AttackName attackName = JudgeAttackNameOnlyPunch();
                     // animator는 FSM을 통해 움직이게 하기 (여기는 FSM 구현하기)
                     _animator.animateByAttackNameInBehavior(attackName);
                     break;
             }
         }
+        Debug.Log(inputCount);
     }
     
     // 해당 메소드는 차후 CommandProcessor로 옮길 예정
-    private Behavior.AttackName JudgeAttackNameOnlyPunch()
+    private BehaviorEnumSet.AttackName JudgeAttackNameOnlyPunch()
     {
-        return Behavior.AttackName.Punch;
-    }
-}
-
-public class Behavior
-{
-    public enum Button{
-        Idle = 0,
-        Punch,
-        Right,
-        Left,
-        Jump,
-        Crouch,
-        Size
-    }
-
-    public enum AttackName
-    {
-        Punch = 0,
-        Size
+        return BehaviorEnumSet.AttackName.Punch;
     }
 }

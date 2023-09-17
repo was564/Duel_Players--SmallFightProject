@@ -4,16 +4,32 @@ using UnityEngine;
 
 public class BehaviorStateManager : MonoBehaviour
 {
-    //update를 안쓰는데 Start는 쓴다
+    // update를 안쓰는데 Start는 쓴다
     // Start는 다른 객체에서 Init을 시키면 가능하다
     // MonoBehavior를 하는 이유가 있을까
+    // 상담하기
+
+    // 모든 behaviorState를 set으로 관리 enum과 연결
+    // 다른 State로 바꿀 때 O(1)로 찾기 위함
+    // 답안 : State에 고유 코드(enum) 가지고 있기
+    // 이의 : State의 추가 마다 enum 추가해야함 (문제 없음)
+    private List<BehaviorStateInterface> _behaviorStateSet = new List<BehaviorStateInterface>();
+
+    private BehaviorStateInterface _currentState;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        _currentState = _behaviorStateSet[(int)BehaviorEnumSet.State.Idle];
     }
 
+    
+    
+    public void StateUpdate(BehaviorEnumSet.Behavior behavior)
+    {
+        
+    }
+    
     // Update is called once per frame
     void Update()
     {

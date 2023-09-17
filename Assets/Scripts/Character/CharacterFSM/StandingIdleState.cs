@@ -2,6 +2,8 @@
 {
     public class StandingIdleState : BehaviorStateInterface
     {
+        public StandingIdleState() : base(BehaviorEnumSet.State.Idle) {}
+        
         public override void Enter()
         {
             

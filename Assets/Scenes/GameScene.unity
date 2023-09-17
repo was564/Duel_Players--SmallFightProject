@@ -156,6 +156,65 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &87311126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87311111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: b9ba6b7fdda4f4c448a0acb6995bee7a,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c5f54f7b-a94c-4f67-b65f-350da877f667
+    m_ActionName: BattleInputSetting/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e786556f-fd48-4e63-8974-30baac206204
+    m_ActionName: BattleInputSetting/Punch[/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b6442aff-fe8c-4ba7-b117-d5a1d3acaccf
+    m_ActionName: BattleInputSetting/Kick[/Keyboard/k]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 66d9e62a-f07a-4e4b-9835-0ca206c50c37
+    m_ActionName: BattleInputSetting/Guard[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f22595cd-5197-4eb9-a0c1-558d57e4e27a
+    m_ActionName: BattleInputSetting/Assist[/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9a498bc4-0f44-4b26-88e8-05e8cfe12f8b
+    m_ActionName: Battle/Jump[/Keyboard/w,/XInputControllerWindows/leftStick/up]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f16592f8-f34e-4b19-8e93-c398a7a05c07
+    m_ActionName: Battle/Crouch[/Keyboard/s,/XInputControllerWindows/leftStick/down]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Battle
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,8 +480,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
+      propertyPath: Move.m_Id
+      value: ad83b9fa-434f-41c0-a13e-40aea1574dc3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: Move.m_Name
+      value: Move
       objectReference: {fileID: 0}
     - target: {fileID: 8344437400459074036, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
@@ -551,6 +620,99 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _Input
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: b9ba6b7fdda4f4c448a0acb6995bee7a,
+        type: 3}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _InputCp
+      value: 
+      objectReference: {fileID: 4129564680865322934, guid: b9ba6b7fdda4f4c448a0acb6995bee7a,
+        type: 3}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: Move.m_Id
+      value: 73e60f71-0a78-4d04-b288-00406a98e1e5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: Move.m_Name
+      value: Move
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _Input.m_Id
+      value: 65ec1d75-e897-4c80-b92d-eabf5dee5bbd
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _Input.m_Name
+      value: Input
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _inputPackage
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: b9ba6b7fdda4f4c448a0acb6995bee7a,
+        type: 3}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: action.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _inputPackage.m_Id
+      value: f186690e-3a67-4caa-81bd-4d0621fe10c6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _inputPackage.m_Name
+      value: Input Package
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _inputPackage.m_Actions.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _inputPackage.m_Bindings.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _inputPackage.m_Actions.Array.data[0].m_Id
+      value: 7b853644-7a70-4f5a-a4d4-d03a15b392ae
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _inputPackage.m_Bindings.Array.data[0].m_Id
+      value: 38863021-b0c5-4a2e-8d50-a5f66959149b
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _inputPackage.m_Actions.Array.data[0].m_Name
+      value: New action
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _inputPackage.m_Actions.Array.data[0].m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _inputPackage.m_Bindings.Array.data[0].m_Action
+      value: New action
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: _inputPackage.m_Actions.Array.data[0].m_ExpectedControlType
+      value: Button
+      objectReference: {fileID: 0}
     - target: {fileID: 8034790696101170765, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
       propertyPath: m_TagString
@@ -569,7 +731,7 @@ PrefabInstance:
     - target: {fileID: 8344437400459494420, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.46
+      value: -0.08
       objectReference: {fileID: 0}
     - target: {fileID: 8344437400459494420, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
@@ -579,7 +741,7 @@ PrefabInstance:
     - target: {fileID: 8344437400459494420, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8344437400459494420, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
@@ -624,6 +786,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 87311118}
+    - targetCorrespondingSourceObject: {fileID: 8344437400459074036, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 87311126}
   m_SourcePrefab: {fileID: 100100000, guid: 8058f8aad5a13a54981410233ee3cd50, type: 3}
 --- !u!1 &1586888661
 GameObject:

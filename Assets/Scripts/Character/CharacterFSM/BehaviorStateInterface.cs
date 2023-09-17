@@ -4,6 +4,13 @@ using UnityEngine;
 
 public abstract class BehaviorStateInterface : MonoBehaviour
 {
+    protected BehaviorStateInterface(BehaviorEnumSet.State stateName)
+    {
+        this.StateName = stateName;
+    }
+    
+    public BehaviorEnumSet.State StateName { get; private set; }
+    
     protected CharacterAnimator _animator;
     protected Transform _charaterTransform;
 
@@ -26,10 +33,3 @@ public abstract class BehaviorStateInterface : MonoBehaviour
  * 거기에 적용될 숫자는 생성자에서 할당하도록 만들기
  * 그리고 생성자에 넣고 싶은 값은 캐릭터 별로 Json같은 기록할만한 곳에 해두기
  */
-
-enum BehaviorState
-{
-    Idle = 0,
-    Punch,
-    Size
-}

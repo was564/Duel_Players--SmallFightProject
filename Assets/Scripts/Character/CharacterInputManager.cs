@@ -1,38 +1,90 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
+using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class CharacterInputManager : MonoBehaviour
 {
-    private Queue<Behavior.Button> _inputQueue = new Queue<Behavior.Button>();
+    [SerializeField]
+    private InputActionAsset _inputPackage;
 
+    private InputActionMap _inputInBattle;
+    // private InputActionMap _inputInMenu;
+
+    // dictionary의 Key로 Enum은 성능 하락 발생 (GetHashCode 같은 것이 없음)
+    // Unity .Net 4 이상으로 가서 문제 없어짐
+    // Reference : https://pizzasheepsdev.tistory.com/2
+    private InputAction _moveInputAction;
+    private Dictionary<BehaviorEnumSet.Button, InputAction> _inputActions 
+        = new Dictionary<BehaviorEnumSet.Button, InputAction>();
+    private Queue<BehaviorEnumSet.Button> _inputQueue = new Queue<BehaviorEnumSet.Button>();
+    
     private void Start()
     {
-        
+        _inputInBattle = _inputPackage.FindActionMap("Battle");
+
+        _moveInputAction = _inputInBattle.FindAction("Move");
+        _inputActions[BehaviorEnumSet.Button.Jump] = _inputInBattle.FindAction("Jump");
+        _inputActions[BehaviorEnumSet.Button.Crouch] = _inputInBattle.FindAction("Crouch");
+        _inputActions[BehaviorEnumSet.Button.Punch] = _inputInBattle.FindAction("Punch");
+        _inputActions[BehaviorEnumSet.Button.Kick] = _inputInBattle.FindAction("Kick");
+        _inputActions[BehaviorEnumSet.Button.Guard] = _inputInBattle.FindAction("Guard");
+        _inputActions[BehaviorEnumSet.Button.Assist] = _inputInBattle.FindAction("Assist");
     }
 
+    
+    
     private void Update()
     {
-        if (Input.GetButtonDown("Punch"))
+        int previousCommandCount = _inputQueue.Count;
+
+        EnqueueMove(_moveInputAction);
+        
+        foreach (KeyValuePair<BehaviorEnumSet.Button, InputAction> input in _inputActions)
         {
-            _inputQueue.Enqueue(Behavior.Button.Punch);
+            EnqueueInput(input.Key, input.Value);
+        }
+
+        if (_inputQueue.Count == previousCommandCount)
+            _inputQueue.Enqueue(BehaviorEnumSet.Button.Idle);
+        
+        /*
+        if (Input.GetKeyDown("Punch"))
+        {
+            _inputQueue.Enqueue(BehaviorEnumSet.Button.Punch);
         }
         else
         {
-            _inputQueue.Enqueue(Behavior.Button.Idle);
+            _inputQueue.Enqueue(BehaviorEnumSet.Button.Idle);
         }
-
+        */
+        
         return;
     }
 
-    public Behavior.Button DequeueInputQueue()
+    private void EnqueueMove(InputAction input)
+    {
+        float direction = input.ReadValue<float>();
+        if (direction > 0.0f) _inputQueue.Enqueue(BehaviorEnumSet.Button.Right);
+        else if (direction < 0.0f) _inputQueue.Enqueue(BehaviorEnumSet.Button.Left);
+    }
+    
+    private void EnqueueInput(BehaviorEnumSet.Button button, InputAction input)
+    {
+        float pressed = input.ReadValue<float>();
+        if(pressed > 0.0f) _inputQueue.Enqueue(button);
+    }
+    
+    public BehaviorEnumSet.Button DequeueInputQueue()
     {
         return _inputQueue.Dequeue();
     }
 
-    public Behavior.Button PeekInputQueue()
+    public BehaviorEnumSet.Button PeekInputQueue()
     {
         return _inputQueue.Peek();
     }
@@ -42,3 +94,5 @@ public class CharacterInputManager : MonoBehaviour
         return _inputQueue.Count <= 0;
     }
 }
+
+

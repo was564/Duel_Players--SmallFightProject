@@ -8,7 +8,7 @@ public class AttackBox : MonoBehaviour
     private BoxCollider _attackAreaCollision2D;
     
     [SerializeField]
-    private Behavior.AttackName AttackNameForUnique;
+    private BehaviorEnumSet.AttackName AttackNameForUnique;
 
     // Start is called before the first frame update
     void Start()

@@ -18,13 +18,13 @@ public class CommandProcessor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int maxInputCountPerSecond = 60 * (int)Behavior.Button.Size;
+        int maxInputCountPerSecond = 60 * (int)BehaviorEnumSet.Button.Size;
         // queue parallel 가능??
         // 예상 : peek 노드가 바뀔 수 있음 (어떻게 구현했는지 따라) (의도에서는 문제가 안됨)
         // 궁금한 점 : Allocation할 때 운영체제에서는 스레드락을 거는가?
         _unusedTupleSet = new Queue<InputAndTimeTuple>();
         for (int i = 0; i < InputAcknowledgeTime * maxInputCountPerSecond; i++) 
-            _unusedTupleSet.Enqueue(new InputAndTimeTuple(Behavior.Button.Idle, 0.0f));
+            _unusedTupleSet.Enqueue(new InputAndTimeTuple(BehaviorEnumSet.Button.Idle, 0.0f));
         _inputUntilAcknowledgeTimeList = new LinkedList<InputAndTimeTuple>();
     }
 
@@ -38,7 +38,7 @@ public class CommandProcessor : MonoBehaviour
         }
     }
 
-    public void EnqueueInput(Behavior.Button button, float time)
+    public void EnqueueInput(BehaviorEnumSet.Button button, float time)
     {
         InputAndTimeTuple input = _unusedTupleSet.Dequeue();
         input.ReInitValues(button, time);
@@ -53,15 +53,15 @@ public class CommandProcessor : MonoBehaviour
 // Generic + Class WritablePair 고려하기 상담
 struct InputAndTimeTuple {
     
-    public Behavior.Button Input { get; private set; }
+    public BehaviorEnumSet.Button Input { get; private set; }
     public float Time { get; private set; }
-    public InputAndTimeTuple(Behavior.Button button, float time)
+    public InputAndTimeTuple(BehaviorEnumSet.Button button, float time)
     {
         this.Input = button;
         this.Time = time;
     }
 
-    public void ReInitValues(Behavior.Button button, float time)
+    public void ReInitValues(BehaviorEnumSet.Button button, float time)
     {
         this.Input = button;
         this.Time = time;
