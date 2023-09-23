@@ -2,24 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BehaviorStateInterface : MonoBehaviour
+public abstract class BehaviorStateInterface
 {
-    protected BehaviorStateInterface(BehaviorEnumSet.State stateName)
+    protected BehaviorStateInterface(BehaviorEnumSet.State stateName, GameObject characterRoot)
     {
         this.StateName = stateName;
+        CharacterTransform = characterRoot.transform;
+        CharacterAnimator = characterRoot.GetComponent<Animator>();
     }
-    
+
     public BehaviorEnumSet.State StateName { get; private set; }
     
-    protected CharacterAnimator _animator;
-    protected Transform _charaterTransform;
+    protected Animator CharacterAnimator;
+    protected Transform CharacterTransform;
 
-    private void Start()
-    {
-        _animator = this.GetComponent<CharacterAnimator>();
-        _charaterTransform = this.GetComponent<Transform>().root;
-    }
-    
     public abstract void Enter();
 
     public abstract void StateUpdate();

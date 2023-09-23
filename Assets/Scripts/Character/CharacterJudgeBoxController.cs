@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CharacterJudgeBoxController : MonoBehaviour
 {
-    private HitBox _hitArea;
+    private HitBox _hitBox;
     
-    private Dictionary<BehaviorEnumSet.AttackName, AttackBox> AttackAreaTable =
+    private Dictionary<BehaviorEnumSet.AttackName, AttackBox> _attackBoxTable =
         new Dictionary<BehaviorEnumSet.AttackName, AttackBox>();
     
     // Start is called before the first frame update
@@ -23,16 +23,16 @@ public class CharacterJudgeBoxController : MonoBehaviour
 
     public void EnableAttackBoxByAttackName(BehaviorEnumSet.AttackName attackName)
     {
-        AttackAreaTable[attackName].EnableAttackArea();
+        _attackBoxTable[attackName].EnableAttackBox();
     }
     
     public void DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName attackName)
     {
-        AttackAreaTable[attackName].DisableAttackArea();
+        _attackBoxTable[attackName].DisableAttackBox();
     }
 
     public void BindAttackBoxByAttackName(BehaviorEnumSet.AttackName attackName, AttackBox attackArea)
     {
-        AttackAreaTable.Add(attackName, attackArea);
+        _attackBoxTable.Add(attackName, attackArea);
     }
 }

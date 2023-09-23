@@ -89,7 +89,7 @@ public class CharacterInputManager : MonoBehaviour
         return _inputQueue.Peek();
     }
 
-    public bool isEmptyQueue()
+    public bool isEmptyInputQueue()
     {
         return _inputQueue.Count <= 0;
     }

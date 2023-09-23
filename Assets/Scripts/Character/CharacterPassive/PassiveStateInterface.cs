@@ -2,16 +2,24 @@
 
 namespace Character.CharacterPassive
 {
-    public abstract class PassiveStateInterface : MonoBehaviour
+    public abstract class PassiveStateInterface
     {
-        protected CharacterStructure _character;
-        public float RemainTime { get; protected set; }
-        
-        private void Start()
+        protected PassiveStateInterface(GameObject characterRoot)
         {
-            _character = this.GetComponent<CharacterStructure>();
+            this.MyCharacter = characterRoot;
         }
+        
+        protected GameObject MyCharacter;
+        public float RemainTime { get; protected set; }
 
-        public abstract void EffectPassive();
+        public abstract void EnterPassiveState();
+
+        public abstract void QuitPassiveState();
     }
+}
+
+public enum PassiveState
+{
+    LightWeight,
+    Size
 }

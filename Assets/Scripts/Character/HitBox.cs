@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class HitBox : MonoBehaviour
 {
-    
+    // FSM 매니저로 가게끔 만들기
     private CharacterAnimator _animator;
-    private BoxCollider _hitArea;
+    
+    private BoxCollider _hitBox;
     
     // Start is called before the first frame update
     void Start()
     {
-        
         _animator = this.GetComponentInParent<CharacterAnimator>();
-        _hitArea = this.GetComponent<BoxCollider>();
+        _hitBox = this.GetComponent<BoxCollider>();
     }
 
     private void OnTriggerEnter(Collider col)

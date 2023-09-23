@@ -5,7 +5,7 @@ using UnityEngine;
 public class AttackBox : MonoBehaviour
 {
     private CharacterJudgeBoxController _myCharacter;
-    private BoxCollider _attackAreaCollision2D;
+    private BoxCollider _attackBoxCollider;
     
     [SerializeField]
     private BehaviorEnumSet.AttackName AttackNameForUnique;
@@ -13,20 +13,19 @@ public class AttackBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _myCharacter = this.GetComponentInParent<CharacterJudgeBoxController>();
-        _attackAreaCollision2D = this.GetComponent<BoxCollider>();
-        DisableAttackArea();
+        _attackBoxCollider = this.GetComponent<BoxCollider>();
+        DisableAttackBox();
         
         _myCharacter.BindAttackBoxByAttackName(AttackNameForUnique, this);
     }
 
-    public void DisableAttackArea()
+    public void DisableAttackBox()
     {
-        _attackAreaCollision2D.enabled = false;
+        _attackBoxCollider.enabled = false;
     }
 
-    public void EnableAttackArea()
+    public void EnableAttackBox()
     {
-        _attackAreaCollision2D.enabled = true;
+        _attackBoxCollider.enabled = true;
     }
 }

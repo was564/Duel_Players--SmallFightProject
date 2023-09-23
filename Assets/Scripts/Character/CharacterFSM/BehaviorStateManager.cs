@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Character.CharacterFSM;
 using UnityEngine;
 
 public class BehaviorStateManager : MonoBehaviour
@@ -13,17 +14,22 @@ public class BehaviorStateManager : MonoBehaviour
     // 다른 State로 바꿀 때 O(1)로 찾기 위함
     // 답안 : State에 고유 코드(enum) 가지고 있기
     // 이의 : State의 추가 마다 enum 추가해야함 (문제 없음)
-    private List<BehaviorStateInterface> _behaviorStateSet = new List<BehaviorStateInterface>();
+    // 나중에 나온 답 : Dictionary 사용 (시간은 O(logN)임)
+    // 추가 : Dictionary의 시간은 O(1)이다.
+    // 물론 index로 접근하면 List가 더 빠르겠지만 그렇게 차이 안난다
+    // Reference: https://prographers.com/blog/list-vs-dictionary-performance
+    private Dictionary<BehaviorEnumSet.State, BehaviorStateInterface> _behaviorStateSet 
+        = new Dictionary<BehaviorEnumSet.State, BehaviorStateInterface>();
 
     private BehaviorStateInterface _currentState;
     
     // Start is called before the first frame update
     void Start()
     {
-        _currentState = _behaviorStateSet[(int)BehaviorEnumSet.State.Idle];
+        _behaviorStateSet.Add(BehaviorEnumSet.State.Idle, new StandingIdleState(this.transform.root.gameObject));
+        
+        _currentState = _behaviorStateSet[BehaviorEnumSet.State.Idle];
     }
-
-    
     
     public void StateUpdate(BehaviorEnumSet.Behavior behavior)
     {

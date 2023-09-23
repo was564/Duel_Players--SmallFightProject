@@ -8,29 +8,35 @@ using UnityEngine;
 public class CharacterStructure : MonoBehaviour
 {
     private CharacterInputManager _inputManager;
+    
     // 여기서 animator를 조종하지 않도록 하자
     // character가 조작할 수 있는 것은 FSM
     private CharacterAnimator _animator;
+    
     private CommandProcessor _commandProcessor;
 
-    private BehaviorStateManager _BehaviorstateManager;
-
-    /* 상담 후 구현하기
-    // priorityQueue 대체 할만한 자료구조 (Key값을 바꿀 수 있고 정렬해주는 자료구조) 
-    // key-read-only
-    // 버프 디버프같은 것을 가지게 하고 남는 시간에 따라 정렬할 수 있는 큐
-    // 남는 시간이 끝나면 Dequeue, 버프나 디버프가 추가되면 Enqueue
-    // 제안1 : PriorityQueue를 구현
+    private BehaviorStateManager _behaviorStateManager;
+    
+    // 버프 디버프같은 것을 가지게 하고 남는 시간에 따라 정렬할 수 있는 리스트
+    // 남는 시간이 끝나면 Remove, 버프나 디버프가 추가되면 Add
+    // 제안1 : PriorityQueue를 구현 (key-read-only이면 안됨)
     // 제안2 : 버프나 디버프 마다 Enum으로 요소 위치를 지정 후 HashTable 처럼 관리
     // 문제 : 새로운 효과가 추가되면 Enum을 추가하며 캐릭터는 시작할 때 모든 효과를 가지고 있는다. (Disable, Enable)
-    private SortedDictionary<float, PassiveStateInterface> _activatedPassiveStateSet
-        = new SortedDictionary<float, PassiveStateInterface>();
-        
+    // 제안3 : LinkedList를 이용해 항상 탐색하여 시간에 관계 없이 종료되면 삭제, 추가할 때 중간에 추가가 용이하다
+    // 문제 : 이미 있던 상태가 다음 상태가 들어오면 삭제되어야 함, new는 쓰면 안된다.
+    // 대안 : 공격을 전체적으로 아는 클래스가 자기가 필요한 모든 스테이트를 만들어 놓기
+    // 모든 스테이트를 만들고 초기화(Start) 단계에서 넣어놓고 삭제하거나 추가하거나 하지말고 Dictionary로 쓰기
+    // Dictionary 구분을 위해 enum 만들기
+    // 대안 : 버프 디버프로 인해 바뀌는 값은 캐릭터의 값 바꾸는 모듈 만들기
+    private LinkedList<PassiveStateInterface> _activatedPassiveStateSet
+        = new LinkedList<PassiveStateInterface>();
+     
+    
     public void ActivatePassiveState(PassiveStateInterface state)
     {
-        _activatedPassiveStateSet.Add(state.RemainTime, state);
+        state.EnterPassiveState();
+        
     }
-    */
     
     // Start is called before the first frame update
     void Start()
@@ -69,7 +75,7 @@ public class CharacterStructure : MonoBehaviour
     public void DecideBehaviorByInput()
     {
         int inputCount = 0;
-        while (!_inputManager.isEmptyQueue())
+        while (!_inputManager.isEmptyInputQueue())
         {
             inputCount++;
             BehaviorEnumSet.Button input = _inputManager.DequeueInputQueue();
@@ -96,7 +102,7 @@ public class CharacterStructure : MonoBehaviour
                     break;
             }
         }
-        Debug.Log(inputCount);
+        // Debug.Log(inputCount);
     }
     
     // 해당 메소드는 차후 CommandProcessor로 옮길 예정
