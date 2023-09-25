@@ -44,7 +44,7 @@ public class CharacterStructure : MonoBehaviour
         _inputManager = this.GetComponent<CharacterInputManager>();
         _animator = this.GetComponent<CharacterAnimator>();
         _commandProcessor = this.GetComponent<CommandProcessor>();
-        
+        _behaviorStateManager = this.GetComponent<BehaviorStateManager>();
     }
     
     // Update is called once per frame
@@ -58,6 +58,7 @@ public class CharacterStructure : MonoBehaviour
         }
         */
         DecideBehaviorByInput();
+        _behaviorStateManager.UpdateState();
     }
     
     // Switch가 아닌 Command Pattern을 써도 좋으나 필요가 있는가
@@ -81,8 +82,8 @@ public class CharacterStructure : MonoBehaviour
             BehaviorEnumSet.Button input = _inputManager.DequeueInputQueue();
             _commandProcessor.EnqueueInput(input, Time.time);
             // _commandProcessor.JudgeCommand();
-            
-            
+
+            BehaviorEnumSet.Behavior nextBehavior = BehaviorEnumSet.Behavior.Idle;
             switch (input)
             {
                 case BehaviorEnumSet.Button.Idle:
@@ -96,18 +97,19 @@ public class CharacterStructure : MonoBehaviour
                 case BehaviorEnumSet.Button.Left:
                     break;
                 case BehaviorEnumSet.Button.Punch:
-                    BehaviorEnumSet.AttackName attackName = JudgeAttackNameOnlyPunch();
+                    nextBehavior = JudgeAttackNameOnlyPunch();
                     // animator는 FSM을 통해 움직이게 하기 (여기는 FSM 구현하기)
-                    _animator.animateByAttackNameInBehavior(attackName);
+                    // _animator.animateByAttackNameInBehavior(attackName);
                     break;
             }
+            _behaviorStateManager.HandleInput(nextBehavior);
         }
         // Debug.Log(inputCount);
     }
     
     // 해당 메소드는 차후 CommandProcessor로 옮길 예정
-    private BehaviorEnumSet.AttackName JudgeAttackNameOnlyPunch()
+    private BehaviorEnumSet.Behavior JudgeAttackNameOnlyPunch()
     {
-        return BehaviorEnumSet.AttackName.Punch;
+        return BehaviorEnumSet.Behavior.Punch;
     }
 }

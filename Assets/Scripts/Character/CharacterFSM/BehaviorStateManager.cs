@@ -22,18 +22,33 @@ public class BehaviorStateManager : MonoBehaviour
         = new Dictionary<BehaviorEnumSet.State, BehaviorStateInterface>();
 
     private BehaviorStateInterface _currentState;
-    
+     
     // Start is called before the first frame update
     void Start()
     {
-        _behaviorStateSet.Add(BehaviorEnumSet.State.Idle, new StandingIdleState(this.transform.root.gameObject));
+        GameObject rootCharacter = this.transform.root.gameObject;
+        _behaviorStateSet.Add(BehaviorEnumSet.State.Idle, new StandingIdleState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.Punch, new StandingPunchState(rootCharacter));
         
         _currentState = _behaviorStateSet[BehaviorEnumSet.State.Idle];
+        _currentState.Enter();
+    }
+
+    public void HandleInput(BehaviorEnumSet.Behavior behavior)
+    {
+        _currentState.HandleInput(behavior);
     }
     
-    public void StateUpdate(BehaviorEnumSet.Behavior behavior)
+    public void UpdateState()
     {
-        
+        _currentState.UpdateState();
+    }
+
+    public void ChangeState(BehaviorEnumSet.State nextState)
+    {
+        _currentState.Quit();
+        _currentState = _behaviorStateSet[nextState];
+        _currentState.Enter();
     }
     
     // Update is called once per frame

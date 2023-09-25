@@ -27,6 +27,7 @@
         Size
     }
 
+    // Include AttackName
     public enum Behavior
     {
         Idle = 0,

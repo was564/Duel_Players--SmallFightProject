@@ -9,16 +9,19 @@ public abstract class BehaviorStateInterface
         this.StateName = stateName;
         CharacterTransform = characterRoot.transform;
         CharacterAnimator = characterRoot.GetComponent<Animator>();
+        StateManager = characterRoot.GetComponent<BehaviorStateManager>();
     }
 
     public BehaviorEnumSet.State StateName { get; private set; }
     
     protected Animator CharacterAnimator;
     protected Transform CharacterTransform;
+    protected BehaviorStateManager StateManager;
 
     public abstract void Enter();
 
-    public abstract void StateUpdate();
+    public abstract void HandleInput(BehaviorEnumSet.Behavior behavior);
+    public abstract void UpdateState();
     
     public abstract void Quit();
 }
