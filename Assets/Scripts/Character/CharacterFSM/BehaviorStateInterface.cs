@@ -8,14 +8,16 @@ public abstract class BehaviorStateInterface
     {
         this.StateName = stateName;
         CharacterTransform = characterRoot.transform;
-        CharacterAnimator = characterRoot.GetComponent<Animator>();
+        CharacterAnimator = characterRoot.GetComponent<CharacterAnimator>();
+        CharacterRigidBody = characterRoot.GetComponent<Rigidbody>();
         StateManager = characterRoot.GetComponent<BehaviorStateManager>();
     }
 
     public BehaviorEnumSet.State StateName { get; private set; }
     
-    protected Animator CharacterAnimator;
+    protected CharacterAnimator CharacterAnimator;
     protected Transform CharacterTransform;
+    protected Rigidbody CharacterRigidBody;
     protected BehaviorStateManager StateManager;
 
     public abstract void Enter();

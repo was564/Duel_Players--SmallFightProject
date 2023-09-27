@@ -5,8 +5,8 @@
         Idle = 0,
         Punch,
         Kick,
-        Right,
-        Left,
+        Forward,
+        Backward,
         Jump,
         Crouch,
         Guard,
@@ -16,8 +16,15 @@
 
     public enum State
     {
-        Idle = 0,
-        Punch,
+        StandingIdle = 0,
+        StandingPunch,
+        Forward,
+        Backward,
+        StandingHit,
+        Jump,
+        InAirIdle,
+        Land,
+        
         Size
     }
 
@@ -32,8 +39,8 @@
     {
         Idle = 0,
         Punch,
-        Right,
-        Left,
+        Forward,
+        Backward,
         Jump,
         Crouch,
         

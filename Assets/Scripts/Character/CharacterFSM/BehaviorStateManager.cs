@@ -27,10 +27,16 @@ public class BehaviorStateManager : MonoBehaviour
     void Start()
     {
         GameObject rootCharacter = this.transform.root.gameObject;
-        _behaviorStateSet.Add(BehaviorEnumSet.State.Idle, new StandingIdleState(rootCharacter));
-        _behaviorStateSet.Add(BehaviorEnumSet.State.Punch, new StandingPunchState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.StandingHit, new StandingHitState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.StandingIdle, new StandingIdleState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.StandingPunch, new StandingPunchState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.Forward, new WalkForwardState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.Backward, new WalkBackwardState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.Jump, new JumpState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.InAirIdle, new InAirIdleState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.Land, new LandState(rootCharacter));
         
-        _currentState = _behaviorStateSet[BehaviorEnumSet.State.Idle];
+        _currentState = _behaviorStateSet[BehaviorEnumSet.State.StandingIdle];
         _currentState.Enter();
     }
 

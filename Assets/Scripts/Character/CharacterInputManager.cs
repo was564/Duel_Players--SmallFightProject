@@ -68,9 +68,10 @@ public class CharacterInputManager : MonoBehaviour
 
     private void EnqueueMove(InputAction input)
     {
-        float direction = input.ReadValue<float>();
-        if (direction > 0.0f) _inputQueue.Enqueue(BehaviorEnumSet.Button.Right);
-        else if (direction < 0.0f) _inputQueue.Enqueue(BehaviorEnumSet.Button.Left);
+        float inputDirection = input.ReadValue<float>();
+        float characterDirection = this.transform.root.forward.x;
+        if (inputDirection * characterDirection > 0.0f) _inputQueue.Enqueue(BehaviorEnumSet.Button.Forward);
+        else if (inputDirection * characterDirection < 0.0f) _inputQueue.Enqueue(BehaviorEnumSet.Button.Backward);
     }
     
     private void EnqueueInput(BehaviorEnumSet.Button button, InputAction input)

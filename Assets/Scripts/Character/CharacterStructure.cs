@@ -35,7 +35,6 @@ public class CharacterStructure : MonoBehaviour
     public void ActivatePassiveState(PassiveStateInterface state)
     {
         state.EnterPassiveState();
-        
     }
     
     // Start is called before the first frame update
@@ -75,10 +74,8 @@ public class CharacterStructure : MonoBehaviour
     // 나중에 나온 답 : FSM에 직접 전달하자 (사실상 State가 Process를 진행한다)
     public void DecideBehaviorByInput()
     {
-        int inputCount = 0;
         while (!_inputManager.isEmptyInputQueue())
         {
-            inputCount++;
             BehaviorEnumSet.Button input = _inputManager.DequeueInputQueue();
             _commandProcessor.EnqueueInput(input, Time.time);
             // _commandProcessor.JudgeCommand();
@@ -87,19 +84,26 @@ public class CharacterStructure : MonoBehaviour
             switch (input)
             {
                 case BehaviorEnumSet.Button.Idle:
+                    nextBehavior = BehaviorEnumSet.Behavior.Idle;
                     break;
                 case BehaviorEnumSet.Button.Crouch:
                     break;
                 case BehaviorEnumSet.Button.Jump:
+                    nextBehavior = BehaviorEnumSet.Behavior.Jump;
                     break;
-                case BehaviorEnumSet.Button.Right:
+                case BehaviorEnumSet.Button.Forward:
+                    nextBehavior = BehaviorEnumSet.Behavior.Forward;
                     break;
-                case BehaviorEnumSet.Button.Left:
+                case BehaviorEnumSet.Button.Backward:
+                    nextBehavior = BehaviorEnumSet.Behavior.Backward;
                     break;
                 case BehaviorEnumSet.Button.Punch:
                     nextBehavior = JudgeAttackNameOnlyPunch();
                     // animator는 FSM을 통해 움직이게 하기 (여기는 FSM 구현하기)
                     // _animator.animateByAttackNameInBehavior(attackName);
+                    break;
+                default:
+                    Debug.Log("No Input Bug");
                     break;
             }
             _behaviorStateManager.HandleInput(nextBehavior);

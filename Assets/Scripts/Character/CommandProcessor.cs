@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 
+// MonoBehaviour 굳이 필요한가 나중에 구현할 때 판단하기
 public class CommandProcessor : MonoBehaviour
 {
     // Keyvaluepair는 Allocation 속도는 빠르나 동작 속도가 느리다.
