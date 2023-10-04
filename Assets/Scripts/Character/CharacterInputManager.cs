@@ -23,11 +23,12 @@ public class CharacterInputManager : MonoBehaviour
         = new Dictionary<BehaviorEnumSet.Button, InputAction>();
     private Queue<BehaviorEnumSet.Button> _inputQueue = new Queue<BehaviorEnumSet.Button>();
     
-    private void Start()
+    private void Awake()
     {
+        if(_inputPackage == null) return;
         _inputInBattle = _inputPackage.FindActionMap("Battle");
-
         _moveInputAction = _inputInBattle.FindAction("Move");
+
         _inputActions[BehaviorEnumSet.Button.Jump] = _inputInBattle.FindAction("Jump");
         _inputActions[BehaviorEnumSet.Button.Crouch] = _inputInBattle.FindAction("Crouch");
         _inputActions[BehaviorEnumSet.Button.Punch] = _inputInBattle.FindAction("Punch");

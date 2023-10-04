@@ -32,6 +32,7 @@ namespace Character.CharacterFSM
                 case BehaviorEnumSet.Behavior.Crouch:
                     break;
                 case BehaviorEnumSet.Behavior.Jump:
+                    StateManager.ChangeState(BehaviorEnumSet.State.Jump);
                     break;
                 case BehaviorEnumSet.Behavior.Backward:
                     StateManager.ChangeState(BehaviorEnumSet.State.Backward);
@@ -48,7 +49,7 @@ namespace Character.CharacterFSM
 
         public override void Quit()
         {
-            CharacterRigidBody.velocity = Vector3.zero;
+            
         }
     }
 }

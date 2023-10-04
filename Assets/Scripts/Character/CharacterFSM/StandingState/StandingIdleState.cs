@@ -9,6 +9,8 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
+            CharacterRigidBody.velocity = Vector3.zero;
+            
             CharacterAnimator.PlayAnimationSmoothly("StandingIdle");
         }
 

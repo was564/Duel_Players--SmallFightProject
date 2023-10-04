@@ -9,12 +9,10 @@ namespace Character.CharacterFSM
 
         public override void Enter()
         {
-            Vector3 temp = CharacterTransform.position;
-            temp.y = 0;
-            CharacterTransform.position = temp;
 
             CharacterRigidBody.useGravity = false;
             CharacterRigidBody.velocity = Vector3.zero;
+            Character.InAir = false;
             CharacterAnimator.PlayAnimationSmoothly("Land");
         }
         
@@ -31,11 +29,24 @@ namespace Character.CharacterFSM
         {
             if(CharacterAnimator.IsEndCurrentAnimation("Land"))
                 StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
+            else
+            {
+                Vector3 characterPosition = this.CharacterTransform.position;
+                
+                float positionY = Mathf.Lerp(
+                    this.Character.PositionYOffsetForLand, 
+                    0.0f, 
+                    CharacterAnimator.GetCurrentAnimationDuration());
+                characterPosition.y = positionY;
+                this.CharacterTransform.position = characterPosition;
+            }
         }
 
         public override void Quit()
         {
-            
+            Vector3 characterPosition = this.CharacterTransform.position;
+            characterPosition.y = 0;
+            this.CharacterTransform.position = characterPosition;
         }
     }
 }

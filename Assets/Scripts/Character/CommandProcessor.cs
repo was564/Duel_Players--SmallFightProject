@@ -17,8 +17,8 @@ public class CommandProcessor : MonoBehaviour
     private Queue<InputAndTimeTuple> _unusedTupleSet;
     
     // Start is called before the first frame update
-    void Start()
-    {
+    void Awake()
+    { 
         int maxInputCountPerSecond = 60 * (int)BehaviorEnumSet.Button.Size;
         // queue parallel 가능??
         // 예상 : peek 노드가 바뀔 수 있음 (어떻게 구현했는지 따라) (의도에서는 문제가 안됨)

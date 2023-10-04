@@ -7,14 +7,16 @@ public abstract class BehaviorStateInterface
     protected BehaviorStateInterface(BehaviorEnumSet.State stateName, GameObject characterRoot)
     {
         this.StateName = stateName;
-        CharacterTransform = characterRoot.transform;
-        CharacterAnimator = characterRoot.GetComponent<CharacterAnimator>();
-        CharacterRigidBody = characterRoot.GetComponent<Rigidbody>();
-        StateManager = characterRoot.GetComponent<BehaviorStateManager>();
+        this.CharacterTransform = characterRoot.transform;
+        this.CharacterAnimator = characterRoot.GetComponent<CharacterAnimator>();
+        this.CharacterRigidBody = characterRoot.GetComponent<Rigidbody>();
+        this.StateManager = characterRoot.GetComponent<BehaviorStateManager>();
+        this.Character = characterRoot.GetComponent<CharacterStructure>();
     }
 
     public BehaviorEnumSet.State StateName { get; private set; }
-    
+
+    protected CharacterStructure Character;
     protected CharacterAnimator CharacterAnimator;
     protected Transform CharacterTransform;
     protected Rigidbody CharacterRigidBody;

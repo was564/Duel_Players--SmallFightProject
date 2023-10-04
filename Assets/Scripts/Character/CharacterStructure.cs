@@ -30,15 +30,20 @@ public class CharacterStructure : MonoBehaviour
     // 대안 : 버프 디버프로 인해 바뀌는 값은 캐릭터의 값 바꾸는 모듈 만들기
     private LinkedList<PassiveStateInterface> _activatedPassiveStateSet
         = new LinkedList<PassiveStateInterface>();
-     
+
+
+    public bool InAir { get; set; } = false;
+
+    public float PositionYOffsetForLand { get; private set; } = -0.5f;
+
+    public int Hp { get; private set; } = 100;
     
     public void ActivatePassiveState(PassiveStateInterface state)
     {
         state.EnterPassiveState();
     }
     
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _inputManager = this.GetComponent<CharacterInputManager>();
         _animator = this.GetComponent<CharacterAnimator>();
@@ -115,5 +120,10 @@ public class CharacterStructure : MonoBehaviour
     private BehaviorEnumSet.Behavior JudgeAttackNameOnlyPunch()
     {
         return BehaviorEnumSet.Behavior.Punch;
+    }
+
+    public void DecreaseHp(int damage)
+    {
+        Hp -= damage;
     }
 }

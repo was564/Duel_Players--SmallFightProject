@@ -10,7 +10,8 @@ namespace Character.CharacterFSM
         public override void Enter()
         {
             CharacterRigidBody.useGravity = true;
-            CharacterRigidBody.AddForce(Vector3.up * 2.0f);
+            CharacterRigidBody.velocity += (Vector3.up * 3.5f);
+            Character.InAir = true;
             CharacterAnimator.PlayAnimation("Jump");
         }
         

@@ -5,7 +5,7 @@ namespace Character.CharacterFSM
     public class InAirIdleState : BehaviorStateInterface
     {
         public InAirIdleState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.StandingIdle, characterRoot) {}
+            base(BehaviorEnumSet.State.InAirIdle, characterRoot) {}
         
         public override void Enter()
         {
@@ -25,10 +25,8 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
-            if (CharacterTransform.position.y <= 0)
-            {
+            if (this.CharacterTransform.position.y <= this.Character.PositionYOffsetForLand)
                 StateManager.ChangeState(BehaviorEnumSet.State.Land);
-            }
         }
 
         public override void Quit()

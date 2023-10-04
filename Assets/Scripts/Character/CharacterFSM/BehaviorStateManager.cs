@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Character.CharacterFSM;
@@ -24,7 +25,7 @@ public class BehaviorStateManager : MonoBehaviour
     private BehaviorStateInterface _currentState;
      
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         GameObject rootCharacter = this.transform.root.gameObject;
         _behaviorStateSet.Add(BehaviorEnumSet.State.StandingHit, new StandingHitState(rootCharacter));
@@ -36,6 +37,10 @@ public class BehaviorStateManager : MonoBehaviour
         _behaviorStateSet.Add(BehaviorEnumSet.State.InAirIdle, new InAirIdleState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.Land, new LandState(rootCharacter));
         
+    }
+
+    private void Start()
+    {
         _currentState = _behaviorStateSet[BehaviorEnumSet.State.StandingIdle];
         _currentState.Enter();
     }
