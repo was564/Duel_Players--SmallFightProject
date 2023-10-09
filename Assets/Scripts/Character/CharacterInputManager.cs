@@ -23,7 +23,7 @@ public class CharacterInputManager : MonoBehaviour
         = new Dictionary<BehaviorEnumSet.Button, InputAction>();
     private Queue<BehaviorEnumSet.Button> _inputQueue = new Queue<BehaviorEnumSet.Button>();
     
-    private void Awake()
+    private void Start()
     {
         if(_inputPackage == null) return;
         _inputInBattle = _inputPackage.FindActionMap("Battle");

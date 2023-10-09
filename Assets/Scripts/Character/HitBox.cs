@@ -6,14 +6,14 @@ using UnityEngine;
 public class HitBox : MonoBehaviour
 {
     // FSM 매니저로 가게끔 만들기
-    //rivate CharacterAnimator _animator;
+    //private CharacterAnimator _animator;
     private BehaviorStateManager _stateManager;
     private CharacterStructure _character;
     
     private BoxCollider _hitBox;
     
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         //_animator = this.GetComponentInParent<CharacterAnimator>();
         _stateManager = this.transform.root.GetComponent<BehaviorStateManager>();

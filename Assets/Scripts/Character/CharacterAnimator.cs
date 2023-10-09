@@ -13,7 +13,7 @@ public class CharacterAnimator : MonoBehaviour
 
     private float _animationStartingNormalizedTime;
 
-    private void Awake()
+    private void Start()
     {
         this._characterRootTransform = this.transform.root;
         this._animator = this.GetComponent<Animator>();

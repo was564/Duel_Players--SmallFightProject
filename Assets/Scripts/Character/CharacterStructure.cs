@@ -9,10 +9,6 @@ public class CharacterStructure : MonoBehaviour
 {
     private CharacterInputManager _inputManager;
     
-    // 여기서 animator를 조종하지 않도록 하자
-    // character가 조작할 수 있는 것은 FSM
-    private CharacterAnimator _animator;
-    
     private CommandProcessor _commandProcessor;
 
     private BehaviorStateManager _behaviorStateManager;
@@ -43,10 +39,9 @@ public class CharacterStructure : MonoBehaviour
         state.EnterPassiveState();
     }
     
-    void Awake()
+    void Start()
     {
         _inputManager = this.GetComponent<CharacterInputManager>();
-        _animator = this.GetComponent<CharacterAnimator>();
         _commandProcessor = this.GetComponent<CommandProcessor>();
         _behaviorStateManager = this.GetComponent<BehaviorStateManager>();
     }

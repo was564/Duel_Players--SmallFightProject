@@ -23,26 +23,21 @@ public class BehaviorStateManager : MonoBehaviour
         = new Dictionary<BehaviorEnumSet.State, BehaviorStateInterface>();
 
     private BehaviorStateInterface _currentState;
-     
-    // Start is called before the first frame update
-    void Awake()
+
+    private void Start()
     {
         GameObject rootCharacter = this.transform.root.gameObject;
         _behaviorStateSet.Add(BehaviorEnumSet.State.StandingHit, new StandingHitState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.StandingIdle, new StandingIdleState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.StandingPunch, new StandingPunchState(rootCharacter));
-        _behaviorStateSet.Add(BehaviorEnumSet.State.Forward, new WalkForwardState(rootCharacter));
-        _behaviorStateSet.Add(BehaviorEnumSet.State.Backward, new WalkBackwardState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.Forward, new WalkingForwardState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.Backward, new WalkingBackwardState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.Jump, new JumpState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.InAirIdle, new InAirIdleState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.Land, new LandState(rootCharacter));
         
-    }
-
-    private void Start()
-    {
         _currentState = _behaviorStateSet[BehaviorEnumSet.State.StandingIdle];
-        _currentState.Enter();
+        //_currentState.Enter();
     }
 
     public void HandleInput(BehaviorEnumSet.Behavior behavior)

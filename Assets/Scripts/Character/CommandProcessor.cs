@@ -17,7 +17,7 @@ public class CommandProcessor : MonoBehaviour
     private Queue<InputAndTimeTuple> _unusedTupleSet;
     
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     { 
         int maxInputCountPerSecond = 60 * (int)BehaviorEnumSet.Button.Size;
         // queue parallel 가능??

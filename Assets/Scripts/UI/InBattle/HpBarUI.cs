@@ -21,17 +21,14 @@ public class HpBarUI : MonoBehaviour
 
     private Vector2 _initHpGuagePosition;
 
-    void Awake()
+    private void Start()
     {
         _hpGuage = this.gameObject.GetComponentInChildren<RawImage>().GetComponent<RectTransform>();
         _hpBackBoard = this.gameObject.GetComponentInChildren<Image>().GetComponent<RectTransform>();
         _hpRenderer = _hpGuage.GetComponent<RawImage>();
         _hpColor = new Color(200, 200, 100, 255);
         _hpRenderer.color = _hpColor;
-    }
-
-    private void Start()
-    {
+        
         _characterHp = CharacterParameter.Hp;
         _barWidth = this.GetComponent<RectTransform>().rect.width;
         

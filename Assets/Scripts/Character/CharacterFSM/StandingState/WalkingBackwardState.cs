@@ -2,11 +2,11 @@
 
 namespace Character.CharacterFSM
 {
-    public class WalkBackwardState : BehaviorStateInterface
+    public class WalkingBackwardState : BehaviorStateInterface
     {
         private float _walkingVelocity = 2.5f;
         
-        public WalkBackwardState(GameObject characterRoot) :
+        public WalkingBackwardState(GameObject characterRoot) :
             base(BehaviorEnumSet.State.Backward, characterRoot) {}
         
         public override void Enter()

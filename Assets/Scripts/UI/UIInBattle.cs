@@ -24,7 +24,9 @@ public class UIInBattle : MonoBehaviour
     private GameObject _player;
     [SerializeField]
     private GameObject _enemy;
-    private void Awake()
+
+    // Start is called before the first frame update
+    void Start()
     {
         _canvas = this.gameObject.GetComponentInChildren<Canvas>().GetComponent<RectTransform>();
         _canvasWidth = _canvas.rect.width;
@@ -39,11 +41,6 @@ public class UIInBattle : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player").transform.root.gameObject;
         _enemy = GameObject.FindGameObjectWithTag("Enemy").transform.root.gameObject;
         
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         Vector3 playerDirection = (_player.transform.position - _camera.transform.position);
         Vector3 enemyDirection = (_enemy.transform.position - _camera.transform.position);
         

@@ -13,7 +13,7 @@ public class AttackBox : MonoBehaviour
     [SerializeField] public int Damage { get; private set; } = 5;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         _myCharacter = this.transform.root.GetComponent<CharacterJudgeBoxController>();
         _attackBoxCollider = this.GetComponent<BoxCollider>();
