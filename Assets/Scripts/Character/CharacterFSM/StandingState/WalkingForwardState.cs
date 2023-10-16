@@ -24,7 +24,7 @@ namespace Character.CharacterFSM
         {
             switch (behavior)
             {
-                case BehaviorEnumSet.Behavior.Idle:
+                case BehaviorEnumSet.Behavior.Stop:
                     StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
                     break;
                 case BehaviorEnumSet.Behavior.Punch:

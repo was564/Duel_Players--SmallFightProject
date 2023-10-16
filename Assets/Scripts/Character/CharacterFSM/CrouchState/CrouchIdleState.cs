@@ -6,9 +6,16 @@ namespace Character.CharacterFSM
     {
         public CrouchIdleState(GameObject characterRoot) : 
             base(BehaviorEnumSet.State.CrouchIdle, characterRoot) {}
+
+        private float _startingTime;
+        private bool _isApplyFinalPosition;
         
         public override void Enter()
         {
+            _startingTime = Time.time;
+            _isApplyFinalPosition = false;
+                
+            CharacterRigidBody.velocity = Vector3.zero;
             CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimationSmoothly("Crouch", CharacterAnimator.Layer.LowerLayer);
         }
@@ -17,7 +24,7 @@ namespace Character.CharacterFSM
         {
             switch (behavior)
             {
-                case BehaviorEnumSet.Behavior.Idle:
+                case BehaviorEnumSet.Behavior.Stand:
                     StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
                     break;
                 case BehaviorEnumSet.Behavior.Jump:
@@ -32,14 +39,21 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
-            Vector3 characterPosition = this.CharacterTransform.position;
+            if (!_isApplyFinalPosition)
+            {
+                Vector3 characterPosition = this.CharacterTransform.position;
+                // 애니메이션 재생속도 0.1초
+                float animationDurationTime = Mathf.Clamp01((Time.time - _startingTime) * 10.0f);
+                float positionY = Mathf.Lerp(
+                    0,
+                    -0.4f,
+                    animationDurationTime);
                 
-            float positionY = Mathf.Lerp(
-                0, 
-                -2f,
-                0.2f);
-            characterPosition.y = positionY;
-            this.CharacterTransform.position = characterPosition;
+                characterPosition.y = positionY;
+                this.CharacterTransform.position = characterPosition;
+                if (animationDurationTime == 1.0f)
+                    _isApplyFinalPosition = true;
+            }
         }
 
         public override void Quit()

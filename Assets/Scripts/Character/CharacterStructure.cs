@@ -80,11 +80,11 @@ public class CharacterStructure : MonoBehaviour
             _commandProcessor.EnqueueInput(input, Time.time);
             // _commandProcessor.JudgeCommand();
 
-            BehaviorEnumSet.Behavior nextBehavior = BehaviorEnumSet.Behavior.Idle;
+            BehaviorEnumSet.Behavior nextBehavior = BehaviorEnumSet.Behavior.Null;
             switch (input)
             {
-                case BehaviorEnumSet.Button.Idle:
-                    nextBehavior = BehaviorEnumSet.Behavior.Idle;
+                case BehaviorEnumSet.Button.Stand:
+                    nextBehavior = BehaviorEnumSet.Behavior.Stand;
                     break;
                 case BehaviorEnumSet.Button.Crouch:
                     nextBehavior = BehaviorEnumSet.Behavior.Crouch;
@@ -97,6 +97,9 @@ public class CharacterStructure : MonoBehaviour
                     break;
                 case BehaviorEnumSet.Button.Backward:
                     nextBehavior = BehaviorEnumSet.Behavior.Backward;
+                    break;
+                case BehaviorEnumSet.Button.Stop:
+                    nextBehavior = BehaviorEnumSet.Behavior.Stop;
                     break;
                 case BehaviorEnumSet.Button.Punch:
                     nextBehavior = JudgeAttackNameOnlyPunch();

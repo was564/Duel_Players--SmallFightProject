@@ -21,6 +21,13 @@ public class CharacterInputManager : MonoBehaviour
     private InputAction _moveInputAction;
     private Dictionary<BehaviorEnumSet.Button, InputAction> _inputActions 
         = new Dictionary<BehaviorEnumSet.Button, InputAction>();
+    
+    // Tuple은 생성은 느리지만 접근은 빠름
+    // Reference : https://codingcoding.tistory.com/206
+    // key : tuple (StateForPressed, StateForNotPressed)
+    private Dictionary<Tuple<BehaviorEnumSet.Button, BehaviorEnumSet.Button>, InputAction> _oppositeInputsActions
+        = new Dictionary<Tuple<BehaviorEnumSet.Button, BehaviorEnumSet.Button>, InputAction>();
+    
     private Queue<BehaviorEnumSet.Button> _inputQueue = new Queue<BehaviorEnumSet.Button>();
     
     private void Start()
@@ -30,11 +37,13 @@ public class CharacterInputManager : MonoBehaviour
         _moveInputAction = _inputInBattle.FindAction("Move");
 
         _inputActions[BehaviorEnumSet.Button.Jump] = _inputInBattle.FindAction("Jump");
-        _inputActions[BehaviorEnumSet.Button.Crouch] = _inputInBattle.FindAction("Crouch");
         _inputActions[BehaviorEnumSet.Button.Punch] = _inputInBattle.FindAction("Punch");
         _inputActions[BehaviorEnumSet.Button.Kick] = _inputInBattle.FindAction("Kick");
         _inputActions[BehaviorEnumSet.Button.Guard] = _inputInBattle.FindAction("Guard");
         _inputActions[BehaviorEnumSet.Button.Assist] = _inputInBattle.FindAction("Assist");
+        
+        _oppositeInputsActions[Tuple.Create(BehaviorEnumSet.Button.Crouch, BehaviorEnumSet.Button.Stand)] 
+            = _inputInBattle.FindAction("Crouch");
     }
 
     
@@ -49,19 +58,15 @@ public class CharacterInputManager : MonoBehaviour
         {
             EnqueueInput(input.Key, input.Value);
         }
+        
+        foreach (KeyValuePair<Tuple<BehaviorEnumSet.Button, BehaviorEnumSet.Button>, InputAction> input in _oppositeInputsActions)
+        {
+            EnqueueOppositeInputs(input.Key, input.Value);
+        }
 
+        /*
         if (_inputQueue.Count == previousCommandCount)
             _inputQueue.Enqueue(BehaviorEnumSet.Button.Idle);
-        
-        /*
-        if (Input.GetKeyDown("Punch"))
-        {
-            _inputQueue.Enqueue(BehaviorEnumSet.Button.Punch);
-        }
-        else
-        {
-            _inputQueue.Enqueue(BehaviorEnumSet.Button.Idle);
-        }
         */
         
         return;
@@ -71,14 +76,24 @@ public class CharacterInputManager : MonoBehaviour
     {
         float inputDirection = input.ReadValue<float>();
         float characterDirection = this.transform.root.forward.x;
-        if (inputDirection * characterDirection > 0.0f) _inputQueue.Enqueue(BehaviorEnumSet.Button.Forward);
-        else if (inputDirection * characterDirection < 0.0f) _inputQueue.Enqueue(BehaviorEnumSet.Button.Backward);
+        float resultDirection = inputDirection * characterDirection;
+        if (resultDirection > 0.0f) _inputQueue.Enqueue(BehaviorEnumSet.Button.Forward);
+        else if (resultDirection < 0.0f) _inputQueue.Enqueue(BehaviorEnumSet.Button.Backward);
+        else if (resultDirection == 0.0f) _inputQueue.Enqueue(BehaviorEnumSet.Button.Stop);
     }
     
     private void EnqueueInput(BehaviorEnumSet.Button button, InputAction input)
     {
         float pressed = input.ReadValue<float>();
         if(pressed > 0.0f) _inputQueue.Enqueue(button);
+    }
+
+    private void EnqueueOppositeInputs(Tuple<BehaviorEnumSet.Button, BehaviorEnumSet.Button> states, InputAction input)
+    {
+        (BehaviorEnumSet.Button pressedState, BehaviorEnumSet.Button notPressedState) = states;
+        float pressed = input.ReadValue<float>();
+        if(pressed > 0.0f) _inputQueue.Enqueue(pressedState);
+        else _inputQueue.Enqueue(notPressedState);
     }
     
     public BehaviorEnumSet.Button DequeueInputQueue()

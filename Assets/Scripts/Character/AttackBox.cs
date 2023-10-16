@@ -15,7 +15,6 @@ public class AttackBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         _myCharacter = this.transform.root.GetComponent<CharacterJudgeBoxController>();
         _attackBoxCollider = this.GetComponent<BoxCollider>();
         DisableAttackBox();

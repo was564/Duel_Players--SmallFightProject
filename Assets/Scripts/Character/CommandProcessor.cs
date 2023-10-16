@@ -25,7 +25,7 @@ public class CommandProcessor : MonoBehaviour
         // 궁금한 점 : Allocation할 때 운영체제에서는 스레드락을 거는가?
         _unusedTupleSet = new Queue<InputAndTimeTuple>();
         for (int i = 0; i < InputAcknowledgeTime * maxInputCountPerSecond; i++) 
-            _unusedTupleSet.Enqueue(new InputAndTimeTuple(BehaviorEnumSet.Button.Idle, 0.0f));
+            _unusedTupleSet.Enqueue(new InputAndTimeTuple(BehaviorEnumSet.Button.Stop, 0.0f));
         _inputUntilAcknowledgeTimeList = new LinkedList<InputAndTimeTuple>();
     }
 

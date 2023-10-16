@@ -2,12 +2,13 @@
 {
     public enum Button
     {
-        Idle = 0,
-        Punch,
+        Punch = 0,
         Kick,
         Forward,
         Backward,
+        Stop,
         Jump,
+        Stand,
         Crouch,
         Guard,
         Assist,
@@ -37,12 +38,14 @@
     // Include AttackName
     public enum Behavior
     {
-        Idle = 0,
+        Null = -1,
         Punch,
         Forward,
         Backward,
+        Stop,
         Jump,
         Crouch,
+        Stand,
         
         Size
     }
