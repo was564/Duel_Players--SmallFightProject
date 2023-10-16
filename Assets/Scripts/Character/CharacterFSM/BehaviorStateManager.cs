@@ -35,6 +35,8 @@ public class BehaviorStateManager : MonoBehaviour
         _behaviorStateSet.Add(BehaviorEnumSet.State.Jump, new JumpState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.InAirIdle, new InAirIdleState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.Land, new LandState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.CrouchIdle, new CrouchIdleState(rootCharacter));
+        
         
         _currentState = _behaviorStateSet[BehaviorEnumSet.State.StandingIdle];
         //_currentState.Enter();

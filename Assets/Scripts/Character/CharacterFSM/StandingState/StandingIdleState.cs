@@ -11,7 +11,8 @@ namespace Character.CharacterFSM
         {
             CharacterRigidBody.velocity = Vector3.zero;
             
-            CharacterAnimator.PlayAnimationSmoothly("StandingIdle");
+            CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.UpperLayer);
+            CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.LowerLayer);
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
@@ -24,6 +25,7 @@ namespace Character.CharacterFSM
                     StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch);
                     break;
                 case BehaviorEnumSet.Behavior.Crouch:
+                    StateManager.ChangeState(BehaviorEnumSet.State.CrouchIdle);
                     break;
                 case BehaviorEnumSet.Behavior.Jump:
                     StateManager.ChangeState(BehaviorEnumSet.State.Jump);

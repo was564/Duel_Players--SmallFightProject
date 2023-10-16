@@ -11,7 +11,8 @@ namespace Character.CharacterFSM
         public override void Enter()
         {
             CharacterRigidBody.velocity = Vector3.zero;
-            CharacterAnimator.PlayAnimation("StandingPunch", true);
+            CharacterAnimator.PlayAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer,true);
+            CharacterAnimator.PlayAnimation("StandingIdle", CharacterAnimator.Layer.LowerLayer, true);
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
@@ -30,7 +31,7 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
-            if(CharacterAnimator.IsEndCurrentAnimation("StandingPunch"))
+            if(CharacterAnimator.IsEndCurrentAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer))
                 StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
         }
 

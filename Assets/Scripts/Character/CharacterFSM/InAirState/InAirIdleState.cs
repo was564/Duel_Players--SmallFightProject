@@ -9,7 +9,8 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
-            CharacterAnimator.PlayAnimationSmoothly("InAirIdle");
+            CharacterAnimator.PlayAnimationSmoothly("InAirIdle", CharacterAnimator.Layer.UpperLayer);
+            CharacterAnimator.PlayAnimationSmoothly("InAirIdle", CharacterAnimator.Layer.LowerLayer);
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)

@@ -9,7 +9,8 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
-            CharacterAnimator.PlayAnimation("StandingHit", true);
+            CharacterAnimator.PlayAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer, true);
+            CharacterAnimator.PlayAnimation("StandingIdle", CharacterAnimator.Layer.LowerLayer, true);
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
@@ -23,7 +24,7 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
-            if(CharacterAnimator.IsEndCurrentAnimation("StandingHit"))
+            if(CharacterAnimator.IsEndCurrentAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer))
                 StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
         }
 

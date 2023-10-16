@@ -13,7 +13,8 @@ namespace Character.CharacterFSM
             CharacterRigidBody.useGravity = false;
             CharacterRigidBody.velocity = Vector3.zero;
             Character.InAir = false;
-            CharacterAnimator.PlayAnimationSmoothly("Land");
+            CharacterAnimator.PlayAnimationSmoothly("Land", CharacterAnimator.Layer.UpperLayer);
+            CharacterAnimator.PlayAnimationSmoothly("Land", CharacterAnimator.Layer.LowerLayer);
         }
         
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
@@ -27,7 +28,7 @@ namespace Character.CharacterFSM
         
         public override void UpdateState()
         {
-            if(CharacterAnimator.IsEndCurrentAnimation("Land"))
+            if(CharacterAnimator.IsEndCurrentAnimation("Land", CharacterAnimator.Layer.LowerLayer))
                 StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
             else
             {
@@ -36,7 +37,7 @@ namespace Character.CharacterFSM
                 float positionY = Mathf.Lerp(
                     this.Character.PositionYOffsetForLand, 
                     0.0f, 
-                    CharacterAnimator.GetCurrentAnimationDuration());
+                    CharacterAnimator.GetCurrentAnimationDuration(CharacterAnimator.Layer.LowerLayer));
                 characterPosition.y = positionY;
                 this.CharacterTransform.position = characterPosition;
             }

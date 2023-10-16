@@ -15,7 +15,8 @@ namespace Character.CharacterFSM
                 (CharacterTransform.transform.forward.x < 0.0f)
                     ? (Vector3.right * _walkingVelocity)
                     : (Vector3.left * _walkingVelocity);
-            CharacterAnimator.PlayAnimationSmoothly("WalkBackward");
+            CharacterAnimator.PlayAnimationSmoothly("WalkBackward", CharacterAnimator.Layer.UpperLayer);
+            CharacterAnimator.PlayAnimationSmoothly("WalkBackward", CharacterAnimator.Layer.LowerLayer);
         }
     
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
@@ -29,6 +30,7 @@ namespace Character.CharacterFSM
                     StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch);
                     break;
                 case BehaviorEnumSet.Behavior.Crouch:
+                    StateManager.ChangeState(BehaviorEnumSet.State.CrouchIdle);
                     break;
                 case BehaviorEnumSet.Behavior.Jump:
                     StateManager.ChangeState(BehaviorEnumSet.State.Jump);

@@ -12,7 +12,14 @@ public class CharacterAnimator : MonoBehaviour
     private Transform _characterRootTransform;
 
     private float _animationStartingNormalizedTime;
-
+    
+    public enum Layer
+    {
+        UpperLayer,
+        LowerLayer,
+        Size
+    }
+    
     private void Start()
     {
         this._characterRootTransform = this.transform.root;
@@ -43,23 +50,23 @@ public class CharacterAnimator : MonoBehaviour
         }
     }
 
-    public float GetCurrentAnimationDuration()
+    public float GetCurrentAnimationDuration(Layer layer)
     {
-        return _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        return _animator.GetCurrentAnimatorStateInfo((int)layer).normalizedTime;
     }
     
-    public bool IsEndCurrentAnimation(string animationName)
+    public bool IsEndCurrentAnimation(string animationName, Layer layer)
     {
-        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
+        if (!_animator.GetCurrentAnimatorStateInfo((int)layer).IsName(animationName))
         {
-            Debug.Assert(true, "State and Animation Mismatch : " + _animator.GetCurrentAnimatorStateInfo(0).ToString());
+            Debug.Assert(true, "State and Animation Mismatch : " + _animator.GetCurrentAnimatorStateInfo((int)layer).ToString());
         }
 
         // normalizeTime이 재생된 직후에는 초기화 되지 않는 현상 발생
         // 따라서 그런 상황에만 해당 프레임 스킵
-        if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime.Equals(_animationStartingNormalizedTime)) return false;
+        if (_animator.GetCurrentAnimatorStateInfo((int)layer).normalizedTime.Equals(_animationStartingNormalizedTime)) return false;
 
-        if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        if (_animator.GetCurrentAnimatorStateInfo((int)layer).normalizedTime >= 1.0f)
         {
             // Debug.Log(_animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
             return true;
@@ -70,18 +77,20 @@ public class CharacterAnimator : MonoBehaviour
 
     // https://sangh518.github.io/record/animationCheck/
     // 일부 애니메이션이 재생 될 때 전 애니메이션의 NormalizedTime이 초기화 되지 않는 현상
-    public void PlayAnimationSmoothly(string animationName, bool atStarting = false)
+    public void PlayAnimationSmoothly(string animationName, Layer layer, bool atStarting = false)
     {
-        _animationStartingNormalizedTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-        if (atStarting) _animator.CrossFade(animationName, 0.1f, -1, 0.0f);
-        else _animator.CrossFade(animationName, 0.1f);
+        _animationStartingNormalizedTime = _animator.GetCurrentAnimatorStateInfo((int)layer).normalizedTime;
+        if (atStarting) _animator.CrossFade(animationName, 0.1f, (int)layer, 0.0f);
+        else _animator.CrossFade(animationName, 0.1f, (int)layer);
     }
  
-    public void PlayAnimation(string animationName, bool atStarting = false)
+    public void PlayAnimation(string animationName, Layer layer, bool atStarting = false)
     {
-        _animationStartingNormalizedTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-        if (atStarting) _animator.Play(animationName, -1, 0.0f);
-        else _animator.Play(animationName);
+        _animationStartingNormalizedTime = _animator.GetCurrentAnimatorStateInfo((int)layer).normalizedTime;
+        if (atStarting) _animator.Play(animationName, (int)layer, 0.0f);
+        else _animator.Play(animationName, (int)layer);
     }
+
+
     
 }

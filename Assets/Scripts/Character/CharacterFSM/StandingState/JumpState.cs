@@ -12,7 +12,8 @@ namespace Character.CharacterFSM
             CharacterRigidBody.useGravity = true;
             CharacterRigidBody.velocity += (Vector3.up * 3.5f);
             Character.InAir = true;
-            CharacterAnimator.PlayAnimation("Jump");
+            CharacterAnimator.PlayAnimation("Jump", CharacterAnimator.Layer.UpperLayer);
+            CharacterAnimator.PlayAnimation("Jump", CharacterAnimator.Layer.LowerLayer);
         }
         
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
@@ -26,7 +27,7 @@ namespace Character.CharacterFSM
         
         public override void UpdateState()
         {
-            if(CharacterAnimator.IsEndCurrentAnimation("Jump"))
+            if(CharacterAnimator.IsEndCurrentAnimation("Jump", CharacterAnimator.Layer.LowerLayer))
                 StateManager.ChangeState(BehaviorEnumSet.State.InAirIdle);
         }
 

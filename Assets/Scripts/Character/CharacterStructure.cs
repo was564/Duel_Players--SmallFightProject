@@ -87,6 +87,7 @@ public class CharacterStructure : MonoBehaviour
                     nextBehavior = BehaviorEnumSet.Behavior.Idle;
                     break;
                 case BehaviorEnumSet.Button.Crouch:
+                    nextBehavior = BehaviorEnumSet.Behavior.Crouch;
                     break;
                 case BehaviorEnumSet.Button.Jump:
                     nextBehavior = BehaviorEnumSet.Behavior.Jump;

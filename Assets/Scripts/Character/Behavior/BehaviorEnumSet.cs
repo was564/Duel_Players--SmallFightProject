@@ -24,7 +24,7 @@
         Jump,
         InAirIdle,
         Land,
-        
+        CrouchIdle,
         Size
     }
 
