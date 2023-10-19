@@ -117,7 +117,9 @@ public class CharacterStructure : MonoBehaviour
     // 해당 메소드는 차후 CommandProcessor로 옮길 예정
     private BehaviorEnumSet.Behavior JudgeAttackNameOnlyPunch()
     {
-        return _commandProcessor.JudgeCommand();
+        return BehaviorEnumSet.Behavior.Punch;
+
+        //return _commandProcessor.JudgeCommand();
     }
 
     public void DecreaseHp(int damage)

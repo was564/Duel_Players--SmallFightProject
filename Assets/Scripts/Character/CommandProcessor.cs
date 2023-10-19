@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CustomDataStructure;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -21,7 +20,7 @@ public class CommandProcessor : MonoBehaviour
     private List<KeyValuePair<BehaviorEnumSet.Behavior, List<BehaviorEnumSet.Button>>> _commandList
         = new List<KeyValuePair<BehaviorEnumSet.Behavior, List<BehaviorEnumSet.Button>>>();
     
-    private CommandTree _commandTree = new CommandTree();
+    // private CommandTree _commandTree = new CommandTree();
     
     // Start is called before the first frame update
     // queue parallel 가능??
@@ -37,11 +36,13 @@ public class CommandProcessor : MonoBehaviour
             _unusedTupleSet.Enqueue(new InputAndTimeTuple(BehaviorEnumSet.Button.Stop, 0.0f));
         _inputUntilAcknowledgeTimeList = new LinkedList<InputAndTimeTuple>();
 
+        /*
         // List<Behavior>에서 공격(Trigger)이 마지막 요소
         foreach (KeyValuePair<BehaviorEnumSet.Behavior, List<BehaviorEnumSet.Button>> commandInfo in _commandList)
         {
             _commandTree.AddCommand(commandInfo.Value, BehaviorEnumSet.Behavior.StandingPunchSkill);
         }
+        */
     }
 
     // Update is called once per frame
@@ -71,12 +72,13 @@ public class CommandProcessor : MonoBehaviour
     {
         _commandList.Add(new KeyValuePair<BehaviorEnumSet.Behavior, List<BehaviorEnumSet.Button>>(behavior, command));
     }
-
+    /*
+    
     public BehaviorEnumSet.Behavior JudgeCommand()
     {
         return _commandTree.JudgeCommand(_inputUntilAcknowledgeTimeList);
     }
-    
+    */
     // struct는 데이터가 스택에 할당되기 때문에 더 빠르다.
     // Reference : https://mdfarragher.medium.com/whats-faster-in-c-a-struct-or-a-class-99e4761a7b76
     // 해당 구조체 속도는 모르겠음..
