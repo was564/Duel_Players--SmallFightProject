@@ -22,6 +22,12 @@ namespace Character.CharacterFSM
         {
             switch (behavior)
             {
+                case BehaviorEnumSet.Behavior.Punch:
+                    StateManager.ChangeState(BehaviorEnumSet.State.AiringPunch);
+                    break;
+                case BehaviorEnumSet.Behavior.Kick:
+                    StateManager.ChangeState(BehaviorEnumSet.State.AiringKick);
+                    break;
                 default:
                     break;
             }

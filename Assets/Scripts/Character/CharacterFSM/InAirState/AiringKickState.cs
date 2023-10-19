@@ -27,7 +27,7 @@ namespace Character.CharacterFSM
             if (this.CharacterTransform.position.y <= this.Character.PositionYOffsetForLand)
                 StateManager.ChangeState(BehaviorEnumSet.State.Land);
             
-            if(CharacterAnimator.IsEndCurrentAnimation("AiringKick", CharacterAnimator.Layer.UpperLayer))
+            if(CharacterAnimator.IsEndCurrentAnimation("AiringKick", CharacterAnimator.Layer.LowerLayer))
                 StateManager.ChangeState(BehaviorEnumSet.State.InAirIdle);
         }
 

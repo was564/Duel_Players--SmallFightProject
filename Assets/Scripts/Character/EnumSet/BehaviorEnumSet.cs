@@ -41,6 +41,7 @@
     public enum AttackName
     {
         Punch = 0,
+        Kick = 1,
         Size
     }
 
