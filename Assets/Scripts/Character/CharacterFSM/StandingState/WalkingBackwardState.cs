@@ -5,16 +5,18 @@ namespace Character.CharacterFSM
     public class WalkingBackwardState : BehaviorStateInterface
     {
         private float _walkingVelocity = 2.5f;
+
+        private Vector3 _finalVelocity;
         
         public WalkingBackwardState(GameObject characterRoot) :
-            base(BehaviorEnumSet.State.Backward, characterRoot) {}
+            base(BehaviorEnumSet.State.Backward, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
         
         public override void Enter()
         {
-            CharacterRigidBody.velocity =
-                (CharacterTransform.transform.forward.x < 0.0f)
+            _finalVelocity = (CharacterTransform.transform.forward.x < 0.0f)
                     ? (Vector3.right * _walkingVelocity)
                     : (Vector3.left * _walkingVelocity);
+            CharacterRigidBody.velocity = _finalVelocity;
             CharacterAnimator.PlayAnimationSmoothly("WalkBackward", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimationSmoothly("WalkBackward", CharacterAnimator.Layer.LowerLayer);
         }
@@ -29,6 +31,9 @@ namespace Character.CharacterFSM
                 case BehaviorEnumSet.Behavior.Punch:
                     StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch);
                     break;
+                case BehaviorEnumSet.Behavior.Kick:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick);
+                    break;
                 case BehaviorEnumSet.Behavior.Crouch:
                     StateManager.ChangeState(BehaviorEnumSet.State.CrouchIdle);
                     break;
@@ -38,6 +43,9 @@ namespace Character.CharacterFSM
                 case BehaviorEnumSet.Behavior.Forward:
                     StateManager.ChangeState(BehaviorEnumSet.State.Forward);
                     break;
+                case BehaviorEnumSet.Behavior.StandingPunchSkill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunchSkill);
+                    break;
                 default:
                     break;
             }
@@ -45,12 +53,12 @@ namespace Character.CharacterFSM
     
         public override void UpdateState()
         {
-            
+            CharacterRigidBody.velocity = _finalVelocity;
         }
 
         public override void Quit()
         {
-            
+            CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.LowerLayer);
         }
     }
 }

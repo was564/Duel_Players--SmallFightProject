@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Character.CharacterFSM;
-using Character.CharacterPassive;
+using Character.CharacterPassiveState;
 using UnityEngine;
 
 public class CharacterStructure : MonoBehaviour
@@ -12,27 +12,17 @@ public class CharacterStructure : MonoBehaviour
     private CommandProcessor _commandProcessor;
 
     private BehaviorStateManager _behaviorStateManager;
+
+    private PassiveStateManager _passiveStateManager;
     
-    // 버프 디버프같은 것을 가지게 하고 남는 시간에 따라 정렬할 수 있는 리스트
-    // 남는 시간이 끝나면 Remove, 버프나 디버프가 추가되면 Add
-    // 제안1 : PriorityQueue를 구현 (key-read-only이면 안됨)
-    // 제안2 : 버프나 디버프 마다 Enum으로 요소 위치를 지정 후 HashTable 처럼 관리
-    // 문제 : 새로운 효과가 추가되면 Enum을 추가하며 캐릭터는 시작할 때 모든 효과를 가지고 있는다. (Disable, Enable)
-    // 제안3 : LinkedList를 이용해 항상 탐색하여 시간에 관계 없이 종료되면 삭제, 추가할 때 중간에 추가가 용이하다
-    // 문제 : 이미 있던 상태가 다음 상태가 들어오면 삭제되어야 함, new는 쓰면 안된다.
-    // 대안 : 공격을 전체적으로 아는 클래스가 자기가 필요한 모든 스테이트를 만들어 놓기
-    // 모든 스테이트를 만들고 초기화(Start) 단계에서 넣어놓고 삭제하거나 추가하거나 하지말고 Dictionary로 쓰기
-    // Dictionary 구분을 위해 enum 만들기
-    // 대안 : 버프 디버프로 인해 바뀌는 값은 캐릭터의 값 바꾸는 모듈 만들기
-    private LinkedList<PassiveStateInterface> _activatedPassiveStateSet
-        = new LinkedList<PassiveStateInterface>();
-
-
-    public bool InAir { get; set; } = false;
-
     public float PositionYOffsetForLand { get; private set; } = -0.5f;
 
+    public PassiveStateEnumSet.CharacterPositionState CharacterPositionState { get; set; }
+        = PassiveStateEnumSet.CharacterPositionState.OnGround;
+    
     public int Hp { get; private set; } = 100;
+
+    public bool IsHitContinuous { get; set; } = false;
     
     public void ActivatePassiveState(PassiveStateInterface state)
     {
@@ -44,6 +34,7 @@ public class CharacterStructure : MonoBehaviour
         _inputManager = this.GetComponent<CharacterInputManager>();
         _commandProcessor = this.GetComponent<CommandProcessor>();
         _behaviorStateManager = this.GetComponent<BehaviorStateManager>();
+        _passiveStateManager = this.GetComponent<PassiveStateManager>();
     }
     
     // Update is called once per frame
@@ -56,7 +47,9 @@ public class CharacterStructure : MonoBehaviour
             if(!_activatedPassiveStateSet.Remove(0));
         }
         */
+        
         DecideBehaviorByInput();
+        _passiveStateManager.UpdatePassiveState();
         _behaviorStateManager.UpdateState();
     }
     
@@ -77,7 +70,6 @@ public class CharacterStructure : MonoBehaviour
         while (!_inputManager.isEmptyInputQueue())
         {
             BehaviorEnumSet.Button input = _inputManager.DequeueInputQueue();
-            _commandProcessor.EnqueueInput(input, Time.time);
             // _commandProcessor.JudgeCommand();
 
             BehaviorEnumSet.Behavior nextBehavior = BehaviorEnumSet.Behavior.Null;
@@ -87,24 +79,31 @@ public class CharacterStructure : MonoBehaviour
                     nextBehavior = BehaviorEnumSet.Behavior.Stand;
                     break;
                 case BehaviorEnumSet.Button.Crouch:
+                    _commandProcessor.EnqueueInput(input, Time.time);
                     nextBehavior = BehaviorEnumSet.Behavior.Crouch;
                     break;
                 case BehaviorEnumSet.Button.Jump:
                     nextBehavior = BehaviorEnumSet.Behavior.Jump;
                     break;
                 case BehaviorEnumSet.Button.Forward:
+                    _commandProcessor.EnqueueInput(input, Time.time);
                     nextBehavior = BehaviorEnumSet.Behavior.Forward;
                     break;
                 case BehaviorEnumSet.Button.Backward:
+                    _commandProcessor.EnqueueInput(input, Time.time);
                     nextBehavior = BehaviorEnumSet.Behavior.Backward;
                     break;
                 case BehaviorEnumSet.Button.Stop:
                     nextBehavior = BehaviorEnumSet.Behavior.Stop;
                     break;
                 case BehaviorEnumSet.Button.Punch:
+                    _commandProcessor.EnqueueInput(input, Time.time);
                     nextBehavior = JudgeAttackNameOnlyPunch();
                     // animator는 FSM을 통해 움직이게 하기 (여기는 FSM 구현하기)
                     // _animator.animateByAttackNameInBehavior(attackName);
+                    break;
+                case BehaviorEnumSet.Button.Kick:
+                    nextBehavior = BehaviorEnumSet.Behavior.Kick;
                     break;
                 default:
                     Debug.Log("No Input Bug");
@@ -118,7 +117,7 @@ public class CharacterStructure : MonoBehaviour
     // 해당 메소드는 차후 CommandProcessor로 옮길 예정
     private BehaviorEnumSet.Behavior JudgeAttackNameOnlyPunch()
     {
-        return BehaviorEnumSet.Behavior.Punch;
+        return _commandProcessor.JudgeCommand();
     }
 
     public void DecreaseHp(int damage)

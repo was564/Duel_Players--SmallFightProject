@@ -5,10 +5,16 @@ namespace Character.CharacterFSM
     public class StandingIdleState : BehaviorStateInterface
     {
         public StandingIdleState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.StandingIdle, characterRoot) {}
+            base(BehaviorEnumSet.State.StandingIdle, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
         
         public override void Enter()
         {
+            Character.CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.OnGround;
+            
+            Vector3 characterPosition = this.CharacterTransform.position;
+            characterPosition.y = 0;
+            this.CharacterTransform.position = characterPosition;
+            
             CharacterRigidBody.velocity = Vector3.zero;
             
             CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.UpperLayer);
@@ -24,6 +30,9 @@ namespace Character.CharacterFSM
                 case BehaviorEnumSet.Behavior.Punch:
                     StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch);
                     break;
+                case BehaviorEnumSet.Behavior.Kick:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick);
+                    break;
                 case BehaviorEnumSet.Behavior.Crouch:
                     StateManager.ChangeState(BehaviorEnumSet.State.CrouchIdle);
                     break;
@@ -35,6 +44,9 @@ namespace Character.CharacterFSM
                     break;
                 case BehaviorEnumSet.Behavior.Forward:
                     StateManager.ChangeState(BehaviorEnumSet.State.Forward);
+                    break;
+                case BehaviorEnumSet.Behavior.StandingPunchSkill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunchSkill);
                     break;
                 default:
                     break;

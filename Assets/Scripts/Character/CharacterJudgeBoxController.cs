@@ -21,6 +21,11 @@ public class CharacterJudgeBoxController : MonoBehaviour
         
     }
 
+    public AttackBox GetAttackBox(BehaviorEnumSet.AttackName attackName)
+    {
+        return _attackBoxTable[attackName];
+    }
+    
     public void EnableAttackBoxByAttackName(BehaviorEnumSet.AttackName attackName)
     {
         _attackBoxTable[attackName].EnableAttackBox();

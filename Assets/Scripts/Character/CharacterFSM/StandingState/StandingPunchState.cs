@@ -3,23 +3,23 @@ using UnityEngine.Assertions;
 
 namespace Character.CharacterFSM
 {
-    public class StandingPunchState : BehaviorStateInterface
+    public class StandingPunchState : PunchState
     {
         public StandingPunchState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.StandingPunch, characterRoot) {}
+            base(BehaviorEnumSet.State.StandingPunch, characterRoot, BehaviorEnumSet.State.StandingIdle) {}
         
         public override void Enter()
         {
+            base.Enter();
+            CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.LowerLayer);
             CharacterRigidBody.velocity = Vector3.zero;
-            CharacterAnimator.PlayAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer,true);
-            CharacterAnimator.PlayAnimation("StandingIdle", CharacterAnimator.Layer.LowerLayer, true);
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
-                case BehaviorEnumSet.Behavior.Punch: 
+                case BehaviorEnumSet.Behavior.Punch:
                     // StateManager.ChangeState(BehaviorEnumSet.State.Punch);
                     break;
                 case BehaviorEnumSet.Behavior.Jump:
@@ -31,8 +31,7 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
-            if(CharacterAnimator.IsEndCurrentAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
+            base.UpdateState();
         }
 
         public override void Quit()

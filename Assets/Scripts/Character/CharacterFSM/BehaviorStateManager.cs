@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Character.CharacterFSM;
+using Character.CharacterFSM.SkillState;
 using UnityEngine;
 
 public class BehaviorStateManager : MonoBehaviour
@@ -23,19 +24,25 @@ public class BehaviorStateManager : MonoBehaviour
         = new Dictionary<BehaviorEnumSet.State, BehaviorStateInterface>();
 
     private BehaviorStateInterface _currentState;
-
+    
     private void Start()
     {
         GameObject rootCharacter = this.transform.root.gameObject;
         _behaviorStateSet.Add(BehaviorEnumSet.State.StandingHit, new StandingHitState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.StandingIdle, new StandingIdleState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.StandingPunch, new StandingPunchState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.StandingKick, new StandingKickState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.Forward, new WalkingForwardState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.Backward, new WalkingBackwardState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.Jump, new JumpState(rootCharacter));
-        _behaviorStateSet.Add(BehaviorEnumSet.State.InAirIdle, new InAirIdleState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.InAirIdle, new AiringState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.Land, new LandState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.CrouchIdle, new CrouchIdleState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.CrouchPunch, new CrouchPunchState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.CrouchKick, new CrouchKickState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.AiringPunch, new AiringPunchState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.AiringKick, new AiringKickState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.StandingPunchSkill, new StandingPunchSkill(rootCharacter));
         
         
         _currentState = _behaviorStateSet[BehaviorEnumSet.State.StandingIdle];
@@ -57,6 +64,11 @@ public class BehaviorStateManager : MonoBehaviour
         _currentState.Quit();
         _currentState = _behaviorStateSet[nextState];
         _currentState.Enter();
+    }
+
+    public int GetAttackLevel(BehaviorEnumSet.State state)
+    {
+        return _behaviorStateSet[state].AttackLevel;
     }
     
     // Update is called once per frame

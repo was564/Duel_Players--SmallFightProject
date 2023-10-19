@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Character.CharacterFSM
 {
     public class CrouchIdleState : BehaviorStateInterface
     {
-        public CrouchIdleState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.CrouchIdle, characterRoot) {}
+        public CrouchIdleState(GameObject characterRoot) 
+            : base(BehaviorEnumSet.State.CrouchIdle, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
 
         private float _startingTime;
         private bool _isApplyFinalPosition;
@@ -13,7 +14,13 @@ namespace Character.CharacterFSM
         public override void Enter()
         {
             _startingTime = Time.time;
-            _isApplyFinalPosition = false;
+            if (Character.CharacterPositionState == PassiveStateEnumSet.CharacterPositionState.Crouch) 
+                _isApplyFinalPosition = true;
+            else
+            {
+                _isApplyFinalPosition = false;
+                Character.CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.Crouch;
+            }
                 
             CharacterRigidBody.velocity = Vector3.zero;
             CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.UpperLayer);
@@ -27,10 +34,11 @@ namespace Character.CharacterFSM
                 case BehaviorEnumSet.Behavior.Stand:
                     StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
                     break;
-                case BehaviorEnumSet.Behavior.Jump:
-                    StateManager.ChangeState(BehaviorEnumSet.State.Jump);
-                    break;
                 case BehaviorEnumSet.Behavior.Punch:
+                    StateManager.ChangeState(BehaviorEnumSet.State.CrouchPunch);
+                    break;
+                case BehaviorEnumSet.Behavior.Kick:
+                    StateManager.ChangeState(BehaviorEnumSet.State.CrouchKick);
                     break;
                 default:
                     break;
@@ -59,7 +67,7 @@ namespace Character.CharacterFSM
         public override void Quit()
         {
             Vector3 characterPosition = this.CharacterTransform.position;
-            characterPosition.y = 0;
+            characterPosition.y = -0.4f;
             this.CharacterTransform.position = characterPosition;
         }
     }

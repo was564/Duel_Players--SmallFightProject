@@ -5,13 +5,15 @@ namespace Character.CharacterFSM
     public class JumpState : BehaviorStateInterface
     {
         public JumpState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.Jump, characterRoot) {}
+            base(BehaviorEnumSet.State.Jump, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
 
         public override void Enter()
         {
             CharacterRigidBody.useGravity = true;
             CharacterRigidBody.velocity += (Vector3.up * 3.5f);
-            Character.InAir = true;
+
+            Character.CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.InAir;
+            
             CharacterAnimator.PlayAnimation("Jump", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimation("Jump", CharacterAnimator.Layer.LowerLayer);
         }
