@@ -11,7 +11,7 @@ public class CommandProcessor : MonoBehaviour
     // 참고 : https://codingcoding.tistory.com/206
 
     public float SkillInputAcknowledgeTime = 1.0f;
-    public float MoveInputAcknowledgeTime = 0.3f;
+    public float MoveInputAcknowledgeTime = 0.5f;
     // Queue -> LinkedList (중간에 값을 알지 못함)
     private Queue<BehaviorEnumSet.Button> _inputQueue = new Queue<BehaviorEnumSet.Button>();
 

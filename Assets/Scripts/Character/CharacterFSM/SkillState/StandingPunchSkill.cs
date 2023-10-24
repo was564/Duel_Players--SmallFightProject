@@ -30,9 +30,23 @@ namespace Character.CharacterFSM.SkillState
         public override List<PassiveStateEnumSet.CharacterPositionState> AvailableCommandPositionCondition { get; protected set; }
             = new List<PassiveStateEnumSet.CharacterPositionState>();
 
+        private float _startingTime;
+        private float _moveSpeed = 1.0f;
+        private Vector3 _moveVelocity;
+        
         public override void Enter()
         {
+            _startingTime = Time.time;
             Character.CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.OnGround;
+            Vector3 characterPosition = this.CharacterTransform.position;
+            characterPosition.y = 0.0f;
+            this.CharacterTransform.position = characterPosition;
+                
+            _moveVelocity = (CharacterTransform.transform.forward.x > 0.0f)
+                ? (Vector3.right * _moveSpeed)
+                : (Vector3.left *_moveSpeed);
+            CharacterRigidBody.velocity = _moveVelocity;
+            
             CharacterAnimator.PlayAnimation("StandingPunchSkill", CharacterAnimator.Layer.UpperLayer,true);
             CharacterAnimator.PlayAnimation("StandingPunchSkill", CharacterAnimator.Layer.LowerLayer,true);
         }
@@ -48,6 +62,10 @@ namespace Character.CharacterFSM.SkillState
 
         public override void UpdateState()
         {
+            if (Time.time - _startingTime <= 0.4f)
+                CharacterRigidBody.velocity = _moveVelocity;
+            
+            
             if(CharacterAnimator.IsEndCurrentAnimation("StandingPunchSkill", CharacterAnimator.Layer.UpperLayer))
                 StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
         }
