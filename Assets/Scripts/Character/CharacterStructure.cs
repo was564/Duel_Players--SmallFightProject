@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Character;
 using Character.CharacterFSM;
 using Character.CharacterPassiveState;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class CharacterStructure : MonoBehaviour
     private CharacterInputManager _inputManager;
     
     private CommandProcessor _commandProcessor;
-
+    
     private BehaviorStateManager _behaviorStateManager;
 
     private PassiveStateManager _passiveStateManager;
@@ -70,6 +71,8 @@ public class CharacterStructure : MonoBehaviour
         while (!_inputManager.isEmptyInputQueue())
         {
             BehaviorEnumSet.Button input = _inputManager.DequeueInputQueue();
+            _commandProcessor.EnqueueInput(input);
+            
             // _commandProcessor.JudgeCommand();
 
             BehaviorEnumSet.Behavior nextBehavior = BehaviorEnumSet.Behavior.Null;
@@ -79,26 +82,22 @@ public class CharacterStructure : MonoBehaviour
                     nextBehavior = BehaviorEnumSet.Behavior.Stand;
                     break;
                 case BehaviorEnumSet.Button.Crouch:
-                    _commandProcessor.EnqueueInput(input, Time.time);
                     nextBehavior = BehaviorEnumSet.Behavior.Crouch;
                     break;
                 case BehaviorEnumSet.Button.Jump:
                     nextBehavior = BehaviorEnumSet.Behavior.Jump;
                     break;
                 case BehaviorEnumSet.Button.Forward:
-                    _commandProcessor.EnqueueInput(input, Time.time);
                     nextBehavior = BehaviorEnumSet.Behavior.Forward;
                     break;
                 case BehaviorEnumSet.Button.Backward:
-                    _commandProcessor.EnqueueInput(input, Time.time);
                     nextBehavior = BehaviorEnumSet.Behavior.Backward;
                     break;
                 case BehaviorEnumSet.Button.Stop:
                     nextBehavior = BehaviorEnumSet.Behavior.Stop;
                     break;
                 case BehaviorEnumSet.Button.Punch:
-                    _commandProcessor.EnqueueInput(input, Time.time);
-                    nextBehavior = JudgeAttackNameOnlyPunch();
+                    nextBehavior = BehaviorEnumSet.Behavior.Punch;
                     // animator는 FSM을 통해 움직이게 하기 (여기는 FSM 구현하기)
                     // _animator.animateByAttackNameInBehavior(attackName);
                     break;
@@ -109,7 +108,11 @@ public class CharacterStructure : MonoBehaviour
                     Debug.Log("No Input Bug");
                     break;
             }
+            BehaviorEnumSet.Behavior commandBehavior 
+                = _commandProcessor.JudgeCommand(nextBehavior, CharacterPositionState);
+            nextBehavior = (commandBehavior == BehaviorEnumSet.Behavior.Null) ? nextBehavior : commandBehavior;
             _behaviorStateManager.HandleInput(nextBehavior);
+            Debug.Log(nextBehavior);
         }
         // Debug.Log(inputCount);
     }

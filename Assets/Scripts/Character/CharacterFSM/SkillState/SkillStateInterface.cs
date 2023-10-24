@@ -14,5 +14,9 @@ public abstract class SkillStateInterface : BehaviorStateInterface
 
     protected CommandProcessor CommandManager;
     
-    public abstract List<BehaviorEnumSet.Button> Command { get; protected set; }
+    public abstract List<BehaviorEnumSet.InputSet> MoveCommand { get; protected set; }
+    
+    public abstract BehaviorEnumSet.Behavior AttackTrigger { get; protected set; }
+    
+    public abstract List<PassiveStateEnumSet.CharacterPositionState> AvailableCommandPositionCondition { get; protected set; }
 }

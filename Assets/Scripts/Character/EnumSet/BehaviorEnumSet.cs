@@ -1,16 +1,16 @@
 ﻿public class BehaviorEnumSet
 {
-    public enum Button
+    public enum Button : int
     {
         Null = -1,
-        Punch,
-        Kick,
         Forward,
         Backward,
         Stop,
         Jump,
         Stand,
         Crouch,
+        Punch,
+        Kick,
         Guard,
         Assist,
         Size
@@ -34,6 +34,7 @@
         AiringPunch,
         AiringKick,
         StandingPunchSkill,
+        DashOnGround,
         
         Size
     }
@@ -58,15 +59,30 @@
     public enum Behavior
     {
         Null = -1,
-        Punch,
-        StandingPunchSkill,
-        Kick,
         Forward,
         Backward,
         Stop,
         Jump,
         Crouch,
         Stand,
+        StandingPunchSkill,
+        Dash,
+        Punch,
+        Kick,
+        Size
+    }
+    
+    public enum InputSet
+    {
+        Idle = 0,
+        Backward = 1,
+        Forward = 2,
+        Down = 3,
+        BackwardDown = 4,
+        ForwardDown = 5,
+        Up = 6,
+        BackwardUp = 7,
+        ForwardUp = 8,
         
         Size
     }

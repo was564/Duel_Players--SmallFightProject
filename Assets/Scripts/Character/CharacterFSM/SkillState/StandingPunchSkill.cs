@@ -8,19 +8,31 @@ namespace Character.CharacterFSM.SkillState
         public StandingPunchSkill(GameObject characterRoot)
             : base(BehaviorEnumSet.State.StandingPunchSkill, characterRoot, BehaviorEnumSet.AttackLevel.Technique)
         {
-            Command = new List<BehaviorEnumSet.Button>()
+            MoveCommand = new List<BehaviorEnumSet.InputSet>()
             {
-                BehaviorEnumSet.Button.Crouch, 
-                BehaviorEnumSet.Button.Forward, 
-                BehaviorEnumSet.Button.Punch
+                BehaviorEnumSet.InputSet.Down,
+                BehaviorEnumSet.InputSet.Forward
             };
-            CommandManager.AddCommand(Command, BehaviorEnumSet.Behavior.StandingPunchSkill);
+            AttackTrigger = BehaviorEnumSet.Behavior.Punch;
+            AvailableCommandPositionCondition.Add(PassiveStateEnumSet.CharacterPositionState.Crouch);
+            AvailableCommandPositionCondition.Add(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            CommandManager.AddCommand(
+                MoveCommand, 
+                AttackTrigger, 
+                AvailableCommandPositionCondition,
+                BehaviorEnumSet.Behavior.StandingPunchSkill);
+            test++;
         }
 
-        public override List<BehaviorEnumSet.Button> Command { get; protected set; }
-        
+        public int test = 0;
+        public override List<BehaviorEnumSet.InputSet> MoveCommand { get; protected set; }
+        public override BehaviorEnumSet.Behavior AttackTrigger { get; protected set; }
+        public override List<PassiveStateEnumSet.CharacterPositionState> AvailableCommandPositionCondition { get; protected set; }
+            = new List<PassiveStateEnumSet.CharacterPositionState>();
+
         public override void Enter()
         {
+            Character.CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.OnGround;
             CharacterAnimator.PlayAnimation("StandingPunchSkill", CharacterAnimator.Layer.UpperLayer,true);
             CharacterAnimator.PlayAnimation("StandingPunchSkill", CharacterAnimator.Layer.LowerLayer,true);
         }
