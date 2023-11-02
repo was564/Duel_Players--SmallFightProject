@@ -24,6 +24,10 @@ public class CharacterStructure : MonoBehaviour
     public int Hp { get; private set; } = 100;
 
     public bool IsHitContinuous { get; set; } = false;
+
+    public bool IsAcceptArtificialInput = false;
+
+    public List<BehaviorEnumSet.Behavior> ArtificialBehaviors = new List<BehaviorEnumSet.Behavior>();
     
     public void ActivatePassiveState(PassiveStateInterface state)
     {
@@ -71,9 +75,8 @@ public class CharacterStructure : MonoBehaviour
         while (!_inputManager.isEmptyInputQueue())
         {
             BehaviorEnumSet.Button input = _inputManager.DequeueInputQueue();
+            // 나중에 삭제해도 되는 코드
             _commandProcessor.EnqueueInput(input);
-            
-            // _commandProcessor.JudgeCommand();
 
             BehaviorEnumSet.Behavior nextBehavior = BehaviorEnumSet.Behavior.Null;
             switch (input)
@@ -98,11 +101,12 @@ public class CharacterStructure : MonoBehaviour
                     break;
                 case BehaviorEnumSet.Button.Punch:
                     nextBehavior = BehaviorEnumSet.Behavior.Punch;
-                    // animator는 FSM을 통해 움직이게 하기 (여기는 FSM 구현하기)
-                    // _animator.animateByAttackNameInBehavior(attackName);
                     break;
                 case BehaviorEnumSet.Button.Kick:
                     nextBehavior = BehaviorEnumSet.Behavior.Kick;
+                    break;
+                case BehaviorEnumSet.Button.Guard:
+                    nextBehavior = BehaviorEnumSet.Behavior.Guard;
                     break;
                 default:
                     Debug.Log("No Input Bug");
@@ -112,19 +116,15 @@ public class CharacterStructure : MonoBehaviour
                 = _commandProcessor.JudgeCommand(nextBehavior, CharacterPositionState);
             nextBehavior = (commandBehavior == BehaviorEnumSet.Behavior.Null) ? nextBehavior : commandBehavior;
             _behaviorStateManager.HandleInput(nextBehavior);
-            Debug.Log(nextBehavior);
         }
         // Debug.Log(inputCount);
+        if (IsAcceptArtificialInput)
+            foreach (var behavior in ArtificialBehaviors)
+            {
+                _behaviorStateManager.HandleInput(behavior);
+            }
     }
     
-    // 해당 메소드는 차후 CommandProcessor로 옮길 예정
-    private BehaviorEnumSet.Behavior JudgeAttackNameOnlyPunch()
-    {
-        return BehaviorEnumSet.Behavior.Punch;
-
-        //return _commandProcessor.JudgeCommand();
-    }
-
     public void DecreaseHp(int damage)
     {
         Hp -= damage;

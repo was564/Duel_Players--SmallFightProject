@@ -40,6 +40,9 @@ namespace Character.CharacterFSM
                 case BehaviorEnumSet.Behavior.Kick:
                     StateManager.ChangeState(BehaviorEnumSet.State.CrouchKick);
                     break;
+                case BehaviorEnumSet.Behavior.Guard:
+                    StateManager.ChangeState(BehaviorEnumSet.State.CrouchGuard);
+                    break;
                 default:
                     break;
             }

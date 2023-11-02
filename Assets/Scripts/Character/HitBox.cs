@@ -26,10 +26,13 @@ public class HitBox : MonoBehaviour
         if (!col.tag.Equals(this.tag))
         {
             AttackBox attackInfo = col.GetComponent<AttackBox>();
-            
+
+            BehaviorEnumSet.State currentState = _stateManager.CurrentState.StateName;
+            if (currentState == BehaviorEnumSet.State.CrouchGuard ||
+                currentState == BehaviorEnumSet.State.StandingGuard)
+                return;
             _character.DecreaseHp(attackInfo.Damage);
             _stateManager.ChangeState(BehaviorEnumSet.State.StandingHit);
-            //_animator.HitByAttack();
         }
     }
 }

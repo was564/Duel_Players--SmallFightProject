@@ -28,7 +28,6 @@ public abstract class BehaviorStateInterface
     protected Rigidbody CharacterRigidBody;
     protected BehaviorStateManager StateManager;
     protected CharacterJudgeBoxController CharacterJudgeBoxController;
-    protected ComboManager ComboManager;
 
     // AttackLevel은 레벨이 낮은 기술에서 같거나 높은 기술로 연계가 되며 반대는 연계를 못하도록 한다.
     public int AttackLevel { get; protected set; }

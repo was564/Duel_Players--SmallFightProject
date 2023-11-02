@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Character.CharacterFSM.SkillState
 {
-    public class StandingPunchSkill : SkillStateInterface
+    public class StandingPunchSkillState : SkillStateInterface
     {
-        public StandingPunchSkill(GameObject characterRoot)
+        public StandingPunchSkillState(GameObject characterRoot)
             : base(BehaviorEnumSet.State.StandingPunchSkill, characterRoot, BehaviorEnumSet.AttackLevel.Technique)
         {
             MoveCommand = new List<BehaviorEnumSet.InputSet>()
@@ -21,10 +21,8 @@ namespace Character.CharacterFSM.SkillState
                 AttackTrigger, 
                 AvailableCommandPositionCondition,
                 BehaviorEnumSet.Behavior.StandingPunchSkill);
-            test++;
         }
 
-        public int test = 0;
         public override List<BehaviorEnumSet.InputSet> MoveCommand { get; protected set; }
         public override BehaviorEnumSet.Behavior AttackTrigger { get; protected set; }
         public override List<PassiveStateEnumSet.CharacterPositionState> AvailableCommandPositionCondition { get; protected set; }

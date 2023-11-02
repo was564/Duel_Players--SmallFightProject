@@ -23,8 +23,8 @@ public class BehaviorStateManager : MonoBehaviour
     // Reference: https://prographers.com/blog/list-vs-dictionary-performance
     private Dictionary<BehaviorEnumSet.State, BehaviorStateInterface> _behaviorStateSet 
         = new Dictionary<BehaviorEnumSet.State, BehaviorStateInterface>();
-
-    private BehaviorStateInterface _currentState;
+    
+    public BehaviorStateInterface CurrentState { get; private set; }
 
     private ComboManager _comboManager;
     
@@ -47,29 +47,31 @@ public class BehaviorStateManager : MonoBehaviour
         _behaviorStateSet.Add(BehaviorEnumSet.State.CrouchKick, new CrouchKickState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.AiringPunch, new AiringPunchState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.AiringKick, new AiringKickState(rootCharacter));
-        _behaviorStateSet.Add(BehaviorEnumSet.State.StandingPunchSkill, new StandingPunchSkill(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.StandingPunchSkill, new StandingPunchSkillState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.DashOnGround, new DashOnGroundState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.StandingGuard, new StandingGuardState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.CrouchGuard, new StandingGuardState(rootCharacter));
         
-        _currentState = _behaviorStateSet[BehaviorEnumSet.State.StandingIdle];
+        CurrentState = _behaviorStateSet[BehaviorEnumSet.State.StandingIdle];
         //_currentState.Enter();
     }
 
     public void HandleInput(BehaviorEnumSet.Behavior behavior)
     {
-        _comboManager.TryActivateSkillState(behavior);
-        _currentState.HandleInput(behavior);
+        if(!_comboManager.TryActivateSkillState(behavior))
+            CurrentState.HandleInput(behavior);
     }
     
     public void UpdateState()
     {
-        _currentState.UpdateState();
+        CurrentState.UpdateState();
     }
 
     public void ChangeState(BehaviorEnumSet.State nextState)
     {
-        _currentState.Quit();
-        _currentState = _behaviorStateSet[nextState];
-        _currentState.Enter();
+        CurrentState.Quit();
+        CurrentState = _behaviorStateSet[nextState];
+        CurrentState.Enter();
     }
 
     public int GetAttackLevel(BehaviorEnumSet.State state)

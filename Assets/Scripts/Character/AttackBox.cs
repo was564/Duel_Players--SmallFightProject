@@ -5,10 +5,10 @@ public class AttackBox : MonoBehaviour
     private CharacterJudgeBoxController _myCharacter;
     private BoxCollider _attackBoxCollider;
     
-    [SerializeField]
-    private BehaviorEnumSet.AttackName AttackNameForUnique;
+    [SerializeField] private BehaviorEnumSet.AttackName AttackNameForUnique;
 
-    [SerializeField] public int Damage { get; private set; } = 5;
+    public int Damage { get; private set; } = 5;
+    
 
     // Start is called before the first frame update
     void Start()

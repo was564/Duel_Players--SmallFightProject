@@ -35,6 +35,9 @@
         AiringKick,
         StandingPunchSkill,
         DashOnGround,
+        StandingGuard,
+        CrouchGuard,
+        AirGuard,
         
         Size
     }
@@ -65,6 +68,7 @@
         Jump,
         Crouch,
         Stand,
+        Guard,
         StandingPunchSkill,
         Dash,
         Punch,

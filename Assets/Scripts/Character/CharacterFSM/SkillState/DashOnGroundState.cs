@@ -5,9 +5,7 @@ namespace Character.CharacterFSM.SkillState
 {
     public class DashOnGroundState : SkillStateInterface
     {
-        private float _dashVelocity = 4.0f;
-
-        private Vector3 _finalVelocity;
+        
         
         public DashOnGroundState(GameObject characterRoot)
             : base(BehaviorEnumSet.State.StandingPunchSkill, characterRoot, BehaviorEnumSet.AttackLevel.Technique)
@@ -31,12 +29,12 @@ namespace Character.CharacterFSM.SkillState
         public override BehaviorEnumSet.Behavior AttackTrigger { get; protected set; }
 
         public override List<PassiveStateEnumSet.CharacterPositionState> AvailableCommandPositionCondition
-        {
-            get;
-            protected set;
-        }
-            = new List<PassiveStateEnumSet.CharacterPositionState>();
+            { get; protected set; } = new List<PassiveStateEnumSet.CharacterPositionState>();
 
+        private float _dashVelocity = 4.0f;
+
+        private Vector3 _finalVelocity;
+        
         public override void Enter()
         {
             _finalVelocity = (CharacterTransform.transform.forward.x > 0.0f)

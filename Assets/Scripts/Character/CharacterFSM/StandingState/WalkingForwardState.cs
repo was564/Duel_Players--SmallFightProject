@@ -43,6 +43,9 @@ namespace Character.CharacterFSM
                 case BehaviorEnumSet.Behavior.Backward:
                     StateManager.ChangeState(BehaviorEnumSet.State.Backward);
                     break;
+                case BehaviorEnumSet.Behavior.Guard:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingGuard);
+                    break;
                 default:
                     break;
             }

@@ -12,7 +12,7 @@ public class CommandProcessor : MonoBehaviour
 
     public float SkillInputAcknowledgeTime = 1.0f;
     public float MoveInputAcknowledgeTime = 0.5f;
-    // Queue -> LinkedList (중간에 값을 알지 못함)
+    
     private Queue<BehaviorEnumSet.Button> _inputQueue = new Queue<BehaviorEnumSet.Button>();
 
     private HashSet<CommandStructure> _unAvailableCommandSet = new HashSet<CommandStructure>();
@@ -20,16 +20,6 @@ public class CommandProcessor : MonoBehaviour
 
     private List<CommandStructure> _commandForMovingState = new List<CommandStructure>();
     
-    // Start is called before the first frame update
-    // queue parallel 가능??
-    // 예상 : peek 노드가 바뀔 수 있음 (어떻게 구현했는지 따라) (의도에서는 문제가 안됨)
-    // 궁금한 점 : Allocation할 때 운영체제에서는 스레드락을 거는가?
-    // 보통 그럴 일은 없다고 함
-    void Start()
-    { 
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -63,12 +53,6 @@ public class CommandProcessor : MonoBehaviour
             if(command.Depth >= command.Command.Count)
             {
                 _availableCommandSet.Add(command);
-                /*
-                if (result == null || result.InputStartingTime > command.InputStartingTime)
-                {
-                    result = command;
-                }
-                */
             }
             else if (command.Command[command.Depth].Condition == resultInput)
             {

@@ -33,8 +33,9 @@ namespace Character
             _countStatesCancel[state]++;
         }
 
-        public void TryActivateSkillState(BehaviorEnumSet.Behavior input)
+        public bool TryActivateSkillState(BehaviorEnumSet.Behavior input)
         {
+            bool result = true;
             switch (input)
             {
                 case BehaviorEnumSet.Behavior.StandingPunchSkill:
@@ -43,7 +44,12 @@ namespace Character
                 case BehaviorEnumSet.Behavior.Dash:
                     _stateManager.ChangeState(BehaviorEnumSet.State.DashOnGround);
                     break;
+                default:
+                    result = false;
+                    break;
             }
+
+            return result;
         }
         
         public BehaviorEnumSet.State GetNextStateByInput(BehaviorEnumSet.State currentState, BehaviorEnumSet.Behavior behavior)
