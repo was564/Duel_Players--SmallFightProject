@@ -35,10 +35,8 @@ namespace Character.CharacterFSM.SkillState
         public override void Enter()
         {
             _startingTime = Time.time;
-            Character.CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.OnGround;
-            Vector3 characterPosition = this.CharacterTransform.position;
-            characterPosition.y = 0.0f;
-            this.CharacterTransform.position = characterPosition;
+            
+            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
                 
             _moveVelocity = (CharacterTransform.transform.forward.x > 0.0f)
                 ? (Vector3.right * _moveSpeed)

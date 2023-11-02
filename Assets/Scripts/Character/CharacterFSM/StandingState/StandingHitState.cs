@@ -9,6 +9,8 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
+            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            
             CharacterAnimator.PlayAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer, true);
             CharacterAnimator.PlayAnimation("StandingIdle", CharacterAnimator.Layer.LowerLayer, true);
         }

@@ -11,8 +11,10 @@ namespace Character.CharacterFSM
         public override void Enter()
         {
             base.Enter();
-            CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.LowerLayer);
+            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            
             CharacterRigidBody.velocity = Vector3.zero;
+            CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.LowerLayer);
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)

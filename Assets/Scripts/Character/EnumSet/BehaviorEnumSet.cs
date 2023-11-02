@@ -25,6 +25,8 @@
         Forward,
         Backward,
         StandingHit,
+        CrouchHit,
+        InAirHit,
         Jump,
         InAirIdle,
         Land,

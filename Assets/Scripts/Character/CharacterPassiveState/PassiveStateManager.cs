@@ -37,9 +37,9 @@ public class PassiveStateManager : MonoBehaviour
     // Update is called once per frame
     public void UpdatePassiveState()
     {
-        foreach (var item in _passiveStateSet)
+        foreach (var key in _passiveStateSet.Keys)
         {
-            PassiveStateInterface currentPassiveState = item.Value;
+            PassiveStateInterface currentPassiveState = _passiveStateSet[key];
             if(!currentPassiveState.IsActivate) continue;
             
             currentPassiveState.UpdatePassiveState();

@@ -37,6 +37,8 @@ namespace Character.CharacterFSM.SkillState
         
         public override void Enter()
         {
+            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            
             _finalVelocity = (CharacterTransform.transform.forward.x > 0.0f)
                 ? (Vector3.right * _dashVelocity)
                 : (Vector3.left * _dashVelocity);

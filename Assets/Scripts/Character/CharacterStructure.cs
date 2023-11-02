@@ -1,22 +1,17 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Character;
-using Character.CharacterFSM;
 using Character.CharacterPassiveState;
 using UnityEngine;
 
 public class CharacterStructure : MonoBehaviour
 {
+    private Rigidbody _rigidbody;
+    
     private CharacterInputManager _inputManager;
-    
     private CommandProcessor _commandProcessor;
-    
     private BehaviorStateManager _behaviorStateManager;
-
     private PassiveStateManager _passiveStateManager;
     
-    public float PositionYOffsetForLand { get; private set; } = -0.5f;
+    public float PositionYOffsetForLand { get; private set; } = -0.6f;
 
     public PassiveStateEnumSet.CharacterPositionState CharacterPositionState { get; set; }
         = PassiveStateEnumSet.CharacterPositionState.OnGround;
@@ -36,10 +31,14 @@ public class CharacterStructure : MonoBehaviour
     
     void Start()
     {
+        _rigidbody = this.GetComponent<Rigidbody>();
+        
         _inputManager = this.GetComponent<CharacterInputManager>();
         _commandProcessor = this.GetComponent<CommandProcessor>();
         _behaviorStateManager = this.GetComponent<BehaviorStateManager>();
         _passiveStateManager = this.GetComponent<PassiveStateManager>();
+        
+        ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
     }
     
     // Update is called once per frame
@@ -129,4 +128,42 @@ public class CharacterStructure : MonoBehaviour
     {
         Hp -= damage;
     }
+
+    // this function provide auto setting position and rigidbody
+    public void ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState state)
+    {
+        Vector3 characterPosition = Vector3.zero;
+        switch (state)
+        {
+            case PassiveStateEnumSet.CharacterPositionState.OnGround:
+                _rigidbody.useGravity = false;
+                _rigidbody.constraints =
+                    RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ |
+                    RigidbodyConstraints.FreezeRotation;
+                characterPosition = this.transform.position;
+                characterPosition.y = 0;
+                this.transform.position = characterPosition;
+                
+                CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.OnGround;
+                break;
+            case PassiveStateEnumSet.CharacterPositionState.Crouch:
+                _rigidbody.constraints =
+                    RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ |
+                    RigidbodyConstraints.FreezeRotation;
+                characterPosition = this.transform.position;
+                characterPosition.y = -0.4f;
+                this.transform.position = characterPosition;
+                
+                break;
+            case PassiveStateEnumSet.CharacterPositionState.InAir:
+                _rigidbody.useGravity = true;
+                _rigidbody.constraints =
+                    RigidbodyConstraints.FreezePositionZ |
+                    RigidbodyConstraints.FreezeRotation;
+                
+                CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.InAir;
+                break;
+        }
+    }
+    
 }

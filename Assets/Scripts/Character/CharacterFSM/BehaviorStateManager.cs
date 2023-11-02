@@ -50,7 +50,9 @@ public class BehaviorStateManager : MonoBehaviour
         _behaviorStateSet.Add(BehaviorEnumSet.State.StandingPunchSkill, new StandingPunchSkillState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.DashOnGround, new DashOnGroundState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.StandingGuard, new StandingGuardState(rootCharacter));
-        _behaviorStateSet.Add(BehaviorEnumSet.State.CrouchGuard, new StandingGuardState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.CrouchGuard, new CrouchGuardState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.CrouchHit, new CrouchHitState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.InAirHit, new InAirHitState(rootCharacter));
         
         CurrentState = _behaviorStateSet[BehaviorEnumSet.State.StandingIdle];
         //_currentState.Enter();
@@ -65,6 +67,7 @@ public class BehaviorStateManager : MonoBehaviour
     public void UpdateState()
     {
         CurrentState.UpdateState();
+        Debug.Log(CurrentState);
     }
 
     public void ChangeState(BehaviorEnumSet.State nextState)

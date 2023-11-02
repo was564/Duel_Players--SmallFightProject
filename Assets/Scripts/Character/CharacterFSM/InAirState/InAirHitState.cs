@@ -2,29 +2,23 @@
 
 namespace Character.CharacterFSM
 {
-    public class AiringState : BehaviorStateInterface
+    public class InAirHitState : BehaviorStateInterface
     {
-        public AiringState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.InAirIdle, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
+        public InAirHitState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.InAirHit, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
         
         public override void Enter()
         {
             Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
             
-            CharacterAnimator.PlayAnimationSmoothly("InAirIdle", CharacterAnimator.Layer.UpperLayer);
-            CharacterAnimator.PlayAnimationSmoothly("InAirIdle", CharacterAnimator.Layer.LowerLayer);
+            CharacterAnimator.PlayAnimation("InAirHit", CharacterAnimator.Layer.UpperLayer, true);
+            CharacterAnimator.PlayAnimation("InAirHit", CharacterAnimator.Layer.LowerLayer, true);
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
-                case BehaviorEnumSet.Behavior.Punch:
-                    StateManager.ChangeState(BehaviorEnumSet.State.AiringPunch);
-                    break;
-                case BehaviorEnumSet.Behavior.Kick:
-                    StateManager.ChangeState(BehaviorEnumSet.State.AiringKick);
-                    break;
                 default:
                     break;
             }

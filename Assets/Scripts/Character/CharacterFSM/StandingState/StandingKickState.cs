@@ -9,9 +9,11 @@ namespace Character.CharacterFSM
 
         public override void Enter()
         {
+            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            
+            CharacterRigidBody.velocity = Vector3.zero;
             CharacterAnimator.PlayAnimation("StandingKick", CharacterAnimator.Layer.UpperLayer,true);
             CharacterAnimator.PlayAnimation("StandingKick", CharacterAnimator.Layer.LowerLayer,true);
-            CharacterRigidBody.velocity = Vector3.zero;
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)

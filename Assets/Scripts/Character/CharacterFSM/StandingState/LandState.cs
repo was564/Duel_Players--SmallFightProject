@@ -9,11 +9,9 @@ namespace Character.CharacterFSM
 
         public override void Enter()
         {
-
-            CharacterRigidBody.useGravity = false;
+            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            
             CharacterRigidBody.velocity = Vector3.zero;
-
-            Character.CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.OnGround;
             
             CharacterAnimator.PlayAnimationSmoothly("Land", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimationSmoothly("Land", CharacterAnimator.Layer.LowerLayer);

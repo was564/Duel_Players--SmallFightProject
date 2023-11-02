@@ -13,6 +13,8 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
+            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
+            
             _startingTime = Time.time;
             if (Character.CharacterPositionState == PassiveStateEnumSet.CharacterPositionState.Crouch) 
                 _isApplyFinalPosition = true;

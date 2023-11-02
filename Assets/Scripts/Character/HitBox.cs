@@ -32,7 +32,19 @@ public class HitBox : MonoBehaviour
                 currentState == BehaviorEnumSet.State.StandingGuard)
                 return;
             _character.DecreaseHp(attackInfo.Damage);
-            _stateManager.ChangeState(BehaviorEnumSet.State.StandingHit);
+            switch (_character.CharacterPositionState)
+            {
+                case PassiveStateEnumSet.CharacterPositionState.OnGround:
+                    _stateManager.ChangeState(BehaviorEnumSet.State.StandingHit);
+                    break;
+                case PassiveStateEnumSet.CharacterPositionState.InAir:
+                    _stateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
+                    break;
+                case PassiveStateEnumSet.CharacterPositionState.Crouch:
+                    _stateManager.ChangeState(BehaviorEnumSet.State.CrouchHit);
+                    break;
+            }
+            
         }
     }
 }

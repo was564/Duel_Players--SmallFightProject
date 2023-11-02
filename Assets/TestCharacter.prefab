@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3572505373812874201}
-  - component: {fileID: 676796448199434015}
+  - component: {fileID: 3772407781898953775}
   m_Layer: 8
   m_Name: Collider
   m_TagString: Untagged
@@ -198,8 +198,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8344437400459494420}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &676796448199434015
-BoxCollider:
+--- !u!136 &3772407781898953775
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -216,8 +216,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5, y: 1, z: 0.5}
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1.25
+  m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &8034790696101170765
 GameObject:
@@ -463,6 +465,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1524a15e348694b97332889ee60723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsAcceptArtificialInput: 0
+  ArtificialBehaviors: 
 --- !u!114 &494960072755380870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,7 +554,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 124
   m_CollisionDetection: 0
 --- !u!4 &8344437400459494420 stripped
 Transform:

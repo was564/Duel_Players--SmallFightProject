@@ -2,16 +2,16 @@
 
 namespace Character.CharacterFSM
 {
-    public class CrouchGuardState: GuardState
+    public class CrouchHitState : BehaviorStateInterface
     {
-        public CrouchGuardState(GameObject characterRoot) : 
-            base(characterRoot, BehaviorEnumSet.State.StandingGuard, BehaviorEnumSet.State.CrouchIdle) {}
+        public CrouchHitState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.CrouchHit, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
         
         public override void Enter()
         {
-            base.Enter();
             Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
             
+            CharacterAnimator.PlayAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer, true);
             CharacterAnimator.PlayAnimation("CrouchStop", CharacterAnimator.Layer.LowerLayer, true);
         }
 
@@ -26,7 +26,8 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
-            base.UpdateState();
+            if(CharacterAnimator.IsEndCurrentAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer))
+                StateManager.ChangeState(BehaviorEnumSet.State.CrouchIdle);
         }
 
         public override void Quit()

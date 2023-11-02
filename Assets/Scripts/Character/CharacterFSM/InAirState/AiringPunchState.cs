@@ -9,6 +9,8 @@ namespace Character.CharacterFSM
 
         public override void Enter()
         {
+            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
+            
             CharacterAnimator.PlayAnimation("AiringPunch", CharacterAnimator.Layer.UpperLayer,true);
         }
 

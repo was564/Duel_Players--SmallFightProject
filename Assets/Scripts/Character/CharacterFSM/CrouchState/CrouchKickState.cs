@@ -9,6 +9,8 @@ namespace Character.CharacterFSM
 
         public override void Enter()
         {
+            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
+            
             CharacterAnimator.PlayAnimation("CrouchKick", CharacterAnimator.Layer.LowerLayer,true);
         }
 

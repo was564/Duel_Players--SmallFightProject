@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -129,33 +129,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1519659116}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &87311118
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 87311111}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 120
-  m_CollisionDetection: 0
 --- !u!114 &87311126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,11 +517,6 @@ PrefabInstance:
       propertyPath: InitState
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4106999604829166088, guid: 8058f8aad5a13a54981410233ee3cd50,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 120
-      objectReference: {fileID: 0}
     - target: {fileID: 6651126748836323593, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
       propertyPath: ArtificialInput
@@ -567,17 +535,17 @@ PrefabInstance:
     - target: {fileID: 6651126748836323593, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
       propertyPath: ArtificialBehaviors.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6651126748836323593, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
       propertyPath: ArtificialBehaviors.Array.data[0]
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6651126748836323593, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
       propertyPath: ArtificialBehaviors.Array.data[1]
-      value: 6
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
@@ -981,10 +949,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8344437400459074036, guid: 8058f8aad5a13a54981410233ee3cd50,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 87311118}
     - targetCorrespondingSourceObject: {fileID: 8344437400459074036, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
       insertIndex: -1
