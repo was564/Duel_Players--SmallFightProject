@@ -11,7 +11,7 @@ namespace Character.CharacterFSM
         {
             Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
             
-            CharacterRigidBody.velocity += (Vector3.up * 3.5f);
+            CharacterRigidBody.velocity += (Vector3.up * 8.0f);
             
             CharacterAnimator.PlayAnimation("Jump", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimation("Jump", CharacterAnimator.Layer.LowerLayer);

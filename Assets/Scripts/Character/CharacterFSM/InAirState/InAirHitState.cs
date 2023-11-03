@@ -7,7 +7,7 @@ namespace Character.CharacterFSM
         public InAirHitState(GameObject characterRoot) : 
             base(BehaviorEnumSet.State.InAirHit, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
 
-        private Vector3 _hittedAwayDirection = new Vector3(1.5f, 2.5f, 0);
+        private Vector3 _hittedAwayDirection = new Vector3(1.5f, 5.0f, 0);
         
         public override void Enter()
         {

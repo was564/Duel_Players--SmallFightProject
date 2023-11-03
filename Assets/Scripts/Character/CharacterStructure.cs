@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Character.CharacterPassiveState;
 using UnityEngine;
@@ -56,7 +57,13 @@ public class CharacterStructure : MonoBehaviour
         _passiveStateManager.UpdatePassiveState();
         _behaviorStateManager.UpdateState();
     }
-    
+
+    private void FixedUpdate()
+    {
+        if(_rigidbody.useGravity)
+            _rigidbody.AddForce(0.0f, -10.0f, 0.0f);
+    }
+
     // Switch가 아닌 Command Pattern을 써도 좋으나 필요가 있는가
     // 답 : 런타임에서 Unity의 InputManager의 입력을 바꿀 수 있다면 이미 적용된 사항
     
@@ -132,6 +139,8 @@ public class CharacterStructure : MonoBehaviour
     // this function provide auto setting position and rigidbody
     public void ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState state)
     {
+        if (state == CharacterPositionState) return;
+        
         Vector3 characterPosition = Vector3.zero;
         switch (state)
         {

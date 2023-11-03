@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 // 문제 : 컴퓨터 사양에 따라 프레임 속도가 다를 수 있는데 이를 동기화할 방법 (서버 멀티 관련 문제)
@@ -7,5 +8,8 @@ using UnityEngine;
 // 60프레임으로 할 것임
 public class FrameManager : MonoBehaviour
 {
-    
+    private void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
 }
