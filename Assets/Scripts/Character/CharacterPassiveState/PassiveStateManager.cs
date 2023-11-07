@@ -31,7 +31,8 @@ public class PassiveStateManager : MonoBehaviour
         GameObject characterRoot = this.transform.root.gameObject;
         
         _passiveStateSet.Add(PassiveStateEnumSet.PassiveState.StoppingOnGround, new StoppingOnGroundState(characterRoot));
-        ActivatePassiveState(PassiveStateEnumSet.PassiveState.StoppingOnGround, 200.0f);
+        _passiveStateSet.Add(PassiveStateEnumSet.PassiveState.FrameStopping, new FrameStoppingState(characterRoot));
+        ActivatePassiveState(PassiveStateEnumSet.PassiveState.StoppingOnGround, 300.0f);
     }
 
     // Update is called once per frame
@@ -59,5 +60,14 @@ public class PassiveStateManager : MonoBehaviour
         stateInfo.IsActivate = true;
         stateInfo.RemainTime = maintainTime;
         stateInfo.EnterPassiveState();
+    }
+
+    public void AddRemainTimeForAllState(float addTime)
+    {
+        foreach (var key in _passiveStateSet.Keys)
+        {
+            var value = _passiveStateSet[key];
+            if (value.IsActivate) value.RemainTime += addTime;
+        }
     }
 }

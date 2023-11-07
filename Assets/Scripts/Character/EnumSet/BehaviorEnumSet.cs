@@ -40,7 +40,8 @@
         StandingGuard,
         CrouchGuard,
         AirGuard,
-        
+        FallDown,
+        GetUp,
         Size
     }
 

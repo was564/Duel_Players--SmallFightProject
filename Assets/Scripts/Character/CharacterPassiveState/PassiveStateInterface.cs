@@ -10,8 +10,8 @@ namespace Character.CharacterPassiveState
         }
         
         protected GameObject MyCharacter;
-        public float RemainTime { get; set; }
-        public bool IsActivate { get; set; }
+        public float RemainTime { get; set; } = 0.0f;
+        public bool IsActivate { get; set; } = false;
 
         public abstract void EnterPassiveState();
 

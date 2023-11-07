@@ -25,7 +25,7 @@ public class BehaviorStateManager : MonoBehaviour
         = new Dictionary<BehaviorEnumSet.State, BehaviorStateInterface>();
     
     public BehaviorStateInterface CurrentState { get; private set; }
-
+    
     private ComboManager _comboManager;
     
     private void Start()
@@ -53,6 +53,8 @@ public class BehaviorStateManager : MonoBehaviour
         _behaviorStateSet.Add(BehaviorEnumSet.State.CrouchGuard, new CrouchGuardState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.CrouchHit, new CrouchHitState(rootCharacter));
         _behaviorStateSet.Add(BehaviorEnumSet.State.InAirHit, new InAirHitState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.FallDown, new FallDownState(rootCharacter));
+        _behaviorStateSet.Add(BehaviorEnumSet.State.GetUp, new GetUpState(rootCharacter));
         
         CurrentState = _behaviorStateSet[BehaviorEnumSet.State.StandingIdle];
         //_currentState.Enter();
@@ -67,7 +69,7 @@ public class BehaviorStateManager : MonoBehaviour
     public void UpdateState()
     {
         CurrentState.UpdateState();
-        Debug.Log(CurrentState);
+        // Debug.Log(CurrentState);
     }
 
     public void ChangeState(BehaviorEnumSet.State nextState)

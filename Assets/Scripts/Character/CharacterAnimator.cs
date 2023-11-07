@@ -150,5 +150,14 @@ public class CharacterAnimator : MonoBehaviour
 
         _animationWillBeChangedSet.Add(layer);
     }
-    
+
+    public void PauseAnimation()
+    {
+        _animator.speed = 0.0f;
+    }
+
+    public void ResumeAnimation()
+    {
+        _animator.speed = 1.0f;
+    }
 }

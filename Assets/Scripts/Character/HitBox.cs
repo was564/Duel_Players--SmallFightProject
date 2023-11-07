@@ -11,6 +11,8 @@ public class HitBox : MonoBehaviour
     private CharacterStructure _character;
     
     private BoxCollider _hitBox;
+
+    private FrameManager _gameManager;
     
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,7 @@ public class HitBox : MonoBehaviour
         _stateManager = this.transform.root.GetComponent<BehaviorStateManager>();
         _character = this.transform.root.GetComponent<CharacterStructure>();
         _hitBox = this.GetComponent<BoxCollider>();
+        _gameManager = GameObject.FindObjectOfType<FrameManager>();
     }
 
     private void OnTriggerEnter(Collider col)
@@ -30,7 +33,11 @@ public class HitBox : MonoBehaviour
             BehaviorEnumSet.State currentState = _stateManager.CurrentState.StateName;
             if (currentState == BehaviorEnumSet.State.CrouchGuard ||
                 currentState == BehaviorEnumSet.State.StandingGuard)
+            {
+                _gameManager.PauseAllCharacters(0.2f);
                 return;
+            }
+
             _character.DecreaseHp(attackInfo.Damage);
             switch (_character.CharacterPositionState)
             {
@@ -44,7 +51,7 @@ public class HitBox : MonoBehaviour
                     _stateManager.ChangeState(BehaviorEnumSet.State.CrouchHit);
                     break;
             }
-            
+            _gameManager.PauseAllCharacters(0.2f);
         }
     }
 }

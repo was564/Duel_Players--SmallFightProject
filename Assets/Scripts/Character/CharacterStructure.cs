@@ -11,8 +11,11 @@ public class CharacterStructure : MonoBehaviour
     private CommandProcessor _commandProcessor;
     private BehaviorStateManager _behaviorStateManager;
     private PassiveStateManager _passiveStateManager;
+    private CharacterAnimator _characterAnimator;
     
     public float PositionYOffsetForLand { get; private set; } = -0.6f;
+
+    public bool IsPause { get; set; } = false;
 
     public PassiveStateEnumSet.CharacterPositionState CharacterPositionState { get; set; }
         = PassiveStateEnumSet.CharacterPositionState.OnGround;
@@ -25,11 +28,6 @@ public class CharacterStructure : MonoBehaviour
 
     public List<BehaviorEnumSet.Behavior> ArtificialBehaviors = new List<BehaviorEnumSet.Behavior>();
     
-    public void ActivatePassiveState(PassiveStateInterface state)
-    {
-        state.EnterPassiveState();
-    }
-    
     void Start()
     {
         _rigidbody = this.GetComponent<Rigidbody>();
@@ -38,6 +36,7 @@ public class CharacterStructure : MonoBehaviour
         _commandProcessor = this.GetComponent<CommandProcessor>();
         _behaviorStateManager = this.GetComponent<BehaviorStateManager>();
         _passiveStateManager = this.GetComponent<PassiveStateManager>();
+        _characterAnimator = this.GetComponent<CharacterAnimator>();
         
         ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
     }
@@ -55,6 +54,7 @@ public class CharacterStructure : MonoBehaviour
         
         DecideBehaviorByInput();
         _passiveStateManager.UpdatePassiveState();
+        if(IsPause) return;
         _behaviorStateManager.UpdateState();
     }
 
@@ -121,7 +121,7 @@ public class CharacterStructure : MonoBehaviour
             BehaviorEnumSet.Behavior commandBehavior 
                 = _commandProcessor.JudgeCommand(nextBehavior, CharacterPositionState);
             nextBehavior = (commandBehavior == BehaviorEnumSet.Behavior.Null) ? nextBehavior : commandBehavior;
-            _behaviorStateManager.HandleInput(nextBehavior);
+            if(!IsPause) _behaviorStateManager.HandleInput(nextBehavior);
         }
         // Debug.Log(inputCount);
         if (IsAcceptArtificialInput)
@@ -129,6 +129,7 @@ public class CharacterStructure : MonoBehaviour
             {
                 _behaviorStateManager.HandleInput(behavior);
             }
+        //Debug.Log(_rigidbody.velocity);
     }
     
     public void DecreaseHp(int damage)
@@ -137,9 +138,9 @@ public class CharacterStructure : MonoBehaviour
     }
 
     // this function provide auto setting position and rigidbody
-    public void ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState state)
+    public void ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState state, bool force = false)
     {
-        if (state == CharacterPositionState) return;
+        if (state == CharacterPositionState && !force) return;
         
         Vector3 characterPosition = Vector3.zero;
         switch (state)
@@ -152,7 +153,7 @@ public class CharacterStructure : MonoBehaviour
                 characterPosition = this.transform.position;
                 characterPosition.y = 0;
                 this.transform.position = characterPosition;
-                
+
                 CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.OnGround;
                 break;
             case PassiveStateEnumSet.CharacterPositionState.Crouch:
@@ -162,14 +163,14 @@ public class CharacterStructure : MonoBehaviour
                 characterPosition = this.transform.position;
                 characterPosition.y = -0.4f;
                 this.transform.position = characterPosition;
-                
+
                 break;
             case PassiveStateEnumSet.CharacterPositionState.InAir:
                 _rigidbody.useGravity = true;
                 _rigidbody.constraints =
                     RigidbodyConstraints.FreezePositionZ |
                     RigidbodyConstraints.FreezeRotation;
-                
+
                 CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.InAir;
                 break;
         }

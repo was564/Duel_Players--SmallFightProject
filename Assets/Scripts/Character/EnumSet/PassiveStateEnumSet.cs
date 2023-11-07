@@ -13,6 +13,7 @@
     {
         LightWeight,
         StoppingOnGround,
+        FrameStopping,
         
         Size
     }

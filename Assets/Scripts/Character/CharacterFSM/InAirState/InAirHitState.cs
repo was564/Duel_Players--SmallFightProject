@@ -31,7 +31,7 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if (this.CharacterTransform.position.y <= this.Character.PositionYOffsetForLand)
-                StateManager.ChangeState(BehaviorEnumSet.State.Land);
+                StateManager.ChangeState(BehaviorEnumSet.State.FallDown);
         }
 
         public override void Quit()
