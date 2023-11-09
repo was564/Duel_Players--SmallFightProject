@@ -5,8 +5,8 @@ namespace Character.CharacterFSM.SkillState
 {
     public class StandingPunchSkillState : SkillStateInterface
     {
-        public StandingPunchSkillState(GameObject characterRoot)
-            : base(BehaviorEnumSet.State.StandingPunchSkill, characterRoot, BehaviorEnumSet.AttackLevel.Technique)
+        public StandingPunchSkillState(GameObject characterRoot, BehaviorStateSimulator stateManager)
+            : base(BehaviorEnumSet.State.StandingPunchSkill, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Technique)
         {
             MoveCommand = new List<BehaviorEnumSet.InputSet>()
             {

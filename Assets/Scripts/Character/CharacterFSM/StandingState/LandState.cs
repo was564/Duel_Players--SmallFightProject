@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class LandState : BehaviorStateInterface
     {
-        public LandState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.Land, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
+        public LandState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
+            base(BehaviorEnumSet.State.Land, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
 
         public override void Enter()
         {

@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class InAirHitState : BehaviorStateInterface
     {
-        public InAirHitState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.InAirHit, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
+        public InAirHitState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
+            base(BehaviorEnumSet.State.InAirHit, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
 
         private Vector3 _hittedAwayDirection = new Vector3(1.5f, 5.0f, 0);
         

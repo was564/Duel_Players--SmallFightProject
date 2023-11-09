@@ -5,8 +5,8 @@ namespace Character.CharacterFSM
 {
     public class StandingPunchState : PunchState
     {
-        public StandingPunchState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.StandingPunch, characterRoot, BehaviorEnumSet.State.StandingIdle) {}
+        public StandingPunchState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
+            base(BehaviorEnumSet.State.StandingPunch, stateManager, characterRoot, BehaviorEnumSet.State.StandingIdle) {}
         
         public override void Enter()
         {

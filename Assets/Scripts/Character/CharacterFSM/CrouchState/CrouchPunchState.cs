@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class CrouchPunchState : PunchState
     {
-        public CrouchPunchState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.CrouchPunch, characterRoot, BehaviorEnumSet.State.CrouchIdle) {}
+        public CrouchPunchState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
+            base(BehaviorEnumSet.State.CrouchPunch, stateManager, characterRoot, BehaviorEnumSet.State.CrouchIdle) {}
         
         public override void Enter()
         {

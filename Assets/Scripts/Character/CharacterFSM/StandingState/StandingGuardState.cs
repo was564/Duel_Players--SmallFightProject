@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class StandingGuardState: GuardState
     {
-        public StandingGuardState(GameObject characterRoot) : 
-            base(characterRoot, BehaviorEnumSet.State.StandingGuard, BehaviorEnumSet.State.StandingIdle) {}
+        public StandingGuardState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
+            base(characterRoot, stateManager, BehaviorEnumSet.State.StandingGuard, BehaviorEnumSet.State.StandingIdle) {}
         
         public override void Enter()
         {

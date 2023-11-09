@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class GetUpState : BehaviorStateInterface
     {
-        public GetUpState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.GetUp, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
+        public GetUpState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
+            base(BehaviorEnumSet.State.GetUp, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
 
         public override void Enter()
         {

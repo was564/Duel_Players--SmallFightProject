@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using Character;
+using Character.CharacterFSM;
 using UnityEngine;
 
 public abstract class BehaviorStateInterface
 {
     protected BehaviorStateInterface(
         BehaviorEnumSet.State stateName,
+        BehaviorStateSimulator stateManager,
         GameObject characterRoot, 
         BehaviorEnumSet.AttackLevel attackLevel)
     {
@@ -15,7 +17,7 @@ public abstract class BehaviorStateInterface
         this.CharacterTransform = characterRoot.transform;
         this.CharacterAnimator = characterRoot.GetComponent<CharacterAnimator>();
         this.CharacterRigidBody = characterRoot.GetComponent<Rigidbody>();
-        this.StateManager = characterRoot.GetComponent<BehaviorStateManager>();
+        this.StateManager = stateManager;
         this.Character = characterRoot.GetComponent<CharacterStructure>();
         this.CharacterJudgeBoxController = characterRoot.GetComponent<CharacterJudgeBoxController>();
     }
@@ -26,7 +28,7 @@ public abstract class BehaviorStateInterface
     protected CharacterAnimator CharacterAnimator;
     protected Transform CharacterTransform;
     protected Rigidbody CharacterRigidBody;
-    protected BehaviorStateManager StateManager;
+    protected BehaviorStateSimulator StateManager;
     protected CharacterJudgeBoxController CharacterJudgeBoxController;
 
     // AttackLevel은 레벨이 낮은 기술에서 같거나 높은 기술로 연계가 되며 반대는 연계를 못하도록 한다.

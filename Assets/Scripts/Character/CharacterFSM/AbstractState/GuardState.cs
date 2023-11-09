@@ -4,9 +4,9 @@ namespace Character.CharacterFSM
 {
     public abstract class GuardState : BehaviorStateInterface
     {
-        public GuardState(GameObject characterRoot, BehaviorEnumSet.State guardStateName,
+        public GuardState(GameObject characterRoot, BehaviorStateSimulator stateManager, BehaviorEnumSet.State guardStateName,
             BehaviorEnumSet.State nextState) :
-            base(guardStateName, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove)
+            base(guardStateName, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove)
         {
             _nextState = nextState;
         }

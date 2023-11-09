@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
+using Character.CharacterFSM;
 using UnityEngine;
 
 public abstract class SkillStateInterface : BehaviorStateInterface
 {
     public SkillStateInterface(
         BehaviorEnumSet.State stateName, 
+        BehaviorStateSimulator stateManager,
         GameObject characterRoot, 
         BehaviorEnumSet.AttackLevel attackLevel)
-        : base(stateName, characterRoot, attackLevel)
+        : base(stateName, stateManager, characterRoot, attackLevel)
     {
         CommandManager = characterRoot.GetComponent<CommandProcessor>();
     }

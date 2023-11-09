@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class FallDownState : BehaviorStateInterface
     {
-        public FallDownState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.FallDown, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
+        public FallDownState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
+            base(BehaviorEnumSet.State.FallDown, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
 
         private float stateStartingTime;
         [SerializeField]

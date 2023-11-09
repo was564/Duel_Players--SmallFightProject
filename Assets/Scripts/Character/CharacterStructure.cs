@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Character;
 using Character.CharacterPassiveState;
 using UnityEngine;
 
@@ -9,9 +10,11 @@ public class CharacterStructure : MonoBehaviour
     
     private CharacterInputManager _inputManager;
     private CommandProcessor _commandProcessor;
-    private BehaviorStateManager _behaviorStateManager;
     private PassiveStateManager _passiveStateManager;
     private CharacterAnimator _characterAnimator;
+    
+    public BehaviorStateManager StateManager { get; private set; }
+    public ComboManager ComboManagerInstance { get; private set; }
     
     public float PositionYOffsetForLand { get; private set; } = -0.6f;
 
@@ -27,14 +30,18 @@ public class CharacterStructure : MonoBehaviour
     public bool IsAcceptArtificialInput = false;
 
     public List<BehaviorEnumSet.Behavior> ArtificialBehaviors = new List<BehaviorEnumSet.Behavior>();
-    
+
+    private void Awake()
+    {
+        ComboManagerInstance = new ComboManager();
+        StateManager = new BehaviorStateManager(this.gameObject, ComboManagerInstance);
+    }
+
     void Start()
     {
         _rigidbody = this.GetComponent<Rigidbody>();
-        
         _inputManager = this.GetComponent<CharacterInputManager>();
         _commandProcessor = this.GetComponent<CommandProcessor>();
-        _behaviorStateManager = this.GetComponent<BehaviorStateManager>();
         _passiveStateManager = this.GetComponent<PassiveStateManager>();
         _characterAnimator = this.GetComponent<CharacterAnimator>();
         
@@ -55,7 +62,7 @@ public class CharacterStructure : MonoBehaviour
         DecideBehaviorByInput();
         _passiveStateManager.UpdatePassiveState();
         if(IsPause) return;
-        _behaviorStateManager.UpdateState();
+        StateManager.UpdateState();
     }
 
     private void FixedUpdate()
@@ -121,13 +128,13 @@ public class CharacterStructure : MonoBehaviour
             BehaviorEnumSet.Behavior commandBehavior 
                 = _commandProcessor.JudgeCommand(nextBehavior, CharacterPositionState);
             nextBehavior = (commandBehavior == BehaviorEnumSet.Behavior.Null) ? nextBehavior : commandBehavior;
-            if(!IsPause) _behaviorStateManager.HandleInput(nextBehavior);
+            if(!IsPause) StateManager.HandleInput(nextBehavior);
         }
         // Debug.Log(inputCount);
         if (IsAcceptArtificialInput)
             foreach (var behavior in ArtificialBehaviors)
             {
-                _behaviorStateManager.HandleInput(behavior);
+                StateManager.HandleInput(behavior);
             }
         //Debug.Log(_rigidbody.velocity);
     }

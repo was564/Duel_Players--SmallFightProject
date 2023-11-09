@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class JumpState : BehaviorStateInterface
     {
-        public JumpState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.Jump, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
+        public JumpState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
+            base(BehaviorEnumSet.State.Jump, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
 
         public override void Enter()
         {

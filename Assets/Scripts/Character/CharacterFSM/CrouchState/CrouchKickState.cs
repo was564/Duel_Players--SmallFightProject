@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class CrouchKickState : BehaviorStateInterface
     {
-        public CrouchKickState(GameObject characterRoot) 
-            : base(BehaviorEnumSet.State.CrouchKick, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
+        public CrouchKickState(GameObject characterRoot, BehaviorStateSimulator stateManager) 
+            : base(BehaviorEnumSet.State.CrouchKick, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
 
         public override void Enter()
         {

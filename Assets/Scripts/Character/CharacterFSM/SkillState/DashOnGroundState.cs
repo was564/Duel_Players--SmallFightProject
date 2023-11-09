@@ -7,8 +7,8 @@ namespace Character.CharacterFSM.SkillState
     {
         
         
-        public DashOnGroundState(GameObject characterRoot)
-            : base(BehaviorEnumSet.State.StandingPunchSkill, characterRoot, BehaviorEnumSet.AttackLevel.Technique)
+        public DashOnGroundState(GameObject characterRoot, BehaviorStateSimulator stateManager)
+            : base(BehaviorEnumSet.State.StandingPunchSkill, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Technique)
         {
             MoveCommand = new List<BehaviorEnumSet.InputSet>()
             {

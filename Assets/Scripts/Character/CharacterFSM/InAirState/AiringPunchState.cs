@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class AiringPunchState : BehaviorStateInterface
     {
-        public AiringPunchState(GameObject characterRoot) 
-            : base(BehaviorEnumSet.State.AiringPunch, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
+        public AiringPunchState(GameObject characterRoot, BehaviorStateSimulator stateManager) 
+            : base(BehaviorEnumSet.State.AiringPunch, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
 
         public override void Enter()
         {

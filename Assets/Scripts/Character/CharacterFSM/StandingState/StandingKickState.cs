@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class StandingKickState : BehaviorStateInterface
     {
-        public StandingKickState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.StandingKick, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
+        public StandingKickState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
+            base(BehaviorEnumSet.State.StandingKick, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
 
         public override void Enter()
         {

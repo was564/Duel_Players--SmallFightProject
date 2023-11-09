@@ -40,7 +40,6 @@ public class FrameManager : MonoBehaviour
     }
 
     public void PauseAllCharacters(float time)
-    
     {
         foreach (var key in _charactersList.Keys)
         {

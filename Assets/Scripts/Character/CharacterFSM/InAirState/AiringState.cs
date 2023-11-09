@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class AiringState : BehaviorStateInterface
     {
-        public AiringState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.InAirIdle, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
+        public AiringState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
+            base(BehaviorEnumSet.State.InAirIdle, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
         
         public override void Enter()
         {

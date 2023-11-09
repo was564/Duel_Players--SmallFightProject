@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class StandingIdleState : BehaviorStateInterface
     {
-        public StandingIdleState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.StandingIdle, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
+        public StandingIdleState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
+            base(BehaviorEnumSet.State.StandingIdle, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
         
         public override void Enter()
         {

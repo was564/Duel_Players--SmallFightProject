@@ -5,8 +5,8 @@ namespace Character.CharacterFSM
 {
     public abstract class PunchState : BehaviorStateInterface
     {
-        public PunchState(BehaviorEnumSet.State state, GameObject characterRoot, BehaviorEnumSet.State nextState) :
-            base(state, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack)
+        public PunchState(BehaviorEnumSet.State state, BehaviorStateSimulator stateManager, GameObject characterRoot, BehaviorEnumSet.State nextState) :
+            base(state, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack)
         {
             _nextState = nextState;
         }

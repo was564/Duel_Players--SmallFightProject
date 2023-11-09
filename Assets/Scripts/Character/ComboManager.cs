@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Character.CharacterFSM;
 using Unity.VisualScripting;
 
 namespace Character
@@ -13,12 +14,10 @@ namespace Character
 
         public bool IsDoingCombo { get; set; }
 
-        private BehaviorStateManager _stateManager;
+        private BehaviorStateSimulator _stateManager;
         
-        public ComboManager(BehaviorStateManager stateManager)
+        public ComboManager()
         {
-            _stateManager = stateManager;
-            
             _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.Jump, 1);
             _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingPunch, 2);
             _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.CrouchPunch, 2);
@@ -33,16 +32,16 @@ namespace Character
             _countStatesCancel[state]++;
         }
 
-        public bool TryActivateSkillState(BehaviorEnumSet.Behavior input)
+        public bool TryActivateSkillState(BehaviorEnumSet.Behavior input, BehaviorStateSimulator stateManager)
         {
             bool result = true;
             switch (input)
             {
                 case BehaviorEnumSet.Behavior.StandingPunchSkill:
-                    _stateManager.ChangeState(BehaviorEnumSet.State.StandingPunchSkill);
+                    stateManager.ChangeState(BehaviorEnumSet.State.StandingPunchSkill);
                     break;
                 case BehaviorEnumSet.Behavior.Dash:
-                    _stateManager.ChangeState(BehaviorEnumSet.State.DashOnGround);
+                    stateManager.ChangeState(BehaviorEnumSet.State.DashOnGround);
                     break;
                 default:
                     result = false;

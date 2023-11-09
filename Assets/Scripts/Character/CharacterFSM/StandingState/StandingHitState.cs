@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class StandingHitState : BehaviorStateInterface
     {
-        public StandingHitState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.StandingHit, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
+        public StandingHitState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
+            base(BehaviorEnumSet.State.StandingHit, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
         
         public override void Enter()
         {

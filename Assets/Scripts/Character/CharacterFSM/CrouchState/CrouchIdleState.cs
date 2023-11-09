@@ -5,8 +5,8 @@ namespace Character.CharacterFSM
 {
     public class CrouchIdleState : BehaviorStateInterface
     {
-        public CrouchIdleState(GameObject characterRoot) 
-            : base(BehaviorEnumSet.State.CrouchIdle, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
+        public CrouchIdleState(GameObject characterRoot, BehaviorStateSimulator stateManager) 
+            : base(BehaviorEnumSet.State.CrouchIdle, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
 
         private float _startingTime;
         private bool _isApplyFinalPosition;

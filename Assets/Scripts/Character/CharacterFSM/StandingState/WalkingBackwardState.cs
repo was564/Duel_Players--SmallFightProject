@@ -8,8 +8,8 @@ namespace Character.CharacterFSM
 
         private Vector3 _finalVelocity;
         
-        public WalkingBackwardState(GameObject characterRoot) :
-            base(BehaviorEnumSet.State.Backward, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
+        public WalkingBackwardState(GameObject characterRoot, BehaviorStateSimulator stateManager) :
+            base(BehaviorEnumSet.State.Backward, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
         
         public override void Enter()
         {
