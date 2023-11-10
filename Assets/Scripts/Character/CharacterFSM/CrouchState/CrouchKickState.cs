@@ -9,7 +9,7 @@ namespace Character.CharacterFSM
 
         public override void Enter()
         {
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
             
             CharacterAnimator.PlayAnimation("CrouchKick", CharacterAnimator.Layer.LowerLayer,true);
         }
@@ -26,7 +26,7 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("CrouchKick", CharacterAnimator.Layer.LowerLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.CrouchIdle);
+                StateManager.ForceChangeState(BehaviorEnumSet.State.CrouchIdle);
         }
 
         public override void Quit()

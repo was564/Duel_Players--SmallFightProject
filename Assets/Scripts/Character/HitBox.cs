@@ -8,7 +8,7 @@ public class HitBox : MonoBehaviour
     // FSM 매니저로 가게끔 만들기
     //private CharacterAnimator _animator;
     private BehaviorStateManager _stateManager;
-    private CharacterStructure _character;
+    private PlayerCharacter _playerCharacter;
     
     private BoxCollider _hitBox;
 
@@ -20,11 +20,11 @@ public class HitBox : MonoBehaviour
     void Start()
     {
         //_animator = this.GetComponentInParent<CharacterAnimator>();
-        _character = this.transform.root.GetComponent<CharacterStructure>();
+        _playerCharacter = this.transform.root.GetComponent<PlayerCharacter>();
         _hitBox = this.GetComponent<BoxCollider>();
         _gameManager = GameObject.FindObjectOfType<FrameManager>();
         
-        _stateManager = _character.StateManager;
+        _stateManager = _playerCharacter.StateManager;
     }
 
     private void OnTriggerEnter(Collider col)
@@ -41,8 +41,8 @@ public class HitBox : MonoBehaviour
                 return;
             }
 
-            _character.DecreaseHp(attackInfo.Damage);
-            switch (_character.CharacterPositionState)
+            _playerCharacter.DecreaseHp(attackInfo.Damage);
+            switch (_playerCharacter.CharacterPositionState)
             {
                 case PassiveStateEnumSet.CharacterPositionState.OnGround:
                     _stateManager.ChangeState(BehaviorEnumSet.State.StandingHit);

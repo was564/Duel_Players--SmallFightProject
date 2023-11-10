@@ -36,7 +36,7 @@ namespace Character.CharacterFSM.SkillState
         {
             _startingTime = Time.time;
             
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
                 
             _moveVelocity = (CharacterTransform.transform.forward.x > 0.0f)
                 ? (Vector3.right * _moveSpeed)
@@ -63,12 +63,12 @@ namespace Character.CharacterFSM.SkillState
             
             
             if(CharacterAnimator.IsEndCurrentAnimation("StandingPunchSkill", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
+                StateManager.ForceChangeState(BehaviorEnumSet.State.StandingIdle);
         }
 
         public override void Quit()
         {
-            
+            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.Punch);
         }
     }
 }

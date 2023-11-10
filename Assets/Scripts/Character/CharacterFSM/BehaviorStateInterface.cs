@@ -18,13 +18,13 @@ public abstract class BehaviorStateInterface
         this.CharacterAnimator = characterRoot.GetComponent<CharacterAnimator>();
         this.CharacterRigidBody = characterRoot.GetComponent<Rigidbody>();
         this.StateManager = stateManager;
-        this.Character = characterRoot.GetComponent<CharacterStructure>();
+        this.PlayerCharacter = characterRoot.GetComponent<PlayerCharacter>();
         this.CharacterJudgeBoxController = characterRoot.GetComponent<CharacterJudgeBoxController>();
     }
 
     public BehaviorEnumSet.State StateName { get; private set; }
 
-    protected CharacterStructure Character;
+    protected PlayerCharacter PlayerCharacter;
     protected CharacterAnimator CharacterAnimator;
     protected Transform CharacterTransform;
     protected Rigidbody CharacterRigidBody;

@@ -11,7 +11,7 @@ namespace Character.CharacterFSM
         public override void Enter()
         {
             base.Enter();
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
             
             CharacterRigidBody.velocity = Vector3.zero;
             CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.LowerLayer);
@@ -22,9 +22,11 @@ namespace Character.CharacterFSM
             switch (behavior)
             {
                 case BehaviorEnumSet.Behavior.Punch:
-                    // StateManager.ChangeState(BehaviorEnumSet.State.Punch);
                     break;
                 case BehaviorEnumSet.Behavior.Jump:
+                    break;
+                case BehaviorEnumSet.Behavior.StandingPunchSkill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunchSkill);
                     break;
                 default:
                     break;
@@ -38,7 +40,7 @@ namespace Character.CharacterFSM
 
         public override void Quit()
         {
-            
+            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.Punch);
         }
     }
 }

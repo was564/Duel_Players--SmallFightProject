@@ -10,7 +10,7 @@ namespace Character.CharacterFSM
         public override void Enter()
         {
             base.Enter();
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
             
             CharacterAnimator.PlayAnimation("CrouchStop", CharacterAnimator.Layer.LowerLayer, true);
         }

@@ -27,7 +27,7 @@ public class FrameManager : MonoBehaviour
     
     private void Start()
     {
-        CharacterStructure[] characters = GameObject.FindObjectsOfType<CharacterStructure>();
+        PlayerCharacter[] characters = GameObject.FindObjectsOfType<PlayerCharacter>();
         foreach (var character in characters)
         {
             _charactersList.Add(character.gameObject.GetInstanceID(), character.gameObject.GetComponent<PassiveStateManager>());

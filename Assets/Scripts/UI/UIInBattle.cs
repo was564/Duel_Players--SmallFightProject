@@ -46,13 +46,13 @@ public class UIInBattle : MonoBehaviour
         
         if (Vector3.Cross(playerDirection, enemyDirection).y > 0.0f)
         {
-            _leftPlayerHpBar.GetComponent<HpBarUI>().CharacterParameter = _player.GetComponent<CharacterStructure>();
-            _rightPlayerHpBar.GetComponent<HpBarUI>().CharacterParameter = _enemy.GetComponent<CharacterStructure>();
+            _leftPlayerHpBar.GetComponent<HpBarUI>().playerCharacterParameter = _player.GetComponent<PlayerCharacter>();
+            _rightPlayerHpBar.GetComponent<HpBarUI>().playerCharacterParameter = _enemy.GetComponent<PlayerCharacter>();
         }
         else
         {
-            _leftPlayerHpBar.GetComponent<HpBarUI>().CharacterParameter = _enemy.GetComponent<CharacterStructure>();
-            _rightPlayerHpBar.GetComponent<HpBarUI>().CharacterParameter = _player.GetComponent<CharacterStructure>();
+            _leftPlayerHpBar.GetComponent<HpBarUI>().playerCharacterParameter = _enemy.GetComponent<PlayerCharacter>();
+            _rightPlayerHpBar.GetComponent<HpBarUI>().playerCharacterParameter = _player.GetComponent<PlayerCharacter>();
         }
         
         

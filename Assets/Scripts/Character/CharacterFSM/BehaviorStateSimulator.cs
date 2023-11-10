@@ -28,20 +28,26 @@ namespace Character.CharacterFSM
         
         public virtual void ChangeState(BehaviorEnumSet.State nextState)
         {
-            CurrentState = BehaviorStateSet[nextState];
+            BehaviorStateInterface nextStateInfo = BehaviorStateSet[nextState];
+            if(ComboManagerInstance.CheckStateTransition(CurrentState, nextStateInfo))
+                CurrentState = nextStateInfo;
         }
         
         public virtual void UpdateState() { }
 
         public virtual void HandleInput(BehaviorEnumSet.Behavior behavior)
         {
-            if(!ComboManagerInstance.TryActivateSkillState(behavior, this))
-                CurrentState.HandleInput(behavior);
+            CurrentState.HandleInput(behavior);
         }
         
         public int GetAttackLevel(BehaviorEnumSet.State state)
         {
             return BehaviorStateSet[state].AttackLevel;
+        }
+
+        public virtual void ForceChangeState(BehaviorEnumSet.State state)
+        {
+            CurrentState = BehaviorStateSet[state];
         }
         
         private void InitStateSet()

@@ -13,15 +13,15 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
             
             _startingTime = Time.time;
-            if (Character.CharacterPositionState == PassiveStateEnumSet.CharacterPositionState.Crouch) 
+            if (PlayerCharacter.CharacterPositionState == PassiveStateEnumSet.CharacterPositionState.Crouch) 
                 _isApplyFinalPosition = true;
             else
             {
                 _isApplyFinalPosition = false;
-                Character.CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.Crouch;
+                PlayerCharacter.CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.Crouch;
             }
                 
             CharacterRigidBody.velocity = Vector3.zero;

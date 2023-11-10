@@ -9,7 +9,7 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
             
             CharacterRigidBody.velocity = Vector3.zero;
             

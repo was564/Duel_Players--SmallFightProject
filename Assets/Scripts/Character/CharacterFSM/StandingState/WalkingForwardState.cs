@@ -13,7 +13,7 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
             _finalVelocity = (CharacterTransform.transform.forward.x > 0.0f)
                     ? (Vector3.right * _walkingVelocity)
                     : (Vector3.left * _walkingVelocity);
@@ -46,6 +46,12 @@ namespace Character.CharacterFSM
                     break;
                 case BehaviorEnumSet.Behavior.Guard:
                     StateManager.ChangeState(BehaviorEnumSet.State.StandingGuard);
+                    break;
+                case BehaviorEnumSet.Behavior.Dash:
+                    StateManager.ChangeState(BehaviorEnumSet.State.DashOnGround);
+                    break;
+                case BehaviorEnumSet.Behavior.StandingPunchSkill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunchSkill);
                     break;
                 default:
                     break;

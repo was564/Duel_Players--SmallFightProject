@@ -9,7 +9,7 @@ namespace Character.CharacterFSM
 
         public override void Enter()
         {
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
             
             CharacterRigidBody.velocity = Vector3.zero;
             
@@ -29,13 +29,13 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("Land", CharacterAnimator.Layer.LowerLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
+                StateManager.ForceChangeState(BehaviorEnumSet.State.StandingIdle);
             else
             {
                 Vector3 characterPosition = this.CharacterTransform.position;
                 
                 float positionY = Mathf.Lerp(
-                    this.Character.PositionYOffsetForLand, 
+                    this.PlayerCharacter.PositionYOffsetForLand, 
                     0.0f, 
                     CharacterAnimator.GetCurrentAnimationDuration(CharacterAnimator.Layer.LowerLayer));
                 characterPosition.y = positionY;

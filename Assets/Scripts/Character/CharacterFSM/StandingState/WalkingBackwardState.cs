@@ -13,7 +13,7 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
             _finalVelocity = (CharacterTransform.transform.forward.x < 0.0f)
                     ? (Vector3.right * _walkingVelocity)
                     : (Vector3.left * _walkingVelocity);

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Character.CharacterFSM;
+using UnityEngine;
 
 namespace Character.CharacterPassiveState
 {
@@ -10,17 +11,19 @@ namespace Character.CharacterPassiveState
         public FrameStoppingState(GameObject characterRoot) : base(characterRoot)
         {
             _animator = characterRoot.GetComponent<CharacterAnimator>();
-            _chatacter = characterRoot.GetComponent<CharacterStructure>();
+            _chatacter = characterRoot.GetComponent<PlayerCharacter>();
             _rigidbody = characterRoot.GetComponent<Rigidbody>();
 
             _passiveManager = characterRoot.GetComponent<PassiveStateManager>();
         }
-
-        private CharacterAnimator _animator;
-        private CharacterStructure _chatacter;
-        private Rigidbody _rigidbody;
-
+        
         private PassiveStateManager _passiveManager;
+
+        private BehaviorStateSimulator _stateSimulator;
+        
+        private CharacterAnimator _animator;
+        private PlayerCharacter _chatacter;
+        private Rigidbody _rigidbody;
         
         private PassiveStateEnumSet.CharacterPositionState _previousState;
         private Vector3 _previousVelocity; 
@@ -31,7 +34,7 @@ namespace Character.CharacterPassiveState
             _previousState = _chatacter.CharacterPositionState;
             _rigidbody.useGravity = false;
             _rigidbody.constraints = RigidbodyConstraints.FreezePosition;
-            _chatacter.IsPause = true;
+            _chatacter.Stop();
             _animator.PauseAnimation();
         }
 
@@ -44,7 +47,7 @@ namespace Character.CharacterPassiveState
         public override void QuitPassiveState()
         {
             _chatacter.ChangeCharacterPosition(_previousState, true);
-            _chatacter.IsPause = false;
+            _chatacter.Resume();
             _rigidbody.velocity = _previousVelocity;
             _animator.ResumeAnimation();
         }

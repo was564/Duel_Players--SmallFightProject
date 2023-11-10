@@ -10,7 +10,7 @@ public class HpBarUI : MonoBehaviour
     private RectTransform _hpGuage;
     private RectTransform _hpBackBoard;
 
-    public CharacterStructure CharacterParameter { get; set; }
+    public PlayerCharacter playerCharacterParameter { get; set; }
     private RawImage _hpRenderer;
 
     private Color _hpColor;
@@ -29,7 +29,7 @@ public class HpBarUI : MonoBehaviour
         _hpColor = new Color(200, 200, 100, 255);
         _hpRenderer.color = _hpColor;
         
-        _characterHp = CharacterParameter.Hp;
+        _characterHp = playerCharacterParameter.Hp;
         _barWidth = this.GetComponent<RectTransform>().rect.width;
         
         _hpGuage.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _barWidth - 5.0f);
@@ -43,7 +43,7 @@ public class HpBarUI : MonoBehaviour
         if (_characterHp <= 0) SetVisibleHp(false);
         else SetVisibleHp(true); 
         
-        _characterHp = CharacterParameter.Hp;
+        _characterHp = playerCharacterParameter.Hp;
         _hpGuage.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _characterHp * 0.01f * (_barWidth - 5.0f));
         _hpGuage.anchoredPosition = _initHpGuagePosition - Vector2.left * ((100.0f - _characterHp) * 0.01f * (_barWidth - 5.0f) * 0.5f);
     }

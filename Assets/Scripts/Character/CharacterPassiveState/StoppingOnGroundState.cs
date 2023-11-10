@@ -6,11 +6,11 @@ namespace Character.CharacterPassiveState
     {
         public StoppingOnGroundState(GameObject characterRoot) : base(characterRoot)
         {
-            _chatacter = characterRoot.GetComponent<CharacterStructure>();
+            _chatacter = characterRoot.GetComponent<PlayerCharacter>();
             _characterTransform = characterRoot.GetComponent<Rigidbody>();
         }
 
-        private CharacterStructure _chatacter;
+        private PlayerCharacter _chatacter;
         private Rigidbody _characterTransform;
         
         public override void EnterPassiveState()

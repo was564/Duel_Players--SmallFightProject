@@ -9,7 +9,7 @@ namespace Character.CharacterFSM
 
         public override void Enter()
         {
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
             
             CharacterRigidBody.velocity += (Vector3.up * 8.0f);
             
@@ -35,7 +35,7 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("Jump", CharacterAnimator.Layer.LowerLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.InAirIdle);
+                StateManager.ForceChangeState(BehaviorEnumSet.State.InAirIdle);
         }
 
         public override void Quit()

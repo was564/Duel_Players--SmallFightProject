@@ -11,7 +11,7 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
 
             CharacterRigidBody.velocity = _hittedAwayDirection;
             
@@ -30,8 +30,8 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
-            if (this.CharacterTransform.position.y <= this.Character.PositionYOffsetForLand)
-                StateManager.ChangeState(BehaviorEnumSet.State.FallDown);
+            if (this.CharacterTransform.position.y <= this.PlayerCharacter.PositionYOffsetForLand)
+                StateManager.ForceChangeState(BehaviorEnumSet.State.FallDown);
         }
 
         public override void Quit()

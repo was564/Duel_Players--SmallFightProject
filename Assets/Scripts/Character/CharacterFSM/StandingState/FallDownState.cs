@@ -13,7 +13,7 @@ namespace Character.CharacterFSM
         public override void Enter()
         {
             stateStartingTime = 0.0f;
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
              
             CharacterAnimator.PlayAnimation("FallDown", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimation("FallDown", CharacterAnimator.Layer.LowerLayer);
@@ -32,7 +32,7 @@ namespace Character.CharacterFSM
         {
             stateStartingTime += Time.deltaTime;
             if(stateStartingTime >= lyingDownTime)
-                StateManager.ChangeState(BehaviorEnumSet.State.GetUp);
+                StateManager.ForceChangeState(BehaviorEnumSet.State.GetUp);
         }
 
         public override void Quit()

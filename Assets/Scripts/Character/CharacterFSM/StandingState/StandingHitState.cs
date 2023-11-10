@@ -9,7 +9,7 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
             
             CharacterAnimator.PlayAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer, true);
             CharacterAnimator.PlayAnimation("StandingIdle", CharacterAnimator.Layer.LowerLayer, true);
@@ -27,7 +27,7 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
+                StateManager.ForceChangeState(BehaviorEnumSet.State.StandingIdle);
         }
 
         public override void Quit()

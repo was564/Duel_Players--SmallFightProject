@@ -57,7 +57,7 @@ public class CharacterAnimator : MonoBehaviour
         if(_characterRootTransform.forward.x > 0)
             _animator.SetBool("IsRight", false);
         
-        else if(_characterRootTransform.forward.x < 0)
+        else if(_characterRootTransform.forward.x < 0)  
             _animator.SetBool("IsRight", true);
 
         foreach (Layer layer in _animationWillBeChangedSet)

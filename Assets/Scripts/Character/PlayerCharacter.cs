@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
 using Character;
+using Character.CharacterFSM;
 using Character.CharacterPassiveState;
 using UnityEngine;
 
-public class CharacterStructure : MonoBehaviour
+public class PlayerCharacter : MonoBehaviour
 {
+    [SerializeField] public GameObject EnemyObject;
+    
     private Rigidbody _rigidbody;
+    private bool _isLookingRight;
     
     private CharacterInputManager _inputManager;
     private CommandProcessor _commandProcessor;
@@ -14,11 +18,12 @@ public class CharacterStructure : MonoBehaviour
     private CharacterAnimator _characterAnimator;
     
     public BehaviorStateManager StateManager { get; private set; }
+    private BehaviorStateSimulator _stateSimulatorInStoppedFrame;
     public ComboManager ComboManagerInstance { get; private set; }
     
     public float PositionYOffsetForLand { get; private set; } = -0.6f;
 
-    public bool IsPause { get; set; } = false;
+    private bool isPause = false;
 
     public PassiveStateEnumSet.CharacterPositionState CharacterPositionState { get; set; }
         = PassiveStateEnumSet.CharacterPositionState.OnGround;
@@ -35,6 +40,7 @@ public class CharacterStructure : MonoBehaviour
     {
         ComboManagerInstance = new ComboManager();
         StateManager = new BehaviorStateManager(this.gameObject, ComboManagerInstance);
+        _stateSimulatorInStoppedFrame = new BehaviorStateSimulator(this.gameObject, ComboManagerInstance);
     }
 
     void Start()
@@ -61,7 +67,7 @@ public class CharacterStructure : MonoBehaviour
         
         DecideBehaviorByInput();
         _passiveStateManager.UpdatePassiveState();
-        if(IsPause) return;
+        if(isPause) return;
         StateManager.UpdateState();
     }
 
@@ -128,7 +134,8 @@ public class CharacterStructure : MonoBehaviour
             BehaviorEnumSet.Behavior commandBehavior 
                 = _commandProcessor.JudgeCommand(nextBehavior, CharacterPositionState);
             nextBehavior = (commandBehavior == BehaviorEnumSet.Behavior.Null) ? nextBehavior : commandBehavior;
-            if(!IsPause) StateManager.HandleInput(nextBehavior);
+            if (!isPause) StateManager.HandleInput(nextBehavior);
+            else if (isPause) _stateSimulatorInStoppedFrame.HandleInput(nextBehavior);
         }
         // Debug.Log(inputCount);
         if (IsAcceptArtificialInput)
@@ -181,6 +188,28 @@ public class CharacterStructure : MonoBehaviour
                 CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.InAir;
                 break;
         }
+    }
+
+    public void Stop()
+    {
+        isPause = true;
+        if(CharacterPositionState == PassiveStateEnumSet.CharacterPositionState.InAir)
+            _stateSimulatorInStoppedFrame.ForceChangeState(BehaviorEnumSet.State.InAirIdle);
+        else
+            _stateSimulatorInStoppedFrame.ForceChangeState(BehaviorEnumSet.State.StandingIdle);
+    }
+
+    public void Resume()
+    {
+        isPause = false;
+        BehaviorEnumSet.State previousInputState = _stateSimulatorInStoppedFrame.CurrentState.StateName;
+        if(previousInputState != BehaviorEnumSet.State.StandingIdle && previousInputState != BehaviorEnumSet.State.InAirIdle)
+            StateManager.ChangeState(previousInputState);
+    }
+    
+    public void LookAtEnemy()
+    {
+        
     }
     
 }

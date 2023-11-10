@@ -30,7 +30,7 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ChangeState(_nextState);
+                StateManager.ForceChangeState(_nextState);
         }
 
         public override void Quit()

@@ -9,7 +9,7 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
-            Character.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
+            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
             
             CharacterAnimator.PlayAnimationSmoothly("InAirIdle", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimationSmoothly("InAirIdle", CharacterAnimator.Layer.LowerLayer);
@@ -32,8 +32,8 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
-            if (this.CharacterTransform.position.y <= this.Character.PositionYOffsetForLand)
-                StateManager.ChangeState(BehaviorEnumSet.State.Land);
+            if (this.CharacterTransform.position.y <= this.PlayerCharacter.PositionYOffsetForLand)
+                StateManager.ForceChangeState(BehaviorEnumSet.State.Land);
         }
 
         public override void Quit()
