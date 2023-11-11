@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42668b7d79930043ac158655ee384e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pauseTime: 0.15
 --- !u!1 &2922279099386980194
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +206,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4693453709096793357}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e395d87d4269f55478523f06cc0a87ba, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -461,6 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1524a15e348694b97332889ee60723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyObject: {fileID: 0}
   IsAcceptArtificialInput: 0
   ArtificialBehaviors: 
 --- !u!114 &494960072755380870

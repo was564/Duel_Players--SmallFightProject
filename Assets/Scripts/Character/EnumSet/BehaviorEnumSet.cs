@@ -58,6 +58,8 @@
         BasicAttack,
         Technique,
         SpecialMove,
+        
+        Hit,
         Size
     }
 

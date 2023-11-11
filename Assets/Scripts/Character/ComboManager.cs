@@ -48,6 +48,9 @@ namespace Character
                 case BehaviorEnumSet.AttackLevel.Technique:
                     if (nextAttackLevel > BehaviorEnumSet.AttackLevel.SpecialMove) return true;
                     break;
+                case BehaviorEnumSet.AttackLevel.Hit:
+                    if (nextAttackLevel == BehaviorEnumSet.AttackLevel.Hit) return true;
+                    break;
                 default:
                     break;
             }

@@ -5,7 +5,7 @@ namespace Character.CharacterFSM
     public class CrouchHitState : BehaviorStateInterface
     {
         public CrouchHitState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.CrouchHit, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
+            base(BehaviorEnumSet.State.CrouchHit, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Hit) {}
         
         public override void Enter()
         {

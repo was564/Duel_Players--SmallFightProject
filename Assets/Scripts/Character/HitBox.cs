@@ -14,7 +14,7 @@ public class HitBox : MonoBehaviour
 
     private FrameManager _gameManager;
 
-    [SerializeField] private float _pauseTime = 0.15f;
+    [SerializeField] private float _pauseTime = 0.1f;
     
     // Start is called before the first frame update
     void Start()

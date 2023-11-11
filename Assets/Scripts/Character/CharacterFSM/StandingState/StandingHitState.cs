@@ -5,7 +5,7 @@ namespace Character.CharacterFSM
     public class StandingHitState : BehaviorStateInterface
     {
         public StandingHitState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.StandingHit, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
+            base(BehaviorEnumSet.State.StandingHit, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Hit) {}
         
         public override void Enter()
         {
