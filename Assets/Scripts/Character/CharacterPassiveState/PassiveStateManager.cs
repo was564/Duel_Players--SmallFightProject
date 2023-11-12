@@ -62,6 +62,15 @@ public class PassiveStateManager : MonoBehaviour
         stateInfo.EnterPassiveState();
     }
 
+    public void DeActivatePassiveState(PassiveStateEnumSet.PassiveState passiveState)
+    {
+        PassiveStateInterface stateInfo = _passiveStateSet[passiveState];
+        if (!stateInfo.IsActivate) return;
+        stateInfo.IsActivate = false;
+        stateInfo.RemainTime = 0;
+        stateInfo.QuitPassiveState();
+    }
+
     public void AddRemainTimeForAllState(float addTime)
     {
         foreach (var key in _passiveStateSet.Keys)

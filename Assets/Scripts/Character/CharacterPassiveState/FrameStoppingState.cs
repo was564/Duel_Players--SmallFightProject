@@ -26,8 +26,8 @@ namespace Character.CharacterPassiveState
         private Rigidbody _rigidbody;
         
         private PassiveStateEnumSet.CharacterPositionState _previousState;
-        private Vector3 _previousVelocity; 
-        
+        private Vector3 _previousVelocity;
+
         public override void EnterPassiveState()
         {
             _previousVelocity = _rigidbody.velocity;

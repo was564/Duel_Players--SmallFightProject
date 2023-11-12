@@ -5,7 +5,7 @@ using Character.CharacterFSM;
 using Character.CharacterPassiveState;
 using UnityEngine;
 
-public class PlayerCharacter : MonoBehaviour
+public class PlayerCharacter : MonoPublisherInterface
 {
     [SerializeField] public GameObject EnemyObject;
     
@@ -37,6 +37,10 @@ public class PlayerCharacter : MonoBehaviour
     public List<BehaviorEnumSet.Behavior> ArtificialBehaviors = new List<BehaviorEnumSet.Behavior>();
 
     private float _addingGravityMultiple = 1.3f;
+
+    public int PlayerUniqueIndex { get; set; }
+
+    private List<MonoObserverInterface> _observers = new List<MonoObserverInterface>();
     
     private void Awake()
     {
@@ -47,6 +51,7 @@ public class PlayerCharacter : MonoBehaviour
 
     void Start()
     {
+        RegisterObserver(GameObject.FindObjectOfType<GameRoundManager>());
         _rigidbody = this.GetComponent<Rigidbody>();
         _inputManager = this.GetComponent<CharacterInputManager>();
         _commandProcessor = this.GetComponent<CommandProcessor>();
@@ -151,6 +156,7 @@ public class PlayerCharacter : MonoBehaviour
     public void DecreaseHp(int damage)
     {
         Hp -= damage;
+        Notify();
     }
 
     // this function provide auto setting position and rigidbody
@@ -208,10 +214,18 @@ public class PlayerCharacter : MonoBehaviour
         if(previousInputState != BehaviorEnumSet.State.StandingIdle && previousInputState != BehaviorEnumSet.State.InAirIdle)
             StateManager.ChangeState(previousInputState);
     }
+
+    public void ResetHp()
+    {
+        Hp = 100;
+    }
     
     public void LookAtEnemy()
     {
+        float forwardDirection = this.transform.forward.x;
+        float positionDirection = EnemyObject.transform.position.x - this.transform.position.x;
         
+        if(forwardDirection * positionDirection < 0.0f) this.transform.Rotate(Vector3.up, 180.0f);
     }
     
 }

@@ -14,6 +14,8 @@ public class HitBox : MonoBehaviour
 
     private FrameManager _gameManager;
 
+    private Rigidbody _rigidbody;
+
     [SerializeField] private float _pauseTime = 0.1f;
     
     // Start is called before the first frame update
@@ -23,6 +25,7 @@ public class HitBox : MonoBehaviour
         _playerCharacter = this.transform.root.GetComponent<PlayerCharacter>();
         _hitBox = this.GetComponent<BoxCollider>();
         _gameManager = GameObject.FindObjectOfType<FrameManager>();
+        _rigidbody = this.transform.root.GetComponent<Rigidbody>();
         
         _stateManager = _playerCharacter.StateManager;
     }
@@ -37,24 +40,25 @@ public class HitBox : MonoBehaviour
             if (currentState == BehaviorEnumSet.State.CrouchGuard ||
                 currentState == BehaviorEnumSet.State.StandingGuard)
             {
-                _gameManager.PauseAllCharacters(_pauseTime);
+                _gameManager.PauseAllCharactersInTime(_pauseTime);
+                _rigidbody.velocity = this.transform.forward.normalized * (-2.0f);
                 return;
             }
-
-            _playerCharacter.DecreaseHp(attackInfo.Damage);
+            
             switch (_playerCharacter.CharacterPositionState)
             {
                 case PassiveStateEnumSet.CharacterPositionState.OnGround:
-                    _stateManager.ChangeState(BehaviorEnumSet.State.StandingHit);
+                    _stateManager.ForceChangeState(BehaviorEnumSet.State.StandingHit);
                     break;
                 case PassiveStateEnumSet.CharacterPositionState.InAir:
-                    _stateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
+                    _stateManager.ForceChangeState(BehaviorEnumSet.State.InAirHit);
                     break;
                 case PassiveStateEnumSet.CharacterPositionState.Crouch:
-                    _stateManager.ChangeState(BehaviorEnumSet.State.CrouchHit);
+                    _stateManager.ForceChangeState(BehaviorEnumSet.State.CrouchHit);
                     break;
             }
-            _gameManager.PauseAllCharacters(_pauseTime);
+            _playerCharacter.DecreaseHp(attackInfo.Damage);
+            _gameManager.PauseAllCharactersInTime(_pauseTime);
         }
     }
 }

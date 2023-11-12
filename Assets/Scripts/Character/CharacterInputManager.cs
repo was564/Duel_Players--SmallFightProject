@@ -29,11 +29,17 @@ public class CharacterInputManager : MonoBehaviour
         = new Dictionary<Tuple<BehaviorEnumSet.Button, BehaviorEnumSet.Button>, InputAction>();
     
     private Queue<BehaviorEnumSet.Button> _inputQueue = new Queue<BehaviorEnumSet.Button>();
+
+    public bool IsAvailableInput = true;
+
+    public bool NeverUseInput = false;
     
     private void Start()
     {
         if(_inputPackage == null) return;
         _inputInBattle = _inputPackage.FindActionMap("Battle");
+        _inputInBattle.Enable();
+        
         _moveInputAction = _inputInBattle.FindAction("Move");
 
         _inputActions[BehaviorEnumSet.Button.Jump] = _inputInBattle.FindAction("Jump");
@@ -50,6 +56,8 @@ public class CharacterInputManager : MonoBehaviour
     
     private void Update()
     {
+        if(NeverUseInput || !IsAvailableInput) return;
+        
         int previousCommandCount = _inputQueue.Count;
 
         // 입력 우선도는 조작키 > 공격키
@@ -86,7 +94,9 @@ public class CharacterInputManager : MonoBehaviour
     
     private void EnqueueInput(BehaviorEnumSet.Button button, InputAction input)
     {
+        if (!input.WasPressedThisFrame()) return;
         float pressed = input.ReadValue<float>();
+        
         if(pressed > 0.0f) _inputQueue.Enqueue(button);
     }
 

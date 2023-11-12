@@ -30,6 +30,7 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
+            if (PlayerCharacter.Hp <= 0) return;
             stateStartingTime += Time.deltaTime;
             if(stateStartingTime >= lyingDownTime)
                 StateManager.ForceChangeState(BehaviorEnumSet.State.GetUp);

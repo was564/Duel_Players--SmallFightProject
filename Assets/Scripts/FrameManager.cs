@@ -39,12 +39,20 @@ public class FrameManager : MonoBehaviour
         
     }
 
-    public void PauseAllCharacters(float time)
+    public void PauseAllCharactersInTime(float time)
     {
         foreach (var key in _charactersList.Keys)
         {
             _charactersList[key].ActivatePassiveState(PassiveStateEnumSet.PassiveState.FrameStopping, time);
         }
     }
-        
+
+    public void ResumeAllCharacters()
+    {
+        foreach (var key in _charactersList.Keys)
+        {
+            _charactersList[key].DeActivatePassiveState(PassiveStateEnumSet.PassiveState.FrameStopping);
+        }
+    }
+    
 }

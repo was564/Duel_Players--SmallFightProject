@@ -51,7 +51,7 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
-            
+            PlayerCharacter.LookAtEnemy();
         }
 
         public override void Quit()
