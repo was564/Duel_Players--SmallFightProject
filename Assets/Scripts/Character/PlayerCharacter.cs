@@ -24,7 +24,7 @@ public class PlayerCharacter : MonoBehaviour
     public float PositionYOffsetForLand { get; private set; } = -0.6f;
 
     private bool isPause = false;
-
+    
     public PassiveStateEnumSet.CharacterPositionState CharacterPositionState { get; set; }
         = PassiveStateEnumSet.CharacterPositionState.OnGround;
     
@@ -36,6 +36,8 @@ public class PlayerCharacter : MonoBehaviour
 
     public List<BehaviorEnumSet.Behavior> ArtificialBehaviors = new List<BehaviorEnumSet.Behavior>();
 
+    private float _addingGravityMultiple = 1.3f;
+    
     private void Awake()
     {
         ComboManagerInstance = new ComboManager();
@@ -74,7 +76,7 @@ public class PlayerCharacter : MonoBehaviour
     private void FixedUpdate()
     {
         if(_rigidbody.useGravity)
-            _rigidbody.AddForce(0.0f, -10.0f, 0.0f);
+            _rigidbody.AddForce(0.0f, -10.0f * _addingGravityMultiple, 0.0f);
     }
 
     // Switch가 아닌 Command Pattern을 써도 좋으나 필요가 있는가
