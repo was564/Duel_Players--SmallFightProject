@@ -450,6 +450,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputPackage: {fileID: 0}
+  IsAvailableInput: 1
+  NeverUseInput: 0
 --- !u!114 &6651126748836323593
 MonoBehaviour:
   m_ObjectHideFlags: 0

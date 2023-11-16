@@ -6,13 +6,15 @@ namespace Character.CharacterFSM
     {
         public InAirHitState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
             base(BehaviorEnumSet.State.InAirHit, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Hit) {}
-
+        
         private Vector3 _hittedAwayDirection = new Vector3(1.5f, 5.0f, 0);
         
         public override void Enter()
         {
+            
             PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
 
+            _hittedAwayDirection.x *= (CharacterTransform.position - PlayerCharacter.EnemyObject.transform.position).x > 0.0f ? 1.0f : -1.0f;
             CharacterRigidBody.velocity = _hittedAwayDirection;
             
             CharacterAnimator.PlayAnimation("InAirHit", CharacterAnimator.Layer.UpperLayer, true);

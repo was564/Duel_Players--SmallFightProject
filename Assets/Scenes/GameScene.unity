@@ -642,6 +642,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6651126748836323593, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
+      propertyPath: EnemyObject
+      value: 
+      objectReference: {fileID: 87311111}
+    - target: {fileID: 6651126748836323593, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
       propertyPath: ArtificialInput
       value: 8
       objectReference: {fileID: 0}
@@ -878,6 +883,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1429259295 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8344437400459074036, guid: 8058f8aad5a13a54981410233ee3cd50,
+    type: 3}
+  m_PrefabInstance: {fileID: 655423239}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1519659116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -921,6 +932,11 @@ PrefabInstance:
       propertyPath: m_ImplicitTensor
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6651126748836323593, guid: 8058f8aad5a13a54981410233ee3cd50,
+        type: 3}
+      propertyPath: EnemyObject
+      value: 
+      objectReference: {fileID: 1429259295}
     - target: {fileID: 7111760275676953904, guid: 8058f8aad5a13a54981410233ee3cd50,
         type: 3}
       propertyPath: _Input

@@ -10,6 +10,7 @@ namespace Character.CharacterFSM
         public override void Enter()
         {
             PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
+            PlayerCharacter.LookAtEnemy();
             
             CharacterRigidBody.velocity += (Vector3.up * 8.0f);
             

@@ -11,6 +11,7 @@ namespace Character.CharacterFSM
         {
             PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
             
+            this.CharacterAnimator.PlayAnimation("CrouchStop", CharacterAnimator.Layer.LowerLayer, true);
             Vector3 characterPosition = this.CharacterTransform.position;
             characterPosition.y = -0.4f;
             this.CharacterTransform.position = characterPosition;
