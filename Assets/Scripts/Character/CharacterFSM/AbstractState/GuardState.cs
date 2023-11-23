@@ -18,17 +18,21 @@ namespace Character.CharacterFSM
         private Rigidbody _enemyRigidbody;
         private Vector3 _previousFrameVelocity;
         private Vector3 _initBackWardVelocity;
-        private bool isStopped;
-        
+        private bool _isPlayerVelocityStoppedByWall;
+
+        private bool _isPressGuardKeyContinuous;
         
         public override void Enter()
         {
-            isStopped = false;
+            _isPlayerVelocityStoppedByWall = false;
+            _isPressGuardKeyContinuous = true;
             CharacterAnimator.PlayAnimation("Guard", CharacterAnimator.Layer.UpperLayer, true);
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
         {
+            PressGuardKey(behavior);
+            
             switch (behavior)
             {
                 default:
@@ -38,22 +42,29 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
-            if (PlayerCharacter.IsHitContinuous && !isStopped && CharacterRigidBody.velocity.x == 0.0f)
+            if (PlayerCharacter.IsHitContinuous && !_isPlayerVelocityStoppedByWall && CharacterRigidBody.velocity.x == 0.0f)
             {
                 if (_previousFrameVelocity == Vector3.zero)
                     _previousFrameVelocity = _initBackWardVelocity;
                 _enemyRigidbody.velocity = _previousFrameVelocity * (-1.0f);
-                isStopped = true;
+                _isPlayerVelocityStoppedByWall = true;
             }
 
             _previousFrameVelocity = CharacterRigidBody.velocity;
-            if(CharacterAnimator.IsEndCurrentAnimation("Guard", CharacterAnimator.Layer.UpperLayer))
+            
+            if (!_isPressGuardKeyContinuous)
                 StateManager.ChangeState(_nextState);
+            else _isPressGuardKeyContinuous = false;
         }
 
         public override void Quit()
         {
-            
+            return;
+        }
+
+        protected void PressGuardKey(BehaviorEnumSet.Behavior behavior)
+        {
+            if (behavior == BehaviorEnumSet.Behavior.Guard) _isPressGuardKeyContinuous = true;
         }
     }
 }

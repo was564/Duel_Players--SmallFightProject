@@ -12,7 +12,7 @@ public class CharacterJudgeBoxController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _hitBox = this.transform.GetComponentInChildren<HitBox>();
     }
 
     // Update is called once per frame
@@ -39,5 +39,15 @@ public class CharacterJudgeBoxController : MonoBehaviour
     public void BindAttackBoxByAttackName(BehaviorEnumSet.AttackName attackName, AttackBox attackArea)
     {
         _attackBoxTable.Add(attackName, attackArea);
+    }
+
+    public void EnableHitBox()
+    {
+        _hitBox.EnableHitBox();
+    }
+
+    public void DisableHitBox()
+    {
+        _hitBox.DisableHitBox();
     }
 }

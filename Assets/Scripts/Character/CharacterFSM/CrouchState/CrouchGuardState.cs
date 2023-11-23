@@ -17,6 +17,8 @@ namespace Character.CharacterFSM
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
         {
+            PressGuardKey(behavior);
+            
             switch (behavior)
             {
                 default:

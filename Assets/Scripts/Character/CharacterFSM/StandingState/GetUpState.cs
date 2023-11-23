@@ -32,7 +32,7 @@ namespace Character.CharacterFSM
 
         public override void Quit()
         {
-            
+            CharacterJudgeBoxController.EnableHitBox();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Character.CharacterFSM
         {
             stateStartingTime = 0.0f;
             PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            CharacterJudgeBoxController.DisableHitBox();
              
             CharacterAnimator.PlayAnimation("FallDown", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimation("FallDown", CharacterAnimator.Layer.LowerLayer);

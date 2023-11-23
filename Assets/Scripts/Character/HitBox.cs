@@ -64,4 +64,14 @@ public class HitBox : MonoBehaviour
             _gameManager.PauseAllCharactersInTime(_pauseTime);
         }
     }
+
+    public void EnableHitBox()
+    {
+        _hitBox.enabled = true;
+    }
+    
+    public void DisableHitBox()
+    {
+        _hitBox.enabled = false;
+    }
 }
