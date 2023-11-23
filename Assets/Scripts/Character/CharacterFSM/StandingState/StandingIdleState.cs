@@ -10,6 +10,7 @@ namespace Character.CharacterFSM
         public override void Enter()
         {
             PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.IsHitContinuous = false;
             
             CharacterRigidBody.velocity = Vector3.zero;
             

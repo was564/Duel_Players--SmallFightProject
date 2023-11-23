@@ -13,9 +13,10 @@ namespace Character.CharacterFSM
         {
             
             PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
-
-            _hittedAwayDirection.x *= (CharacterTransform.position - PlayerCharacter.EnemyObject.transform.position).x > 0.0f ? 1.0f : -1.0f;
-            CharacterRigidBody.velocity = _hittedAwayDirection;
+            
+            Vector3 resultDirection = _hittedAwayDirection;
+            resultDirection.x *= (CharacterTransform.position - PlayerCharacter.EnemyObject.transform.position).x > 0.0f ? 1.0f : -1.0f;
+            CharacterRigidBody.velocity = resultDirection;
             
             CharacterAnimator.PlayAnimation("InAirHit", CharacterAnimator.Layer.UpperLayer, true);
             CharacterAnimator.PlayAnimation("InAirHit", CharacterAnimator.Layer.LowerLayer, true);
@@ -33,7 +34,7 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if (this.CharacterTransform.position.y <= this.PlayerCharacter.PositionYOffsetForLand)
-                StateManager.ForceChangeState(BehaviorEnumSet.State.FallDown);
+                StateManager.ChangeState(BehaviorEnumSet.State.FallDown);
         }
 
         public override void Quit()

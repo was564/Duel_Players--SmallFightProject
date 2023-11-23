@@ -36,7 +36,7 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("Jump", CharacterAnimator.Layer.LowerLayer))
-                StateManager.ForceChangeState(BehaviorEnumSet.State.InAirIdle);
+                StateManager.ChangeState(BehaviorEnumSet.State.InAirIdle);
         }
 
         public override void Quit()

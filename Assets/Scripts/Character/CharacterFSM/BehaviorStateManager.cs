@@ -35,8 +35,8 @@ public class BehaviorStateManager : BehaviorStateSimulator
 
     public override void HandleInput(BehaviorEnumSet.Behavior behavior)
     {
-        //if(!ComboManagerInstance.TryActivateSkillState(behavior, this))
-        CurrentState.HandleInput(behavior);
+        if(!ComboManagerInstance.TryActivateSkillState(behavior, this))
+            CurrentState.HandleInput(behavior);
     }
     
     public override void UpdateState()
@@ -46,15 +46,6 @@ public class BehaviorStateManager : BehaviorStateSimulator
     }
 
     public override void ChangeState(BehaviorEnumSet.State nextState)
-    {
-        BehaviorStateInterface nextStateInfo = BehaviorStateSet[nextState];
-        if (!ComboManagerInstance.CheckStateTransition(CurrentState, nextStateInfo)) return;
-        CurrentState.Quit();
-        CurrentState = nextStateInfo;
-        CurrentState.Enter();
-    }
-
-    public override void ForceChangeState(BehaviorEnumSet.State nextState)
     {
         CurrentState.Quit();
         CurrentState = BehaviorStateSet[nextState];

@@ -35,29 +35,32 @@ public class HitBox : MonoBehaviour
         if (!col.tag.Equals(this.tag))
         {
             AttackBox attackInfo = col.GetComponent<AttackBox>();
-
+            _playerCharacter.IsHitContinuous = true;
+            
             BehaviorEnumSet.State currentState = _stateManager.CurrentState.StateName;
             if (currentState == BehaviorEnumSet.State.CrouchGuard ||
                 currentState == BehaviorEnumSet.State.StandingGuard)
             {
+                _rigidbody.velocity = Vector3.right * (this.transform.forward.x < 0.0f ? -1.0f : 1.0f) * (-3.0f);
+                attackInfo.GuardParticle.Play();
                 _gameManager.PauseAllCharactersInTime(_pauseTime);
-                _rigidbody.velocity = this.transform.forward.normalized * (-2.0f);
                 return;
             }
             
             switch (_playerCharacter.CharacterPositionState)
             {
                 case PassiveStateEnumSet.CharacterPositionState.OnGround:
-                    _stateManager.ForceChangeState(BehaviorEnumSet.State.StandingHit);
+                    _stateManager.ChangeState(BehaviorEnumSet.State.StandingHit);
                     break;
                 case PassiveStateEnumSet.CharacterPositionState.InAir:
-                    _stateManager.ForceChangeState(BehaviorEnumSet.State.InAirHit);
+                    _stateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
                     break;
                 case PassiveStateEnumSet.CharacterPositionState.Crouch:
-                    _stateManager.ForceChangeState(BehaviorEnumSet.State.CrouchHit);
+                    _stateManager.ChangeState(BehaviorEnumSet.State.CrouchHit);
                     break;
             }
             _playerCharacter.DecreaseHp(attackInfo.Damage);
+            attackInfo.HitParticle.Play();
             _gameManager.PauseAllCharactersInTime(_pauseTime);
         }
     }

@@ -66,11 +66,13 @@ public class GameRoundManager : MonoObserverInterface
         RoundRemainTime = InitRemainTime;
         _players[0].transform.position = Vector3.left;
         _players[1].transform.position = Vector3.right;
+        
 
         foreach (var player in _players)
         {
             player.ResetHp();
-            player.StateManager.ForceChangeState(BehaviorEnumSet.State.StandingIdle);
+            player.CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.Size;
+            player.StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
             player.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
         

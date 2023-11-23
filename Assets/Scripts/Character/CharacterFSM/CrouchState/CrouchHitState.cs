@@ -27,7 +27,7 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ForceChangeState(BehaviorEnumSet.State.CrouchIdle);
+                StateManager.ChangeState(BehaviorEnumSet.State.CrouchIdle);
         }
 
         public override void Quit()

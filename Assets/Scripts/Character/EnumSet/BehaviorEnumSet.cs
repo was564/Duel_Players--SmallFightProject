@@ -60,6 +60,7 @@
         SpecialMove,
         
         Hit,
+        Guard,
         Size
     }
 

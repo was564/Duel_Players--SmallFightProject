@@ -10,6 +10,7 @@ namespace Character.CharacterFSM
         public override void Enter()
         {
             PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.LookAtEnemy();
             
             CharacterRigidBody.velocity = Vector3.zero;
             
@@ -29,7 +30,7 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("Land", CharacterAnimator.Layer.LowerLayer))
-                StateManager.ForceChangeState(BehaviorEnumSet.State.StandingIdle);
+                StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
             else
             {
                 Vector3 characterPosition = this.CharacterTransform.position;

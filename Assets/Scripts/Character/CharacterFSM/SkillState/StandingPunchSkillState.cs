@@ -63,7 +63,7 @@ namespace Character.CharacterFSM.SkillState
             
             
             if(CharacterAnimator.IsEndCurrentAnimation("StandingPunchSkill", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ForceChangeState(BehaviorEnumSet.State.StandingIdle);
+                StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
         }
 
         public override void Quit()

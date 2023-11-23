@@ -28,7 +28,7 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("StandingKick", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ForceChangeState(BehaviorEnumSet.State.StandingIdle);
+                StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
         }
 
         public override void Quit()

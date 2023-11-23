@@ -27,10 +27,10 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if (this.CharacterTransform.position.y <= this.PlayerCharacter.PositionYOffsetForLand)
-                StateManager.ForceChangeState(BehaviorEnumSet.State.Land);
+                StateManager.ChangeState(BehaviorEnumSet.State.Land);
             
             if(CharacterAnimator.IsEndCurrentAnimation("AiringKick", CharacterAnimator.Layer.LowerLayer))
-                StateManager.ForceChangeState(BehaviorEnumSet.State.InAirIdle);
+                StateManager.ChangeState(BehaviorEnumSet.State.InAirIdle);
         }
 
         public override void Quit()

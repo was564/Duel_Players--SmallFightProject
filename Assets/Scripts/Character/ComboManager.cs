@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Character.CharacterFSM;
 using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Character
 {
@@ -14,29 +16,50 @@ namespace Character
 
         public bool IsDoingCombo { get; set; }
 
-        private BehaviorStateSimulator _stateManager;
+        private PlayerCharacter _player;
+
+        private PlayerCharacter _enemyCharacter;
         
-        public ComboManager()
+        private bool isCanceled = false;
+        
+        public ComboManager(PlayerCharacter player)
         {
+            _player = player;
+            _enemyCharacter = player.EnemyObject.GetComponent<PlayerCharacter>();
+            
             _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.Jump, 1);
-            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingPunch, 2);
-            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.CrouchPunch, 2);
+            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingPunch, 1);
+            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.CrouchPunch, 1);
+            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.AiringPunch, 1);
+            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.AiringKick, 1);
+            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.CrouchKick, 1);
+            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingKick, 1);
             
             _countStatesCancel.Add(BehaviorEnumSet.State.Jump, 0);
             _countStatesCancel.Add(BehaviorEnumSet.State.StandingPunch, 0);
             _countStatesCancel.Add(BehaviorEnumSet.State.CrouchPunch, 0);
+            _countStatesCancel.Add(BehaviorEnumSet.State.AiringPunch, 0);
+            _countStatesCancel.Add(BehaviorEnumSet.State.AiringKick, 0);
+            _countStatesCancel.Add(BehaviorEnumSet.State.CrouchKick, 0);
+            _countStatesCancel.Add(BehaviorEnumSet.State.StandingKick, 0);
         }
 
         public void CountStateCancel(BehaviorEnumSet.State state)
         {
+            if (!_countStatesCancel.ContainsKey(state)) return;
             _countStatesCancel[state]++;
+            isCanceled = true;
         }
 
         public bool CheckStateTransition(BehaviorStateInterface currentState, BehaviorStateInterface nextState)
         {
             BehaviorEnumSet.AttackLevel currentAttackLevel = (BehaviorEnumSet.AttackLevel)currentState.AttackLevel;
             BehaviorEnumSet.AttackLevel nextAttackLevel = (BehaviorEnumSet.AttackLevel)nextState.AttackLevel;
-
+            
+            if (_countStatesCancel.ContainsKey(nextState.StateName) &&
+                (_countStatesCancel[nextState.StateName] >= _limitStatesCancelCountInTheCombo[nextState.StateName]))
+                return false;
+            
             switch (currentAttackLevel)
             {
                 case BehaviorEnumSet.AttackLevel.Move:
@@ -58,36 +81,50 @@ namespace Character
             return false;
             
         }
-
-        // ComboManager가 attackLevel이 BasicAttack이상인 State들의 이동을 관리하려 했으나
-        // State에서 가독성이 많이 떨어지고 ComboManager가 StateManager의 역할이 중복된다.
-        // 대안 : StateManager가 State의 Transition을 실행할 때 검증 역할
-        /*
+        
         public bool TryActivateSkillState(BehaviorEnumSet.Behavior input, BehaviorStateSimulator stateManager)
         {
-            bool result = true;
+            if (!_player.IsHitContinuous) return false;
+            
+            BehaviorEnumSet.State nextState = BehaviorEnumSet.State.Null;
             switch (input)
             {
                 case BehaviorEnumSet.Behavior.StandingPunchSkill:
-                    stateManager.ChangeState(BehaviorEnumSet.State.StandingPunchSkill);
+                    nextState = BehaviorEnumSet.State.StandingPunchSkill;
                     break;
                 case BehaviorEnumSet.Behavior.Dash:
-                    stateManager.ChangeState(BehaviorEnumSet.State.DashOnGround);
+                    nextState = BehaviorEnumSet.State.DashOnGround;
+                    break;
+                case BehaviorEnumSet.Behavior.Jump:
+                    nextState = BehaviorEnumSet.State.Jump;
                     break;
                 default:
-                    result = false;
                     break;
             }
 
-            return result;
+            if (nextState != BehaviorEnumSet.State.Null &&
+                CheckStateTransition(stateManager.CurrentState, stateManager.GetStateInfo(nextState)))
+            {
+                stateManager.ChangeState(nextState);
+                CountStateCancel(nextState);
+                return true;
+            }
+
+            return false;
         }
-        */
-        
-        public BehaviorEnumSet.State GetNextStateByInput(BehaviorEnumSet.State currentState, BehaviorEnumSet.Behavior behavior)
+
+        public void UpdateComboManager()
         {
-            
-            
-            return currentState;
+            if (isCanceled && !_enemyCharacter.IsHitContinuous)
+            {
+                var keys = _countStatesCancel.Keys.ToList();
+                for (int index = 0; index < keys.Count; index++)
+                {
+                    _countStatesCancel[keys[index]] = 0;
+                }
+                
+                isCanceled = false;
+            }
         }
     }
 }

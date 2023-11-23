@@ -14,6 +14,7 @@ namespace Character.CharacterFSM
         public override void Enter()
         {
             PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
+            PlayerCharacter.IsHitContinuous = false;
             
             _startingTime = Time.time;
             if (PlayerCharacter.CharacterPositionState == PassiveStateEnumSet.CharacterPositionState.Crouch) 
@@ -44,6 +45,9 @@ namespace Character.CharacterFSM
                     break;
                 case BehaviorEnumSet.Behavior.Guard:
                     StateManager.ChangeState(BehaviorEnumSet.State.CrouchGuard);
+                    break;
+                case BehaviorEnumSet.Behavior.StandingPunchSkill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunchSkill);
                     break;
                 default:
                     break;

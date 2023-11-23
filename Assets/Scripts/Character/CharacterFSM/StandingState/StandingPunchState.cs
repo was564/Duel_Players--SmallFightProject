@@ -25,9 +25,6 @@ namespace Character.CharacterFSM
                     break;
                 case BehaviorEnumSet.Behavior.Jump:
                     break;
-                case BehaviorEnumSet.Behavior.StandingPunchSkill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunchSkill);
-                    break;
                 default:
                     break;
             }

@@ -4,6 +4,9 @@ public class AttackBox : MonoBehaviour
 {
     private CharacterJudgeBoxController _myCharacter;
     private BoxCollider _attackBoxCollider;
+
+    public ParticleSystem HitParticle { get; private set; }
+    public ParticleSystem GuardParticle { get; private set; }
     
     [SerializeField] private BehaviorEnumSet.AttackName AttackNameForUnique;
 
@@ -18,6 +21,16 @@ public class AttackBox : MonoBehaviour
         DisableAttackBox();
         
         _myCharacter.BindAttackBoxByAttackName(AttackNameForUnique, this);
+
+        foreach (var childTransform in this.transform.GetComponentsInChildren<Transform>())
+        {
+            if (childTransform.tag.Equals("GuardParticle"))
+                GuardParticle = childTransform.GetComponent<ParticleSystem>();
+            else if (childTransform.tag.Equals("HitParticle"))
+                HitParticle = childTransform.GetComponent<ParticleSystem>();
+        }
+        GuardParticle.Stop();
+        HitParticle.Stop();
     }
 
     public void DisableAttackBox()

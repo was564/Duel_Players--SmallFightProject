@@ -8,6 +8,8 @@ using UnityEngine;
 public class PlayerCharacter : MonoPublisherInterface
 {
     [SerializeField] public GameObject EnemyObject;
+
+    private BehaviorStateSimulator _enemyStateManager;
     
     private Rigidbody _rigidbody;
     private bool _isLookingRight;
@@ -26,7 +28,7 @@ public class PlayerCharacter : MonoPublisherInterface
     private bool isPause = false;
     
     public PassiveStateEnumSet.CharacterPositionState CharacterPositionState { get; set; }
-        = PassiveStateEnumSet.CharacterPositionState.OnGround;
+        = PassiveStateEnumSet.CharacterPositionState.Size;
     
     public int Hp { get; private set; } = 100;
 
@@ -34,7 +36,7 @@ public class PlayerCharacter : MonoPublisherInterface
 
     public bool IsAcceptArtificialInput = false;
 
-    public List<BehaviorEnumSet.Behavior> ArtificialBehaviors = new List<BehaviorEnumSet.Behavior>();
+    public List<BehaviorEnumSet.Button> ArtificialButtons = new List<BehaviorEnumSet.Button>();
 
     private float _addingGravityMultiple = 1.3f;
 
@@ -44,7 +46,7 @@ public class PlayerCharacter : MonoPublisherInterface
     
     private void Awake()
     {
-        ComboManagerInstance = new ComboManager();
+        ComboManagerInstance = new ComboManager(this);
         StateManager = new BehaviorStateManager(this.gameObject, ComboManagerInstance);
         _stateSimulatorInStoppedFrame = new BehaviorStateSimulator(this.gameObject, ComboManagerInstance);
     }
@@ -57,6 +59,8 @@ public class PlayerCharacter : MonoPublisherInterface
         _commandProcessor = this.GetComponent<CommandProcessor>();
         _passiveStateManager = this.GetComponent<PassiveStateManager>();
         _characterAnimator = this.GetComponent<CharacterAnimator>();
+
+        _enemyStateManager = EnemyObject.GetComponent<PlayerCharacter>().StateManager;
         
         ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
     }
@@ -76,6 +80,7 @@ public class PlayerCharacter : MonoPublisherInterface
         _passiveStateManager.UpdatePassiveState();
         if(isPause) return;
         StateManager.UpdateState();
+        ComboManagerInstance.UpdateComboManager();
     }
 
     private void FixedUpdate()
@@ -98,6 +103,11 @@ public class PlayerCharacter : MonoPublisherInterface
     // 나중에 나온 답 : FSM에 직접 전달하자 (사실상 State가 Process를 진행한다)
     public void DecideBehaviorByInput()
     {
+        if (IsAcceptArtificialInput)
+            foreach (var button in ArtificialButtons)
+            {
+                _inputManager.EnqueueInputQueue(button);
+            }
         while (!_inputManager.isEmptyInputQueue())
         {
             BehaviorEnumSet.Button input = _inputManager.DequeueInputQueue();
@@ -120,7 +130,11 @@ public class PlayerCharacter : MonoPublisherInterface
                     nextBehavior = BehaviorEnumSet.Behavior.Forward;
                     break;
                 case BehaviorEnumSet.Button.Backward:
-                    nextBehavior = BehaviorEnumSet.Behavior.Backward;
+                    if ((int)_enemyStateManager.CurrentState.AttackLevel >= (int)BehaviorEnumSet.AttackLevel.BasicAttack &&
+                        (int)_enemyStateManager.CurrentState.AttackLevel < (int)BehaviorEnumSet.AttackLevel.Hit)
+                        nextBehavior = BehaviorEnumSet.Behavior.Guard;
+                    else
+                        nextBehavior = BehaviorEnumSet.Behavior.Backward;
                     break;
                 case BehaviorEnumSet.Button.Stop:
                     nextBehavior = BehaviorEnumSet.Behavior.Stop;
@@ -145,11 +159,7 @@ public class PlayerCharacter : MonoPublisherInterface
             else if (isPause) _stateSimulatorInStoppedFrame.HandleInput(nextBehavior);
         }
         // Debug.Log(inputCount);
-        if (IsAcceptArtificialInput)
-            foreach (var behavior in ArtificialBehaviors)
-            {
-                StateManager.HandleInput(behavior);
-            }
+        
         //Debug.Log(_rigidbody.velocity);
     }
     
@@ -173,7 +183,7 @@ public class PlayerCharacter : MonoPublisherInterface
                     RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ |
                     RigidbodyConstraints.FreezeRotation;
                 characterPosition = this.transform.position;
-                characterPosition.y = 0;
+                characterPosition.y = 0.05f;
                 this.transform.position = characterPosition;
 
                 CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.OnGround;
@@ -202,17 +212,23 @@ public class PlayerCharacter : MonoPublisherInterface
     {
         isPause = true;
         if(CharacterPositionState == PassiveStateEnumSet.CharacterPositionState.InAir)
-            _stateSimulatorInStoppedFrame.ForceChangeState(BehaviorEnumSet.State.InAirIdle);
+            _stateSimulatorInStoppedFrame.ChangeState(BehaviorEnumSet.State.InAirIdle);
         else
-            _stateSimulatorInStoppedFrame.ForceChangeState(BehaviorEnumSet.State.StandingIdle);
+            _stateSimulatorInStoppedFrame.ChangeState(BehaviorEnumSet.State.StandingIdle);
     }
 
     public void Resume()
     {
         isPause = false;
         BehaviorEnumSet.State previousInputState = _stateSimulatorInStoppedFrame.CurrentState.StateName;
-        if(previousInputState != BehaviorEnumSet.State.StandingIdle && previousInputState != BehaviorEnumSet.State.InAirIdle)
-            StateManager.ChangeState(previousInputState);
+        if (previousInputState != BehaviorEnumSet.State.StandingIdle &&
+            previousInputState != BehaviorEnumSet.State.InAirIdle)
+            if (ComboManagerInstance.CheckStateTransition(StateManager.CurrentState,
+                    _stateSimulatorInStoppedFrame.CurrentState))
+            {
+                ComboManagerInstance.CountStateCancel(_stateSimulatorInStoppedFrame.CurrentState.StateName);
+                StateManager.ChangeState(_stateSimulatorInStoppedFrame.CurrentState.StateName);
+            }
     }
 
     public void ResetHp()

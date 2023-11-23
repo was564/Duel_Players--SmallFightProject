@@ -33,12 +33,12 @@ namespace Character.CharacterFSM
             if (PlayerCharacter.Hp <= 0) return;
             stateStartingTime += Time.deltaTime;
             if(stateStartingTime >= lyingDownTime)
-                StateManager.ForceChangeState(BehaviorEnumSet.State.GetUp);
+                StateManager.ChangeState(BehaviorEnumSet.State.GetUp);
         }
 
         public override void Quit()
         {
-            
+            PlayerCharacter.IsHitContinuous = false;
         }
     }
 }

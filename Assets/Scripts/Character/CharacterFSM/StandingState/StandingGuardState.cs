@@ -31,7 +31,7 @@ namespace Character.CharacterFSM
 
         public override void Quit()
         {
-            
+            base.Quit();
         }
     }
 }

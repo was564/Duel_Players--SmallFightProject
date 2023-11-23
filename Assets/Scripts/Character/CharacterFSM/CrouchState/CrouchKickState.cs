@@ -26,7 +26,7 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("CrouchKick", CharacterAnimator.Layer.LowerLayer))
-                StateManager.ForceChangeState(BehaviorEnumSet.State.CrouchIdle);
+                StateManager.ChangeState(BehaviorEnumSet.State.CrouchIdle);
         }
 
         public override void Quit()
