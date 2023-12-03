@@ -172,7 +172,7 @@ public class PlayerCharacter : MonoPublisherInterface
     // this function provide auto setting position and rigidbody
     public void ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState state, bool force = false)
     {
-        if (state == CharacterPositionState && !force) return;
+        //if (state == CharacterPositionState && !force) return;
         
         Vector3 characterPosition = Vector3.zero;
         switch (state)
@@ -221,6 +221,9 @@ public class PlayerCharacter : MonoPublisherInterface
     {
         isPause = false;
         BehaviorEnumSet.State previousInputState = _stateSimulatorInStoppedFrame.CurrentState.StateName;
+        if (previousInputState == BehaviorEnumSet.State.CrouchGuard || previousInputState == BehaviorEnumSet.State.StandingGuard)
+            return;
+        
         if (previousInputState != BehaviorEnumSet.State.StandingIdle &&
             previousInputState != BehaviorEnumSet.State.InAirIdle)
             if (ComboManagerInstance.CheckStateTransition(StateManager.CurrentState,

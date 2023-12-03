@@ -32,7 +32,7 @@ public class BehaviorStateManager : BehaviorStateSimulator
     
     public BehaviorStateManager(GameObject characterObject, ComboManager comboManager)
         : base(characterObject, comboManager) { }
-
+    
     public override void HandleInput(BehaviorEnumSet.Behavior behavior)
     {
         if(!ComboManagerInstance.TryActivateSkillState(behavior, this))

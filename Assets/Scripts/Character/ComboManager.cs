@@ -66,7 +66,7 @@ namespace Character
                     return true;
                     break;
                 case BehaviorEnumSet.AttackLevel.BasicAttack:
-                    if (nextAttackLevel >= BehaviorEnumSet.AttackLevel.BasicAttack) return true;
+                    if (nextAttackLevel >= BehaviorEnumSet.AttackLevel.CancelableMove) return true;
                     break;
                 case BehaviorEnumSet.AttackLevel.Technique:
                     if (nextAttackLevel > BehaviorEnumSet.AttackLevel.SpecialMove) return true;
@@ -77,9 +77,7 @@ namespace Character
                 default:
                     break;
             }
-            
             return false;
-            
         }
         
         public bool TryActivateSkillState(BehaviorEnumSet.Behavior input, BehaviorStateSimulator stateManager)
@@ -87,7 +85,7 @@ namespace Character
             if (!_player.IsHitContinuous) return false;
             
             BehaviorEnumSet.State nextState = BehaviorEnumSet.State.Null;
-            switch (input)
+            switch (input) // AttackLevel이 Cancelable Move 이상부터인 스킬 넣기
             {
                 case BehaviorEnumSet.Behavior.StandingPunchSkill:
                     nextState = BehaviorEnumSet.State.StandingPunchSkill;
@@ -109,7 +107,6 @@ namespace Character
                 CountStateCancel(nextState);
                 return true;
             }
-
             return false;
         }
 

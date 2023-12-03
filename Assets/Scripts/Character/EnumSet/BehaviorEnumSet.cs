@@ -55,10 +55,10 @@
     public enum AttackLevel
     {
         Move = 0,
+        CancelableMove,
         BasicAttack,
         Technique,
         SpecialMove,
-        
         Hit,
         Guard,
         Size

@@ -18,9 +18,17 @@ namespace Character.CharacterFSM
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
         {
             PressGuardKey(behavior);
-            
+
+            if (ContinuousTimeByBlockAttack > 0.0f) return;
             switch (behavior)
             {
+                case BehaviorEnumSet.Behavior.Jump:
+                    CharacterRigidBody.velocity = (CharacterTransform.forward.x > 0 ? -1.0f : 1.0f) * 2.5f * Vector3.right;
+                    StateManager.ChangeState(BehaviorEnumSet.State.Jump);
+                    break;
+                case BehaviorEnumSet.Behavior.Crouch:
+                    StateManager.ChangeState(BehaviorEnumSet.State.CrouchGuard);
+                    break;
                 default:
                     break;
             }

@@ -22,10 +22,13 @@ namespace Character.CharacterFSM
 
         private bool _isPressGuardKeyContinuous;
         
+        public float ContinuousTimeByBlockAttack { get; set; }
+        
         public override void Enter()
         {
             _isPlayerVelocityStoppedByWall = false;
             _isPressGuardKeyContinuous = true;
+            ContinuousTimeByBlockAttack = 0.0f;
             CharacterAnimator.PlayAnimation("Guard", CharacterAnimator.Layer.UpperLayer, true);
         }
 
@@ -42,6 +45,7 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
+            ContinuousTimeByBlockAttack -= Time.deltaTime;
             if (PlayerCharacter.IsHitContinuous && !_isPlayerVelocityStoppedByWall && CharacterRigidBody.velocity.x == 0.0f)
             {
                 if (_previousFrameVelocity == Vector3.zero)
@@ -49,10 +53,10 @@ namespace Character.CharacterFSM
                 _enemyRigidbody.velocity = _previousFrameVelocity * (-1.0f);
                 _isPlayerVelocityStoppedByWall = true;
             }
-
+            
             _previousFrameVelocity = CharacterRigidBody.velocity;
             
-            if (!_isPressGuardKeyContinuous)
+            if (!_isPressGuardKeyContinuous && ContinuousTimeByBlockAttack < 0.0f)
                 StateManager.ChangeState(_nextState);
             else _isPressGuardKeyContinuous = false;
         }

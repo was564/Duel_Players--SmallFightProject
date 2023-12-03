@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Character.CharacterFSM;
 using UnityEngine;
 
 public class HitBox : MonoBehaviour
@@ -41,7 +42,10 @@ public class HitBox : MonoBehaviour
             if (currentState == BehaviorEnumSet.State.CrouchGuard ||
                 currentState == BehaviorEnumSet.State.StandingGuard)
             {
-                _rigidbody.velocity = Vector3.right * (this.transform.forward.x < 0.0f ? -1.0f : 1.0f) * (-3.0f);
+                _rigidbody.velocity = 
+                    Vector3.right * (this.transform.forward.x < 0.0f ? -1.0f : 1.0f) * (-3.0f);
+                GuardState currentGuardState = _stateManager.CurrentState as GuardState;
+                currentGuardState.ContinuousTimeByBlockAttack = 1.0f;
                 attackInfo.GuardParticle.Play();
                 _gameManager.PauseAllCharactersInTime(_pauseTime);
                 return;

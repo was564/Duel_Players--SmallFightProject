@@ -21,6 +21,9 @@ namespace Character.CharacterFSM
             
             switch (behavior)
             {
+                case BehaviorEnumSet.Behavior.Stand:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingGuard);
+                    break;
                 default:
                     break;
             }
