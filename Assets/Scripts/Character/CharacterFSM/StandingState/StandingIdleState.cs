@@ -15,8 +15,8 @@ namespace Character.CharacterFSM
             
             CharacterRigidBody.velocity = Vector3.zero;
             
-            CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.UpperLayer);
-            CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.LowerLayer);
+            CharacterAnimator.PlayAnimation("StandingIdle", CharacterAnimator.Layer.UpperLayer);
+            CharacterAnimator.PlayAnimation("StandingIdle", CharacterAnimator.Layer.LowerLayer);
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)

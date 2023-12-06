@@ -1,11 +1,11 @@
 ﻿namespace CommandSkill
 {
-    public class InputConditionAndTimePair {
+    public class InputConditionAndFramePair {
     
         public BehaviorEnumSet.InputSet Condition { get; private set; }
-        public float Time { get; set; } = 0;
+        public int Frame { get; set; } = 0;
         
-        public InputConditionAndTimePair(BehaviorEnumSet.InputSet button)
+        public InputConditionAndFramePair(BehaviorEnumSet.InputSet button)
         {
             this.Condition = button;
         }

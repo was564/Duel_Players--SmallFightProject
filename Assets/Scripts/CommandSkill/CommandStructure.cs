@@ -11,12 +11,12 @@ namespace CommandSkill
     // 지금까지 들어온 입력을 보고 매 프레임마다 커맨드인지 검사하려다가 실시간성을 잘 이용하지 못한 느낌이 들어 변경
     public class CommandStructure
     {
-        public List<InputConditionAndTimePair> Command { get; private set; } = new List<InputConditionAndTimePair>();
+        public List<InputConditionAndFramePair> Command { get; private set; } = new List<InputConditionAndFramePair>();
         public int Depth { get; set; } = 0;
 
         public BehaviorEnumSet.Behavior AttackTrigger { get; private set; }
 
-        public float InputStartingTime { get; set; }
+        public int InputStartingFrame { get; set; }
 
         public BehaviorEnumSet.Behavior CommandBehavior { get; private set; }
 
@@ -33,7 +33,7 @@ namespace CommandSkill
             AvailableCommandPositionState = availableCommandPositionState;
             foreach (var input in command)
             {
-                this.Command.Add(new InputConditionAndTimePair(input));
+                this.Command.Add(new InputConditionAndFramePair(input));
             }
         }
     }

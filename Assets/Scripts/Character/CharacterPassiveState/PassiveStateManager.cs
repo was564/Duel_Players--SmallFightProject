@@ -32,7 +32,7 @@ public class PassiveStateManager : MonoBehaviour
         
         _passiveStateSet.Add(PassiveStateEnumSet.PassiveState.StoppingOnGround, new StoppingOnGroundState(characterRoot));
         _passiveStateSet.Add(PassiveStateEnumSet.PassiveState.FrameStopping, new FrameStoppingState(characterRoot));
-        ActivatePassiveState(PassiveStateEnumSet.PassiveState.StoppingOnGround, 300.0f);
+        ActivatePassiveState(PassiveStateEnumSet.PassiveState.StoppingOnGround, 18000);
     }
 
     // Update is called once per frame
@@ -45,8 +45,8 @@ public class PassiveStateManager : MonoBehaviour
             
             currentPassiveState.UpdatePassiveState();
 
-            currentPassiveState.RemainTime -= Time.deltaTime;
-            if (currentPassiveState.RemainTime <= 0.0f)
+            currentPassiveState.RemainFrame -= 1;
+            if (currentPassiveState.RemainFrame <= 0)
             {
                 currentPassiveState.IsActivate = false;
                 currentPassiveState.QuitPassiveState();
@@ -54,11 +54,11 @@ public class PassiveStateManager : MonoBehaviour
         }
     }
 
-    public void ActivatePassiveState(PassiveStateEnumSet.PassiveState passiveState, float maintainTime)
+    public void ActivatePassiveState(PassiveStateEnumSet.PassiveState passiveState, int maintainFrame)
     {
         PassiveStateInterface stateInfo = _passiveStateSet[passiveState];
         stateInfo.IsActivate = true;
-        stateInfo.RemainTime = maintainTime;
+        stateInfo.RemainFrame = maintainFrame;
         stateInfo.EnterPassiveState();
     }
 
@@ -67,16 +67,16 @@ public class PassiveStateManager : MonoBehaviour
         PassiveStateInterface stateInfo = _passiveStateSet[passiveState];
         if (!stateInfo.IsActivate) return;
         stateInfo.IsActivate = false;
-        stateInfo.RemainTime = 0;
+        stateInfo.RemainFrame = 0;
         stateInfo.QuitPassiveState();
     }
 
-    public void AddRemainTimeForAllState(float addTime)
+    public void AddRemainFrameForAllState(int addFrame)
     {
         foreach (var key in _passiveStateSet.Keys)
         {
             var value = _passiveStateSet[key];
-            if (value.IsActivate) value.RemainTime += addTime;
+            if (value.IsActivate) value.RemainFrame += addFrame;
         }
     }
 }

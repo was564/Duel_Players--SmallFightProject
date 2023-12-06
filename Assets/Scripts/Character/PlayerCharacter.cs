@@ -12,6 +12,8 @@ public class PlayerCharacter : MonoPublisherInterface
     private GameObject _wall;
 
     private BehaviorStateSimulator _enemyStateManager;
+
+    private GameRoundManager _roundManager;
     
     private Rigidbody _rigidbody;
     private bool _isLookingRight;
@@ -49,6 +51,7 @@ public class PlayerCharacter : MonoPublisherInterface
 
     void Start()
     {
+        _roundManager = GameObject.FindObjectOfType<GameRoundManager>();
         _wall = GameObject.FindWithTag("Wall");
         
         ComboManagerInstance = new ComboManager(this);
@@ -77,7 +80,8 @@ public class PlayerCharacter : MonoPublisherInterface
             if(!_activatedPassiveStateSet.Remove(0));
         }
         */
-        
+        if (_roundManager.IsGameStopped || _roundManager.IsGameEnded) return;
+            
         DecideBehaviorByInput();
         _passiveStateManager.UpdatePassiveState();
         if(isPaused) return;
@@ -85,7 +89,7 @@ public class PlayerCharacter : MonoPublisherInterface
         ComboManagerInstance.UpdateComboManager();
         
          //Debug.Log(StateManager.CurrentState.StateName);
-         Debug.Log(gameObject.name + CharacterPositionState);
+         //Debug.Log(gameObject.name + CharacterPositionState);
     }
 
     private void FixedUpdate()
@@ -118,7 +122,7 @@ public class PlayerCharacter : MonoPublisherInterface
         while (!_inputManager.isEmptyInputQueue())
         {
             BehaviorEnumSet.Button input = _inputManager.DequeueInputQueue();
-            // 나중에 삭제해도 되는 코드
+            _roundManager.EnqueueRoundInput(gameObject.tag, input, FrameManager.CurrentFrame);
             _commandProcessor.EnqueueInput(input);
 
             BehaviorEnumSet.Behavior nextBehavior = BehaviorEnumSet.Behavior.Null;

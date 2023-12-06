@@ -41,8 +41,8 @@ namespace Character.CharacterPassiveState
 
         public override void UpdatePassiveState()
         {
-            this.RemainTime -= Time.deltaTime;
-            _passiveManager.AddRemainTimeForAllState(Time.deltaTime);
+            this.RemainFrame -= 1;
+            _passiveManager.AddRemainFrameForAllState(1);
         }
 
         public override void QuitPassiveState()

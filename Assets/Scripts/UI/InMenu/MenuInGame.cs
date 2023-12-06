@@ -38,7 +38,9 @@ public class MenuInGame : MonoBehaviour
         _menuList.Add(new GameEndOption(Instantiate(MenuOptionPrefab, Vector3.zero, Quaternion.identity, _canvas) as GameObject));
         _menuList.Add(new ResumeOption(Instantiate(MenuOptionPrefab, Vector3.zero, Quaternion.identity, _canvas) as GameObject));
         _menuList.Add(new RestartOption(Instantiate(MenuOptionPrefab, Vector3.zero, Quaternion.identity, _canvas) as GameObject));
-        
+        _menuList.Add(new ReplayOption(Instantiate(MenuOptionPrefab, Vector3.zero, Quaternion.identity, _canvas) as GameObject));
+        _menuList.Add(new SaveRoundOption(Instantiate(MenuOptionPrefab, Vector3.zero, Quaternion.identity, _canvas) as GameObject));
+
         for (int index = 0; index < _menuList.Count; index++)
         {
             RectTransform optionPosition = _menuList[index].Transform;
@@ -83,7 +85,7 @@ public class MenuInGame : MonoBehaviour
             }
             _menuSelectingUI.gameObject.SetActive(true);
             
-            _gameManager.PauseAllCharactersInTime(10000000.0f);
+            _gameManager.PauseAllCharactersInFrame(100000000);
             
             _gameRoundManager.BlockAllPlayersInput();
         }

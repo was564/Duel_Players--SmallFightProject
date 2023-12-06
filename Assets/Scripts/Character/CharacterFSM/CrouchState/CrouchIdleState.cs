@@ -9,7 +9,7 @@ namespace Character.CharacterFSM
             : base(BehaviorEnumSet.State.CrouchIdle, stateManager, characterRoot, 
                 BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.Crouch) {}
 
-        private float _startingTime;
+        private int _startingFrame;
         private bool _isApplyFinalPosition;
         
         public override void Enter()
@@ -17,7 +17,7 @@ namespace Character.CharacterFSM
             PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             PlayerCharacter.IsHitContinuous = false;
             
-            _startingTime = Time.time;
+            _startingFrame = FrameManager.CurrentFrame;
             if (PlayerCharacter.CharacterPositionState == PassiveStateEnumSet.CharacterPositionState.Crouch) 
                 _isApplyFinalPosition = true;
             else
@@ -72,7 +72,7 @@ namespace Character.CharacterFSM
             {
                 Vector3 characterPosition = this.CharacterTransform.position;
                 // 애니메이션 재생속도 0.1초
-                float animationDurationTime = Mathf.Clamp01((Time.time - _startingTime) * 10.0f);
+                float animationDurationTime = Mathf.Clamp01((FrameManager.CurrentFrame - _startingFrame) * 10.0f);
                 float positionY = Mathf.Lerp(
                     0,
                     -0.4f,

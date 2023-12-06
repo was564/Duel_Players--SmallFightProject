@@ -17,9 +17,9 @@ public class HitBox : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    [SerializeField] private float _pauseTime = 0.1f;
+    [SerializeField] private int _pauseFrame = 60;
     private float _backMoveSpeedByAttack = 2.0f;
-    private float _blockingTimeForGuard = 0.5f;
+    private int _blockingFrameForGuard = 30;
     
     // Start is called before the first frame update
     void Start()
@@ -47,7 +47,7 @@ public class HitBox : MonoBehaviour
                 ReactGuardAction(attackInfo);
             else attackInfo.ReactWhenHitByAttack(_playerCharacter, _stateManager, _rigidbody);
             
-            _gameManager.PauseAllCharactersInTime(_pauseTime);
+            _gameManager.PauseAllCharactersInFrame(_pauseFrame);
         }
     }
 
@@ -110,7 +110,7 @@ public class HitBox : MonoBehaviour
         if (currentState == BehaviorEnumSet.State.CrouchGuard || currentState == BehaviorEnumSet.State.StandingGuard)
         {
             GuardState currentGuardState = _stateManager.CurrentState as GuardState;
-            currentGuardState.ContinuousTimeByBlockAttack = _blockingTimeForGuard;
+            currentGuardState.ContinuousFrameByBlockAttack = _blockingFrameForGuard;
             _playerCharacter.IsGuarded = true;
             attackInfo.GuardParticle.Play();
         }

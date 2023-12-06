@@ -10,8 +10,8 @@ public class CommandProcessor : MonoBehaviour
     // 반면 Tuple은 Allocation 속도가 느리나 동작 속도가 빠르다.
     // 참고 : https://codingcoding.tistory.com/206
 
-    public float SkillInputAcknowledgeTime = 1.0f;
-    public float MoveInputAcknowledgeTime = 0.5f;
+    public int SkillInputAcknowledgeFrame = 24;
+    public int MoveInputAcknowledgeFrame = 12;
     
     private Queue<BehaviorEnumSet.Button> _inputQueue = new Queue<BehaviorEnumSet.Button>();
 
@@ -56,14 +56,14 @@ public class CommandProcessor : MonoBehaviour
             }
             else if (command.Command[command.Depth].Condition == resultInput)
             {
-                if (command.Depth == 0) command.InputStartingTime = Time.time;
+                if (command.Depth == 0) command.InputStartingFrame = FrameManager.CurrentFrame;
                 command.Depth += 1;
             }
             
-            float inputAcknowledgeTime = (command.AttackTrigger == BehaviorEnumSet.Behavior.Null)
-                ? MoveInputAcknowledgeTime
-                : SkillInputAcknowledgeTime;
-            if (Time.time - command.InputStartingTime > inputAcknowledgeTime)
+            int inputAcknowledgeFrame = (command.AttackTrigger == BehaviorEnumSet.Behavior.Null)
+                ? MoveInputAcknowledgeFrame
+                : SkillInputAcknowledgeFrame;
+            if (FrameManager.CurrentFrame - command.InputStartingFrame > inputAcknowledgeFrame)
             {
                 command.Depth = 0;
             }
@@ -72,9 +72,9 @@ public class CommandProcessor : MonoBehaviour
         foreach (var command in _availableCommandSet)
         {
             float inputAcknowledgeTime = (command.AttackTrigger == BehaviorEnumSet.Behavior.Null)
-                ? MoveInputAcknowledgeTime
-                : SkillInputAcknowledgeTime;
-            if (Time.time - command.InputStartingTime > inputAcknowledgeTime)
+                ? MoveInputAcknowledgeFrame
+                : SkillInputAcknowledgeFrame;
+            if (FrameManager.CurrentFrame - command.InputStartingFrame > inputAcknowledgeTime)
             {
                 command.Depth = 0;
                 _unAvailableCommandSet.Add(command);
@@ -104,7 +104,7 @@ public class CommandProcessor : MonoBehaviour
             }
             if (command.AttackTrigger == attack)
             {
-                if(result == null || result.InputStartingTime > command.InputStartingTime)
+                if(result == null || result.InputStartingFrame > command.InputStartingFrame)
                     result = command;
             }
         }

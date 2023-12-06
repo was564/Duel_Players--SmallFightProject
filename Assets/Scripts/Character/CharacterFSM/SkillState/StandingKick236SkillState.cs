@@ -29,13 +29,13 @@ namespace Character.CharacterFSM.SkillState
         public override List<PassiveStateEnumSet.CharacterPositionState> AvailableCommandPositionCondition { get; protected set; }
             = new List<PassiveStateEnumSet.CharacterPositionState>();
 
-        private float _startingTime;
+        private int _startingFrame;
         private float _moveSpeed = 1.0f;
         private Vector3 _moveVelocity;
         
         public override void Enter()
         {
-            _startingTime = Time.time;
+            _startingFrame = FrameManager.CurrentFrame;
             
             PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
                 
@@ -59,7 +59,7 @@ namespace Character.CharacterFSM.SkillState
 
         public override void UpdateState()
         {
-            if (Time.time - _startingTime <= 0.4f)
+            if (FrameManager.CurrentFrame - _startingFrame <= 24)
                 CharacterRigidBody.velocity = _moveVelocity;
             
             

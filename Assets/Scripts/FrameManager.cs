@@ -15,11 +15,12 @@ using UnityEngine.SceneManagement;
 // 캐릭터 고유 스킬 발동 (Character State)
 public class FrameManager : MonoBehaviour
 {
+    private GameRoundManager _gameManager;
     
     private Dictionary<int, PassiveStateManager> _charactersList = new Dictionary<int, PassiveStateManager>();
 
-    private float loopStopTime = 0.0f;
-    
+    public static int CurrentFrame { get; private set; } = 0;
+
     private void Awake()
     {
         Application.targetFrameRate = 60;
@@ -27,6 +28,8 @@ public class FrameManager : MonoBehaviour
     
     private void Start()
     {
+        CurrentFrame = 0;
+        _gameManager = GameObject.FindObjectOfType<GameRoundManager>();
         PlayerCharacter[] characters = GameObject.FindObjectsOfType<PlayerCharacter>();
         foreach (var character in characters)
         {
@@ -36,14 +39,15 @@ public class FrameManager : MonoBehaviour
 
     private void Update()
     {
-        
+        if (_gameManager.IsGameStopped) return;
+        CurrentFrame += 1;
     }
 
-    public void PauseAllCharactersInTime(float time)
+    public void PauseAllCharactersInFrame(int frame)
     {
         foreach (var key in _charactersList.Keys)
         {
-            _charactersList[key].ActivatePassiveState(PassiveStateEnumSet.PassiveState.FrameStopping, time);
+            _charactersList[key].ActivatePassiveState(PassiveStateEnumSet.PassiveState.FrameStopping, frame);
         }
     }
 

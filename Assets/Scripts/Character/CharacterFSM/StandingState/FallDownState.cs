@@ -8,12 +8,12 @@ namespace Character.CharacterFSM
             base(BehaviorEnumSet.State.FallDown, stateManager, characterRoot, 
                 BehaviorEnumSet.AttackLevel.SpecialMove, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
 
-        private float stateStartingTime;
+        private int stateStartingFrame;
         [SerializeField]
-        private float lyingDownTime = 0.2f;
+        private int lyingDownFrame = 12;
         public override void Enter()
         {
-            stateStartingTime = 0.0f;
+            stateStartingFrame = 0;
             PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             CharacterJudgeBoxController.DisableHitBox();
              
@@ -33,8 +33,8 @@ namespace Character.CharacterFSM
         public override void UpdateState()
         {
             if (PlayerCharacter.Hp <= 0) return;
-            stateStartingTime += Time.deltaTime;
-            if(stateStartingTime >= lyingDownTime)
+            stateStartingFrame += 1;
+            if(stateStartingFrame >= lyingDownFrame)
                 StateManager.ChangeState(BehaviorEnumSet.State.GetUp);
         }
 
