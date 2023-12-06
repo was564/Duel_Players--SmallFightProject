@@ -45,6 +45,9 @@ namespace Character.CharacterFSM
                 case BehaviorEnumSet.Behavior.Forward:
                     StateManager.ChangeState(BehaviorEnumSet.State.Forward);
                     break;
+                case BehaviorEnumSet.Behavior.BackStep:
+                    StateManager.ChangeState(BehaviorEnumSet.State.BackStepOnGroundState);
+                    break;
                 case BehaviorEnumSet.Behavior.StandingPunch236Skill:
                     StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch236Skill);
                     break;

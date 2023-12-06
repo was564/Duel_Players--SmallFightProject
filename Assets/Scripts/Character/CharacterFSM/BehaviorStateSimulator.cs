@@ -67,6 +67,7 @@ namespace Character.CharacterFSM
             BehaviorStateSet.Add(BehaviorEnumSet.State.StandingPunch623Skill, new StandingPunch623SkillState(RootCharacterObject, this));
             BehaviorStateSet.Add(BehaviorEnumSet.State.StandingKick623Skill, new StandingKick623SkillState(RootCharacterObject, this));
             BehaviorStateSet.Add(BehaviorEnumSet.State.DashOnGround, new DashOnGroundState(RootCharacterObject, this));
+            BehaviorStateSet.Add(BehaviorEnumSet.State.BackStepOnGroundState, new BackStepOnGroundState(RootCharacterObject, this));
             BehaviorStateSet.Add(BehaviorEnumSet.State.StandingGuard, new StandingGuardState(RootCharacterObject, Wall, this));
             BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchGuard, new CrouchGuardState(RootCharacterObject, Wall, this));
             BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchHit, new CrouchHitState(RootCharacterObject, this));

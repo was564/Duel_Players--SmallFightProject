@@ -40,6 +40,7 @@
         StandingPunch623Skill,
         StandingKick623Skill,
         DashOnGround,
+        BackStepOnGroundState,
         StandingGuard,
         CrouchGuard,
         AirGuard,
@@ -106,6 +107,7 @@
         StandingPunch623Skill,
         StandingKick623Skill,
         Dash,
+        BackStep,
         Punch,
         Kick,
         Size

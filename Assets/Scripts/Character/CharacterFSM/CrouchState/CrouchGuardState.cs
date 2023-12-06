@@ -20,6 +20,8 @@ namespace Character.CharacterFSM
         {
             PressGuardKey(behavior);
             
+            if(ContinuousTimeByBlockAttack > 0.0f) return;
+            
             switch (behavior)
             {
                 case BehaviorEnumSet.Behavior.Stand:

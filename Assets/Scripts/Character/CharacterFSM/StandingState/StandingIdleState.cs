@@ -46,6 +46,12 @@ namespace Character.CharacterFSM
                 case BehaviorEnumSet.Behavior.Guard:
                     StateManager.ChangeState(BehaviorEnumSet.State.StandingGuard);
                     break;
+                case BehaviorEnumSet.Behavior.Dash:
+                    StateManager.ChangeState(BehaviorEnumSet.State.DashOnGround);
+                    break;
+                case BehaviorEnumSet.Behavior.BackStep:
+                    StateManager.ChangeState(BehaviorEnumSet.State.BackStepOnGroundState);
+                    break;
                 case BehaviorEnumSet.Behavior.StandingPunch236Skill:
                     StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch236Skill);
                     break;
