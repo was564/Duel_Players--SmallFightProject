@@ -11,7 +11,7 @@ public class PlayerCharacter : MonoPublisherInterface
 
     private GameObject _wall;
 
-    private BehaviorStateSimulator _enemyStateManager;
+    private PlayerCharacter _enemyCharacter;
 
     private GameRoundManager _roundManager;
     
@@ -21,7 +21,6 @@ public class PlayerCharacter : MonoPublisherInterface
     private CharacterInputManager _inputManager;
     private CommandProcessor _commandProcessor;
     private PassiveStateManager _passiveStateManager;
-    private CharacterAnimator _characterAnimator;
     
     public BehaviorStateManager StateManager { get; private set; }
     private BehaviorStateSimulator _stateSimulatorInStoppedFrame;
@@ -63,9 +62,8 @@ public class PlayerCharacter : MonoPublisherInterface
         _inputManager = this.GetComponent<CharacterInputManager>();
         _commandProcessor = this.GetComponent<CommandProcessor>();
         _passiveStateManager = this.GetComponent<PassiveStateManager>();
-        _characterAnimator = this.GetComponent<CharacterAnimator>();
 
-        _enemyStateManager = EnemyObject.GetComponent<PlayerCharacter>().StateManager;
+        _enemyCharacter = EnemyObject.GetComponent<PlayerCharacter>();
         
         ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
     }
@@ -115,7 +113,8 @@ public class PlayerCharacter : MonoPublisherInterface
     {
         if (IsAcceptArtificialInput && ArtificialButtons.Count > 0)
         {
-            _inputManager.EnqueueInputQueue(ArtificialButtons[_indexForReadInArtificialInput++]);
+            BehaviorEnumSet.Button artficialInput = ArtificialButtons[_indexForReadInArtificialInput++];
+            _inputManager.EnqueueInputQueue(artficialInput);
             if (_indexForReadInArtificialInput == ArtificialButtons.Count) _indexForReadInArtificialInput = 0;
         }
 
@@ -141,8 +140,8 @@ public class PlayerCharacter : MonoPublisherInterface
                     nextBehavior = BehaviorEnumSet.Behavior.Forward;
                     break;
                 case BehaviorEnumSet.Button.Backward:
-                    if ((int)_enemyStateManager.CurrentState.AttackLevel >= (int)BehaviorEnumSet.AttackLevel.BasicAttack &&
-                        (int)_enemyStateManager.CurrentState.AttackLevel < (int)BehaviorEnumSet.AttackLevel.Hit)
+                    if ((int)_enemyCharacter.StateManager.CurrentState.AttackLevel >= (int)BehaviorEnumSet.AttackLevel.BasicAttack &&
+                        (int)_enemyCharacter.StateManager.CurrentState.AttackLevel < (int)BehaviorEnumSet.AttackLevel.Hit)
                         nextBehavior = BehaviorEnumSet.Behavior.Guard;
                     else
                         nextBehavior = BehaviorEnumSet.Behavior.Backward;

@@ -19,7 +19,7 @@ public class HitBox : MonoBehaviour
 
     [SerializeField] private int _pauseFrame = 60;
     private float _backMoveSpeedByAttack = 2.0f;
-    private int _blockingFrameForGuard = 30;
+    private int _blockingFrameForGuard = 18;
     
     // Start is called before the first frame update
     void Start()

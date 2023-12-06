@@ -31,6 +31,9 @@ namespace Character.CharacterFSM
                 case BehaviorEnumSet.Behavior.Crouch:
                     StateManager.ChangeState(BehaviorEnumSet.State.CrouchGuard);
                     break;
+                case BehaviorEnumSet.Behavior.BackStep:
+                    StateManager.ChangeState(BehaviorEnumSet.State.BackStepOnGroundState);
+                    break;
                 default:
                     break;
             }

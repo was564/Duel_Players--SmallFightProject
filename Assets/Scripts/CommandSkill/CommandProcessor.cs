@@ -100,7 +100,8 @@ public class CommandProcessor : MonoBehaviour
                 continue;
             if (command.AttackTrigger == BehaviorEnumSet.Behavior.Null)
             {
-                result = command;
+                if(result == null || result.InputStartingFrame > command.InputStartingFrame)
+                    result = command;
             }
             if (command.AttackTrigger == attack)
             {
