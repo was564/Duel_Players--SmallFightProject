@@ -68,7 +68,10 @@ public class BehaviorStateManager : BehaviorStateSimulator
         BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchKick, new CrouchKickState(RootCharacterObject, this));
         BehaviorStateSet.Add(BehaviorEnumSet.State.AiringPunch, new AiringPunchState(RootCharacterObject, this));
         BehaviorStateSet.Add(BehaviorEnumSet.State.AiringKick, new AiringKickState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingPunchSkill, new StandingPunch236SkillState(RootCharacterObject, this));
+        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingPunch236Skill, new StandingPunch236SkillState(RootCharacterObject, this));
+        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingKick236Skill, new StandingKick236SkillState(RootCharacterObject, this));
+        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingPunch623Skill, new StandingPunch623SkillState(RootCharacterObject, this));
+        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingKick623Skill, new StandingKick623SkillState(RootCharacterObject, this));
         BehaviorStateSet.Add(BehaviorEnumSet.State.DashOnGround, new DashOnGroundState(RootCharacterObject, this));
         BehaviorStateSet.Add(BehaviorEnumSet.State.StandingGuard, new StandingGuardState(RootCharacterObject, Wall, this));
         BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchGuard, new CrouchGuardState(RootCharacterObject, Wall, this));

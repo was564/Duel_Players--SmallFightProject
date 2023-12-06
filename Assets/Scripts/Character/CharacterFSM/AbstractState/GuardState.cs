@@ -63,7 +63,7 @@ namespace Character.CharacterFSM
                 _isPlayerPositionClosedWithWall = true;
             }
             else _isPlayerPositionClosedWithWall = false;
-            Debug.Log(PlayerCharacter.name + _isPlayerPositionClosedWithWall);
+            //Debug.Log(PlayerCharacter.name + _isPlayerPositionClosedWithWall);
             
             _previousFrameVelocity = CharacterRigidBody.velocity;
 

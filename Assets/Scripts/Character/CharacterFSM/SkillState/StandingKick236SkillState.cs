@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Character.CharacterFSM.SkillState
 {
-    public class StandingPunch236SkillState : SkillStateInterface
+    public class StandingKick236SkillState : SkillStateInterface
     {
-        public StandingPunch236SkillState(GameObject characterRoot, BehaviorStateSimulator stateManager)
-            : base(BehaviorEnumSet.State.StandingPunch236Skill, stateManager, characterRoot, 
+        public StandingKick236SkillState(GameObject characterRoot, BehaviorStateSimulator stateManager)
+            : base(BehaviorEnumSet.State.StandingKick236Skill, stateManager, characterRoot, 
                 BehaviorEnumSet.AttackLevel.Technique, PassiveStateEnumSet.CharacterPositionState.OnGround)
         {
             MoveCommand = new List<BehaviorEnumSet.InputSet>()
@@ -14,14 +14,14 @@ namespace Character.CharacterFSM.SkillState
                 BehaviorEnumSet.InputSet.Down,
                 BehaviorEnumSet.InputSet.Forward
             };
-            AttackTrigger = BehaviorEnumSet.Behavior.Punch;
+            AttackTrigger = BehaviorEnumSet.Behavior.Kick;
             AvailableCommandPositionCondition.Add(PassiveStateEnumSet.CharacterPositionState.Crouch);
             AvailableCommandPositionCondition.Add(PassiveStateEnumSet.CharacterPositionState.OnGround);
             CommandManager.AddCommand(
                 MoveCommand, 
                 AttackTrigger, 
                 AvailableCommandPositionCondition,
-                BehaviorEnumSet.Behavior.StandingPunch236Skill);
+                BehaviorEnumSet.Behavior.StandingKick236Skill);
         }
 
         public override List<BehaviorEnumSet.InputSet> MoveCommand { get; protected set; }
@@ -44,8 +44,8 @@ namespace Character.CharacterFSM.SkillState
                 : (Vector3.left *_moveSpeed);
             CharacterRigidBody.velocity = _moveVelocity;
             
-            CharacterAnimator.PlayAnimation("StandingPunch236Skill", CharacterAnimator.Layer.UpperLayer,true);
-            CharacterAnimator.PlayAnimation("StandingPunch236Skill", CharacterAnimator.Layer.LowerLayer,true);
+            CharacterAnimator.PlayAnimation("StandingKick236Skill", CharacterAnimator.Layer.UpperLayer,true);
+            CharacterAnimator.PlayAnimation("StandingKick236Skill", CharacterAnimator.Layer.LowerLayer,true);
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
@@ -63,13 +63,13 @@ namespace Character.CharacterFSM.SkillState
                 CharacterRigidBody.velocity = _moveVelocity;
             
             
-            if(CharacterAnimator.IsEndCurrentAnimation("StandingPunch236Skill", CharacterAnimator.Layer.UpperLayer))
+            if(CharacterAnimator.IsEndCurrentAnimation("StandingKick236Skill", CharacterAnimator.Layer.UpperLayer))
                 StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
         }
 
         public override void Quit()
         {
-            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.StandingPunch236Skill);
+            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.StandingKick236Skill);
         }
     }
 }

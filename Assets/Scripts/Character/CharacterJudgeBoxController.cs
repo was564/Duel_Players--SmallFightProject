@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterJudgeBoxController : MonoBehaviour
 {
+    private PlayerCharacter _playerCharacter;
     private HitBox _hitBox;
     
     private Dictionary<BehaviorEnumSet.AttackName, AttackBox> _attackBoxTable =
@@ -12,6 +13,7 @@ public class CharacterJudgeBoxController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _playerCharacter = this.GetComponent<PlayerCharacter>();
         _hitBox = this.transform.GetComponentInChildren<HitBox>();
     }
 
@@ -39,6 +41,16 @@ public class CharacterJudgeBoxController : MonoBehaviour
     public void BindAttackBoxByAttackName(BehaviorEnumSet.AttackName attackName, AttackBox attackArea)
     {
         _attackBoxTable.Add(attackName, attackArea);
+    }
+
+    public void EnableGuardPointDuringAttack()
+    {
+        _playerCharacter.IsGuarded = true;
+    }
+    
+    public void DisableGuardPointDuringAttack()
+    {
+        _playerCharacter.IsGuarded = false;
     }
 
     public void EnableHitBox()

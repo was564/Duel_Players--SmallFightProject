@@ -34,6 +34,10 @@ namespace Character
             _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.AiringKick, 1);
             _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.CrouchKick, 1);
             _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingKick, 1);
+            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingPunch236Skill, 1);
+            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingKick236Skill, 1);
+            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingPunch623Skill, 1);
+            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingKick623Skill, 1);
             
             _countStatesCancel.Add(BehaviorEnumSet.State.Jump, 0);
             _countStatesCancel.Add(BehaviorEnumSet.State.StandingPunch, 0);
@@ -42,6 +46,10 @@ namespace Character
             _countStatesCancel.Add(BehaviorEnumSet.State.AiringKick, 0);
             _countStatesCancel.Add(BehaviorEnumSet.State.CrouchKick, 0);
             _countStatesCancel.Add(BehaviorEnumSet.State.StandingKick, 0);
+            _countStatesCancel.Add(BehaviorEnumSet.State.StandingPunch236Skill, 0);
+            _countStatesCancel.Add(BehaviorEnumSet.State.StandingKick236Skill, 0);
+            _countStatesCancel.Add(BehaviorEnumSet.State.StandingPunch623Skill, 0);
+            _countStatesCancel.Add(BehaviorEnumSet.State.StandingKick623Skill, 0);
         }
 
         public void CountStateCancel(BehaviorEnumSet.State state)
@@ -84,19 +92,28 @@ namespace Character
         
         public bool TryActivateSkillState(BehaviorEnumSet.Behavior input, BehaviorStateSimulator stateManager)
         {
-            if (!_player.IsHitContinuous) return false;
+            if (!_enemyCharacter.IsHitContinuous) return false;
             
             BehaviorEnumSet.State nextState = BehaviorEnumSet.State.Null;
             switch (input) // AttackLevel이 Cancelable Move 이상부터인 스킬 넣기
             {
-                case BehaviorEnumSet.Behavior.StandingPunchSkill:
-                    nextState = BehaviorEnumSet.State.StandingPunchSkill;
+                case BehaviorEnumSet.Behavior.StandingPunch236Skill:
+                    nextState = BehaviorEnumSet.State.StandingPunch236Skill;
                     break;
                 case BehaviorEnumSet.Behavior.Dash:
                     nextState = BehaviorEnumSet.State.DashOnGround;
                     break;
                 case BehaviorEnumSet.Behavior.Jump:
                     nextState = BehaviorEnumSet.State.Jump;
+                    break;
+                case BehaviorEnumSet.Behavior.StandingKick236Skill:
+                    nextState = BehaviorEnumSet.State.StandingKick236Skill;
+                    break;
+                case BehaviorEnumSet.Behavior.StandingPunch623Skill:
+                    nextState = BehaviorEnumSet.State.StandingPunch623Skill;
+                    break;
+                case BehaviorEnumSet.Behavior.StandingKick623Skill:
+                    nextState = BehaviorEnumSet.State.StandingKick623Skill;
                     break;
                 default:
                     break;

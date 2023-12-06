@@ -45,8 +45,17 @@ namespace Character.CharacterFSM
                 case BehaviorEnumSet.Behavior.Forward:
                     StateManager.ChangeState(BehaviorEnumSet.State.Forward);
                     break;
-                case BehaviorEnumSet.Behavior.StandingPunchSkill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunchSkill);
+                case BehaviorEnumSet.Behavior.StandingPunch236Skill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch236Skill);
+                    break;
+                case BehaviorEnumSet.Behavior.StandingKick236Skill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick236Skill);
+                    break;
+                case BehaviorEnumSet.Behavior.StandingPunch623Skill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch623Skill);
+                    break;
+                case BehaviorEnumSet.Behavior.StandingKick623Skill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick623Skill);
                     break;
                 case BehaviorEnumSet.Behavior.Guard:
                     StateManager.ChangeState(BehaviorEnumSet.State.StandingGuard);

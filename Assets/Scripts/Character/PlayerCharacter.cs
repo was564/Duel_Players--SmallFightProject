@@ -106,13 +106,15 @@ public class PlayerCharacter : MonoPublisherInterface
     // 답 2 : Input 클래스를 따로 만들고 Process를 포함 시키면 된다. 좋을지도..?
     // 상담해보기 (굳이 안해도 될 듯)
     // 나중에 나온 답 : FSM에 직접 전달하자 (사실상 State가 Process를 진행한다)
+    private int _indexForReadInArtificialInput = 0;
     public void DecideBehaviorByInput()
     {
-        if (IsAcceptArtificialInput)
-            foreach (var button in ArtificialButtons)
-            {
-                _inputManager.EnqueueInputQueue(button);
-            }
+        if (IsAcceptArtificialInput && ArtificialButtons.Count > 0)
+        {
+            _inputManager.EnqueueInputQueue(ArtificialButtons[_indexForReadInArtificialInput++]);
+            if (_indexForReadInArtificialInput == ArtificialButtons.Count) _indexForReadInArtificialInput = 0;
+        }
+
         while (!_inputManager.isEmptyInputQueue())
         {
             BehaviorEnumSet.Button input = _inputManager.DequeueInputQueue();

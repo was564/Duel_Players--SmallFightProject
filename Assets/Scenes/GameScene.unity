@@ -785,6 +785,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 9157146894947978564, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1798,6 +1803,11 @@ PrefabInstance:
     - target: {fileID: 6340529592618984513, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
         type: 3}
       propertyPath: AttackPosition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6524074759969006283, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: HitReactLevel
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

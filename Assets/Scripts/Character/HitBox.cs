@@ -99,15 +99,24 @@ public class HitBox : MonoBehaviour
                     break;
             }
         }
+        else if(_playerCharacter.IsGuarded) isSucceededGuard = true; // CurrentState = GuardPoint
 
         return isSucceededGuard;
     }
     
     private void ReactGuardAction(AttackBox attackInfo)
     {
-        GuardState currentGuardState = _stateManager.CurrentState as GuardState;
-        currentGuardState.ContinuousTimeByBlockAttack = _blockingTimeForGuard;
-        _playerCharacter.IsGuarded = true;
-        attackInfo.GuardParticle.Play();
+        BehaviorEnumSet.State currentState = _stateManager.CurrentState.StateName;
+        if (currentState == BehaviorEnumSet.State.CrouchGuard || currentState == BehaviorEnumSet.State.StandingGuard)
+        {
+            GuardState currentGuardState = _stateManager.CurrentState as GuardState;
+            currentGuardState.ContinuousTimeByBlockAttack = _blockingTimeForGuard;
+            _playerCharacter.IsGuarded = true;
+            attackInfo.GuardParticle.Play();
+        }
+        else
+        {
+            attackInfo.GuardParticle.Play();
+        }
     }
 }
