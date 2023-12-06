@@ -120,6 +120,32 @@ AnimatorState:
   m_MirrorParameter: IsRight
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &-8526228289699180329
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CrouchPunch
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 0ccffaa4ca7e68742b4b9efd70eb7bc8, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &-8294694192371113307
 AnimatorState:
   serializedVersion: 6
@@ -361,7 +387,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: StandingPunchSkill
+  m_Name: StandingPunch236Skill
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -831,6 +857,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -6295517942719316377}
     m_Position: {x: 410, y: -50, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -8526228289699180329}
+    m_Position: {x: 410, y: -130, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions:
@@ -1679,7 +1708,7 @@ AnimatorStateMachine:
     m_Position: {x: 380, y: 90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6017895959191776109}
-    m_Position: {x: 360, y: 270, z: 0}
+    m_Position: {x: 350, y: 270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 533641611625215537}
     m_Position: {x: 350, y: 360, z: 0}
@@ -2116,7 +2145,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: StandingPunchSkill
+  m_Name: StandingPunch236Skill
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -2251,7 +2280,7 @@ AnimatorStateMachine:
     m_Position: {x: 530, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4291741798860172400}
-    m_Position: {x: 340, y: 100, z: 0}
+    m_Position: {x: 330, y: -60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2807142516266148386}
     m_Position: {x: 570, y: 40, z: 0}

@@ -8,7 +8,8 @@ namespace Character.CharacterFSM.SkillState
         
         
         public DashOnGroundState(GameObject characterRoot, BehaviorStateSimulator stateManager)
-            : base(BehaviorEnumSet.State.StandingPunchSkill, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Move)
+            : base(BehaviorEnumSet.State.DashOnGround, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.OnGround)
         {
             MoveCommand = new List<BehaviorEnumSet.InputSet>()
             {
@@ -37,7 +38,7 @@ namespace Character.CharacterFSM.SkillState
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             
             _finalVelocity = (CharacterTransform.transform.forward.x > 0.0f)
                 ? (Vector3.right * _dashVelocity)

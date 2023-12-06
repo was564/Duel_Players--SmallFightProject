@@ -5,12 +5,16 @@ namespace Character.CharacterFSM
     public class StandingHitState : BehaviorStateInterface
     {
         public StandingHitState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.StandingHit, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Hit) {}
+            base(BehaviorEnumSet.State.StandingHit, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.Hit, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
+        
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             
+            //CharacterRigidBody.velocity = Vector3.left * ((CharacterTransform.forward.x < 0.0f ? -1.0f : 1.0f) * _backMoveSpeedByAttack);
+
             CharacterAnimator.PlayAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer, true);
             CharacterAnimator.PlayAnimation("StandingIdle", CharacterAnimator.Layer.LowerLayer, true);
         }

@@ -5,11 +5,12 @@ namespace Character.CharacterFSM
     public class GetUpState : BehaviorStateInterface
     {
         public GetUpState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.GetUp, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
+            base(BehaviorEnumSet.State.GetUp, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.SpecialMove, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
 
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
              
             CharacterAnimator.PlayAnimation("GetUp", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimation("GetUp", CharacterAnimator.Layer.LowerLayer);

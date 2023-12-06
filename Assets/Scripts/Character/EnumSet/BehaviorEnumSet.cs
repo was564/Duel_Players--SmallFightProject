@@ -47,8 +47,22 @@
 
     public enum AttackName
     {
-        Punch = 0,
-        Kick = 1,
+        StandingPunch = 0,
+        StandingKick = 1,
+        CrouchPunch = 2,
+        CrouchKick = 3,
+        AiringPunch = 4,
+        AiringKick = 5,
+        Skill236Punch = 6,
+        Skill236Kick = 7,
+        Size
+    }
+
+    public enum AttackPosition
+    {
+        Air = 0,
+        Stand,
+        Crouch,
         Size
     }
 
@@ -61,6 +75,13 @@
         SpecialMove,
         Hit,
         Guard,
+        Size
+    }
+
+    public enum HitReactLevel
+    {
+        HitInPlace = 0,
+        HitFlyOut,
         Size
     }
 

@@ -5,11 +5,12 @@ namespace Character.CharacterFSM
     public class AiringState : BehaviorStateInterface
     {
         public AiringState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.InAirIdle, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
+            base(BehaviorEnumSet.State.InAirIdle, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.InAir) {}
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             
             CharacterAnimator.PlayAnimationSmoothly("InAirIdle", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimationSmoothly("InAirIdle", CharacterAnimator.Layer.LowerLayer);

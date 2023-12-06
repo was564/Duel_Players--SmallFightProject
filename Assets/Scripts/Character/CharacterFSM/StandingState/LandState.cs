@@ -5,11 +5,12 @@ namespace Character.CharacterFSM
     public class LandState : BehaviorStateInterface
     {
         public LandState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.Land, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
+            base(BehaviorEnumSet.State.Land, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
 
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             PlayerCharacter.LookAtEnemy();
             
             CharacterRigidBody.velocity = Vector3.zero;

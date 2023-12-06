@@ -18,6 +18,8 @@ public class HitBox : MonoBehaviour
     private Rigidbody _rigidbody;
 
     [SerializeField] private float _pauseTime = 0.1f;
+    private float _backMoveSpeedByAttack = 2.0f;
+    private float _blockingTimeForGuard = 0.5f;
     
     // Start is called before the first frame update
     void Start()
@@ -37,34 +39,14 @@ public class HitBox : MonoBehaviour
         {
             AttackBox attackInfo = col.GetComponent<AttackBox>();
             _playerCharacter.IsHitContinuous = true;
+            attackInfo.DisableAttackBox();
             
-            BehaviorEnumSet.State currentState = _stateManager.CurrentState.StateName;
-            if (currentState == BehaviorEnumSet.State.CrouchGuard ||
-                currentState == BehaviorEnumSet.State.StandingGuard)
-            {
-                _rigidbody.velocity = 
-                    Vector3.right * (this.transform.forward.x < 0.0f ? -1.0f : 1.0f) * (-3.0f);
-                GuardState currentGuardState = _stateManager.CurrentState as GuardState;
-                currentGuardState.ContinuousTimeByBlockAttack = 1.0f;
-                attackInfo.GuardParticle.Play();
-                _gameManager.PauseAllCharactersInTime(_pauseTime);
-                return;
-            }
+            _rigidbody.velocity = Vector3.left * (this.transform.forward.x < 0.0f ? -1.0f : 1.0f) * _backMoveSpeedByAttack;
+
+            if (CheckGuardSuccess(attackInfo))
+                ReactGuardAction(attackInfo);
+            else attackInfo.ReactWhenHitByAttack(_playerCharacter, _stateManager, _rigidbody);
             
-            switch (_playerCharacter.CharacterPositionState)
-            {
-                case PassiveStateEnumSet.CharacterPositionState.OnGround:
-                    _stateManager.ChangeState(BehaviorEnumSet.State.StandingHit);
-                    break;
-                case PassiveStateEnumSet.CharacterPositionState.InAir:
-                    _stateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
-                    break;
-                case PassiveStateEnumSet.CharacterPositionState.Crouch:
-                    _stateManager.ChangeState(BehaviorEnumSet.State.CrouchHit);
-                    break;
-            }
-            _playerCharacter.DecreaseHp(attackInfo.Damage);
-            attackInfo.HitParticle.Play();
             _gameManager.PauseAllCharactersInTime(_pauseTime);
         }
     }
@@ -77,5 +59,55 @@ public class HitBox : MonoBehaviour
     public void DisableHitBox()
     {
         _hitBox.enabled = false;
+    }
+
+    private bool CheckGuardSuccess(AttackBox attackInfo)
+    {
+        if (!_playerCharacter.IsGuarded) return false;
+        
+        BehaviorEnumSet.State currentState = _stateManager.CurrentState.StateName;
+        bool isSucceededGuard = false;
+            
+        
+        if (currentState == BehaviorEnumSet.State.StandingGuard)
+        {
+            switch (attackInfo.AttackPosition)
+            {
+                case BehaviorEnumSet.AttackPosition.Air:
+                    isSucceededGuard = true;
+                    break;
+                case BehaviorEnumSet.AttackPosition.Crouch:
+                    isSucceededGuard = false;
+                    break;
+                case BehaviorEnumSet.AttackPosition.Stand:
+                    isSucceededGuard = true;
+                    break;
+            }
+        }
+        else if (currentState == BehaviorEnumSet.State.CrouchGuard)
+        {
+            switch (attackInfo.AttackPosition)
+            {
+                case BehaviorEnumSet.AttackPosition.Air:
+                    isSucceededGuard = false;
+                    break;
+                case BehaviorEnumSet.AttackPosition.Crouch:
+                    isSucceededGuard = true;
+                    break;
+                case BehaviorEnumSet.AttackPosition.Stand:
+                    isSucceededGuard = true;
+                    break;
+            }
+        }
+
+        return isSucceededGuard;
+    }
+    
+    private void ReactGuardAction(AttackBox attackInfo)
+    {
+        GuardState currentGuardState = _stateManager.CurrentState as GuardState;
+        currentGuardState.ContinuousTimeByBlockAttack = _blockingTimeForGuard;
+        _playerCharacter.IsGuarded = true;
+        attackInfo.GuardParticle.Play();
     }
 }

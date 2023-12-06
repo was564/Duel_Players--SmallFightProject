@@ -1,105 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &912735815322689122
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5449837904246248984}
-  - component: {fileID: 6340529592618984513}
-  - component: {fileID: 7005940901981646408}
-  m_Layer: 6
-  m_Name: PunchAttackArea
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5449837904246248984
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912735815322689122}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 825225607942386572}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &6340529592618984513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912735815322689122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3945fd5de14c639489604c5cdf87323b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttackNameForUnique: 0
---- !u!65 &7005940901981646408
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912735815322689122}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5, y: 0.3, z: 0.5}
-  m_Center: {x: -0.4, y: 1.1, z: 0}
---- !u!1 &1148111519653372550
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 825225607942386572}
-  m_Layer: 6
-  m_Name: AttackArea
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &825225607942386572
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1148111519653372550}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5449837904246248984}
-  - {fileID: 7773536387323730354}
-  m_Father: {fileID: 3197552201441400336}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1867014277866156909
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,73 +122,80 @@ CapsuleCollider:
   m_Height: 1.25
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!1 &4366017341616276572
-GameObject:
+--- !u!1001 &2044379262816131383
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7773536387323730354}
-  - component: {fileID: 161600569124008931}
-  - component: {fileID: 7210708760549055696}
-  m_Layer: 6
-  m_Name: KickAttackArea
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7773536387323730354
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4366017341616276572}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 825225607942386572}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &161600569124008931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3197552201441400336}
+    m_Modifications:
+    - target: {fileID: 1419180630770301873, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_Name
+      value: AttackArea
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669940780718009019, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669940780718009019, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669940780718009019, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669940780718009019, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669940780718009019, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669940780718009019, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669940780718009019, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669940780718009019, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669940780718009019, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669940780718009019, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8b87ae062393fb04daac4776f38921d6, type: 3}
+--- !u!4 &825225607942386572 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1669940780718009019, guid: 8b87ae062393fb04daac4776f38921d6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2044379262816131383}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4366017341616276572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3945fd5de14c639489604c5cdf87323b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttackNameForUnique: 1
---- !u!65 &7210708760549055696
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4366017341616276572}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5, y: 0.6, z: 0.6}
-  m_Center: {x: 0, y: 0.4, z: 0.4}
 --- !u!1001 &3197552201441004688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -299,7 +206,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 8ca7b932c0de3b7478dc4385b041fa91, type: 3}
       propertyPath: m_Name
-      value: KoHakuPlayer 1
+      value: KoHakuPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8ca7b932c0de3b7478dc4385b041fa91, type: 3}
       propertyPath: m_TagString

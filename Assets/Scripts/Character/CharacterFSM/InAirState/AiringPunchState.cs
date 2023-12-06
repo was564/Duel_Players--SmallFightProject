@@ -5,11 +5,12 @@ namespace Character.CharacterFSM
     public class AiringPunchState : BehaviorStateInterface
     {
         public AiringPunchState(GameObject characterRoot, BehaviorStateSimulator stateManager) 
-            : base(BehaviorEnumSet.State.AiringPunch, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
+            : base(BehaviorEnumSet.State.AiringPunch, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.BasicAttack, PassiveStateEnumSet.CharacterPositionState.InAir) {}
 
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             
             CharacterAnimator.PlayAnimation("AiringPunch", CharacterAnimator.Layer.UpperLayer,true);
         }
@@ -34,7 +35,7 @@ namespace Character.CharacterFSM
 
         public override void Quit()
         {
-            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.Punch);
+            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.AiringPunch);
         }
     }
 }

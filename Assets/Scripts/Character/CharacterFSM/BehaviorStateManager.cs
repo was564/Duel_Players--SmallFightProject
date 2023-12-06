@@ -30,8 +30,8 @@ public class BehaviorStateManager : BehaviorStateSimulator
     protected ComboManager ComboManagerInstance;
     */
     
-    public BehaviorStateManager(GameObject characterObject, ComboManager comboManager)
-        : base(characterObject, comboManager) { }
+    public BehaviorStateManager(GameObject characterObject, GameObject wall, ComboManager comboManager)
+        : base(characterObject, wall, comboManager) { }
     
     public override void HandleInput(BehaviorEnumSet.Behavior behavior)
     {
@@ -68,10 +68,10 @@ public class BehaviorStateManager : BehaviorStateSimulator
         BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchKick, new CrouchKickState(RootCharacterObject, this));
         BehaviorStateSet.Add(BehaviorEnumSet.State.AiringPunch, new AiringPunchState(RootCharacterObject, this));
         BehaviorStateSet.Add(BehaviorEnumSet.State.AiringKick, new AiringKickState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingPunchSkill, new StandingPunchSkillState(RootCharacterObject, this));
+        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingPunchSkill, new StandingPunch236SkillState(RootCharacterObject, this));
         BehaviorStateSet.Add(BehaviorEnumSet.State.DashOnGround, new DashOnGroundState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingGuard, new StandingGuardState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchGuard, new CrouchGuardState(RootCharacterObject, this));
+        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingGuard, new StandingGuardState(RootCharacterObject, Wall, this));
+        BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchGuard, new CrouchGuardState(RootCharacterObject, Wall, this));
         BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchHit, new CrouchHitState(RootCharacterObject, this));
         BehaviorStateSet.Add(BehaviorEnumSet.State.InAirHit, new InAirHitState(RootCharacterObject, this));
         BehaviorStateSet.Add(BehaviorEnumSet.State.FallDown, new FallDownState(RootCharacterObject, this));

@@ -5,17 +5,18 @@ namespace Character.CharacterFSM
     public class CrouchPunchState : PunchState
     {
         public CrouchPunchState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.CrouchPunch, stateManager, characterRoot, BehaviorEnumSet.State.CrouchIdle) {}
+            base(BehaviorEnumSet.State.CrouchPunch, stateManager, characterRoot, BehaviorEnumSet.State.CrouchIdle, 
+                PassiveStateEnumSet.CharacterPositionState.Crouch) {}
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             
+            this.CharacterAnimator.PlayAnimation("CrouchPunch", CharacterAnimator.Layer.UpperLayer,true);
             this.CharacterAnimator.PlayAnimation("CrouchStop", CharacterAnimator.Layer.LowerLayer, true);
             Vector3 characterPosition = this.CharacterTransform.position;
             characterPosition.y = -0.4f;
             this.CharacterTransform.position = characterPosition;
-            base.Enter();
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)
@@ -39,7 +40,8 @@ namespace Character.CharacterFSM
 
         public override void Quit()
         {
-            
+            base.Quit();
+            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.CrouchPunch);
         }
     }
 }

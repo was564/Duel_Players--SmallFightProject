@@ -33,7 +33,7 @@ namespace Character.CharacterPassiveState
             _previousVelocity = _rigidbody.velocity;
             _previousState = _chatacter.CharacterPositionState;
             _rigidbody.useGravity = false;
-            _rigidbody.constraints = RigidbodyConstraints.FreezePosition;
+            _rigidbody.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
             _rigidbody.velocity = Vector3.zero;
             _chatacter.Stop();
             _animator.PauseAnimation();
@@ -47,8 +47,9 @@ namespace Character.CharacterPassiveState
 
         public override void QuitPassiveState()
         {
-            _chatacter.ChangeCharacterPosition(_previousState, true);
             _chatacter.Resume();
+            _chatacter.ChangeCharacterPosition(
+                _chatacter.StateManager.CurrentState.CharacterPositionStateInCurrentState, true);
             _animator.ResumeAnimation();
             if(_rigidbody.velocity == Vector3.zero)
                 _rigidbody.velocity = _previousVelocity;

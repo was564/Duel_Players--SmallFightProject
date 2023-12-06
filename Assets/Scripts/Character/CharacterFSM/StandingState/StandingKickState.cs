@@ -5,13 +5,14 @@ namespace Character.CharacterFSM
     public class StandingKickState : BehaviorStateInterface
     {
         public StandingKickState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.StandingKick, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
+            base(BehaviorEnumSet.State.StandingKick, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.BasicAttack, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
 
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             
-            CharacterRigidBody.velocity = Vector3.zero;
+            //CharacterRigidBody.velocity = Vector3.zero;
             CharacterAnimator.PlayAnimation("StandingKick", CharacterAnimator.Layer.UpperLayer,true);
             CharacterAnimator.PlayAnimation("StandingKick", CharacterAnimator.Layer.LowerLayer,true);
         }
@@ -33,7 +34,7 @@ namespace Character.CharacterFSM
 
         public override void Quit()
         {
-            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.Kick);
+            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.StandingKick);
         }
     }
 }

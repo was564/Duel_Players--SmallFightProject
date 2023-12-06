@@ -4,13 +4,14 @@ namespace Character.CharacterFSM
 {
     public class StandingGuardState: GuardState
     {
-        public StandingGuardState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(characterRoot, stateManager, BehaviorEnumSet.State.StandingGuard, BehaviorEnumSet.State.StandingIdle) {}
+        public StandingGuardState(GameObject characterRoot, GameObject wall, BehaviorStateSimulator stateManager) : 
+            base(characterRoot, wall, stateManager, BehaviorEnumSet.State.StandingGuard, BehaviorEnumSet.State.StandingIdle, 
+                PassiveStateEnumSet.CharacterPositionState.OnGround) {}
         
         public override void Enter()
         {
             base.Enter();
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             
             CharacterAnimator.PlayAnimation("StandingStop", CharacterAnimator.Layer.LowerLayer, true);
         }

@@ -10,7 +10,8 @@ public abstract class BehaviorStateInterface
         BehaviorEnumSet.State stateName,
         BehaviorStateSimulator stateManager,
         GameObject characterRoot, 
-        BehaviorEnumSet.AttackLevel attackLevel)
+        BehaviorEnumSet.AttackLevel attackLevel,
+        PassiveStateEnumSet.CharacterPositionState positionState)
     {
         this.AttackLevel = (int)attackLevel;
         this.StateName = stateName;
@@ -20,16 +21,20 @@ public abstract class BehaviorStateInterface
         this.StateManager = stateManager;
         this.PlayerCharacter = characterRoot.GetComponent<PlayerCharacter>();
         this.CharacterJudgeBoxController = characterRoot.GetComponent<CharacterJudgeBoxController>();
+        this.CharacterPositionStateInCurrentState = positionState;
     }
 
     public BehaviorEnumSet.State StateName { get; private set; }
-
+    public PassiveStateEnumSet.CharacterPositionState CharacterPositionStateInCurrentState;
+    
     protected PlayerCharacter PlayerCharacter;
     protected CharacterAnimator CharacterAnimator;
     protected Transform CharacterTransform;
     protected Rigidbody CharacterRigidBody;
     protected BehaviorStateSimulator StateManager;
     protected CharacterJudgeBoxController CharacterJudgeBoxController;
+
+    
 
     // AttackLevel은 레벨이 낮은 기술에서 같거나 높은 기술로 연계가 되며 반대는 연계를 못하도록 한다.
     public int AttackLevel { get; protected set; }

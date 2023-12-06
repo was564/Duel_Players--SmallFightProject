@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 555701249414697060}
   m_Layer: 8
   m_Name: Collider
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -299,7 +299,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 65b6cdbae3b2373419fe1b942c1c77ba, type: 3}
       propertyPath: m_Name
-      value: YuKoPlayer 1
+      value: YuKoPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 65b6cdbae3b2373419fe1b942c1c77ba, type: 3}
       propertyPath: m_TagString

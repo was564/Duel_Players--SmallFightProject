@@ -8,8 +8,9 @@ public abstract class SkillStateInterface : BehaviorStateInterface
         BehaviorEnumSet.State stateName, 
         BehaviorStateSimulator stateManager,
         GameObject characterRoot, 
-        BehaviorEnumSet.AttackLevel attackLevel)
-        : base(stateName, stateManager, characterRoot, attackLevel)
+        BehaviorEnumSet.AttackLevel attackLevel,
+        PassiveStateEnumSet.CharacterPositionState positionState)
+        : base(stateName, stateManager, characterRoot, attackLevel, positionState)
     {
         CommandManager = characterRoot.GetComponent<CommandProcessor>();
     }

@@ -5,7 +5,8 @@ namespace Character.CharacterFSM
     public class FallDownState : BehaviorStateInterface
     {
         public FallDownState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.FallDown, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.SpecialMove) {}
+            base(BehaviorEnumSet.State.FallDown, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.SpecialMove, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
 
         private float stateStartingTime;
         [SerializeField]
@@ -13,7 +14,7 @@ namespace Character.CharacterFSM
         public override void Enter()
         {
             stateStartingTime = 0.0f;
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             CharacterJudgeBoxController.DisableHitBox();
              
             CharacterAnimator.PlayAnimation("FallDown", CharacterAnimator.Layer.UpperLayer);

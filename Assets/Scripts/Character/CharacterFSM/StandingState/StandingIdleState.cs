@@ -5,11 +5,12 @@ namespace Character.CharacterFSM
     public class StandingIdleState : BehaviorStateInterface
     {
         public StandingIdleState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.StandingIdle, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
+            base(BehaviorEnumSet.State.StandingIdle, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             PlayerCharacter.IsHitContinuous = false;
             
             CharacterRigidBody.velocity = Vector3.zero;

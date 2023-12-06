@@ -5,8 +5,9 @@ namespace Character.CharacterFSM
 {
     public abstract class PunchState : BehaviorStateInterface
     {
-        public PunchState(BehaviorEnumSet.State state, BehaviorStateSimulator stateManager, GameObject characterRoot, BehaviorEnumSet.State nextState) :
-            base(state, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack)
+        public PunchState(BehaviorEnumSet.State state, BehaviorStateSimulator stateManager, GameObject characterRoot, 
+            BehaviorEnumSet.State nextState, PassiveStateEnumSet.CharacterPositionState positionState) :
+            base(state, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack, positionState)
         {
             _nextState = nextState;
         }
@@ -15,7 +16,7 @@ namespace Character.CharacterFSM
         
         public override void Enter()
         {
-            CharacterAnimator.PlayAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer,true);
+            //CharacterAnimator.PlayAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer,true);
         }
 
         public override void HandleInput(BehaviorEnumSet.Behavior behavior)

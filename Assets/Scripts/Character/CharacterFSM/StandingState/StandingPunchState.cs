@@ -6,14 +6,16 @@ namespace Character.CharacterFSM
     public class StandingPunchState : PunchState
     {
         public StandingPunchState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.StandingPunch, stateManager, characterRoot, BehaviorEnumSet.State.StandingIdle) {}
+            base(BehaviorEnumSet.State.StandingPunch, stateManager, characterRoot, BehaviorEnumSet.State.StandingIdle,
+                PassiveStateEnumSet.CharacterPositionState.OnGround) {}
         
         public override void Enter()
         {
             base.Enter();
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             
-            CharacterRigidBody.velocity = Vector3.zero;
+            //CharacterRigidBody.velocity = Vector3.zero;
+            CharacterAnimator.PlayAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer,true);
             CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.LowerLayer);
         }
 
@@ -37,7 +39,7 @@ namespace Character.CharacterFSM
 
         public override void Quit()
         {
-            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.Punch);
+            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.StandingPunch);
         }
     }
 }

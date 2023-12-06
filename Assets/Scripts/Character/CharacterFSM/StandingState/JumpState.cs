@@ -5,11 +5,12 @@ namespace Character.CharacterFSM
     public class JumpState : BehaviorStateInterface
     {
         public JumpState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.Jump, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
+            base(BehaviorEnumSet.State.Jump, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.BasicAttack, PassiveStateEnumSet.CharacterPositionState.InAir) {}
 
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             PlayerCharacter.LookAtEnemy();
             
             CharacterRigidBody.velocity += (Vector3.up * 8.0f);

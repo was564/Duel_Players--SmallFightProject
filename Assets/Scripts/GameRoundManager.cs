@@ -70,8 +70,8 @@ public class GameRoundManager : MonoObserverInterface
 
         foreach (var player in _players)
         {
+            player.ComboManagerInstance.IsCanceled = true;
             player.ResetHp();
-            player.CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.Size;
             player.StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
             player.GetComponent<CharacterJudgeBoxController>().EnableHitBox();
             player.GetComponent<Rigidbody>().velocity = Vector3.zero;

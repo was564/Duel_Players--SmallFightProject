@@ -9,11 +9,12 @@ namespace Character.CharacterFSM
         private Vector3 _finalVelocity;
         
         public WalkingBackwardState(GameObject characterRoot, BehaviorStateSimulator stateManager) :
-            base(BehaviorEnumSet.State.Backward, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
+            base(BehaviorEnumSet.State.Backward, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             _finalVelocity = (CharacterTransform.transform.forward.x < 0.0f)
                     ? (Vector3.right * _walkingVelocity)
                     : (Vector3.left * _walkingVelocity);

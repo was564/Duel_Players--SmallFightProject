@@ -19,8 +19,8 @@ namespace Character
         private PlayerCharacter _player;
 
         private PlayerCharacter _enemyCharacter;
-        
-        private bool isCanceled = false;
+
+        public bool IsCanceled { get; set; } = false;
         
         public ComboManager(PlayerCharacter player)
         {
@@ -48,7 +48,7 @@ namespace Character
         {
             if (!_countStatesCancel.ContainsKey(state)) return;
             _countStatesCancel[state]++;
-            isCanceled = true;
+            IsCanceled = true;
         }
 
         public bool CheckStateTransition(BehaviorStateInterface currentState, BehaviorStateInterface nextState)
@@ -77,6 +77,8 @@ namespace Character
                 default:
                     break;
             }
+
+            IsCanceled = false;
             return false;
         }
         
@@ -112,7 +114,7 @@ namespace Character
 
         public void UpdateComboManager()
         {
-            if (isCanceled && !_enemyCharacter.IsHitContinuous)
+            if (!_enemyCharacter.IsHitContinuous)
             {
                 var keys = _countStatesCancel.Keys.ToList();
                 for (int index = 0; index < keys.Count; index++)
@@ -120,7 +122,7 @@ namespace Character
                     _countStatesCancel[keys[index]] = 0;
                 }
                 
-                isCanceled = false;
+                IsCanceled = false;
             }
         }
     }

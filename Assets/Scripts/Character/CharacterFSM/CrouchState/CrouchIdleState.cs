@@ -6,14 +6,15 @@ namespace Character.CharacterFSM
     public class CrouchIdleState : BehaviorStateInterface
     {
         public CrouchIdleState(GameObject characterRoot, BehaviorStateSimulator stateManager) 
-            : base(BehaviorEnumSet.State.CrouchIdle, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
+            : base(BehaviorEnumSet.State.CrouchIdle, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.Crouch) {}
 
         private float _startingTime;
         private bool _isApplyFinalPosition;
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             PlayerCharacter.IsHitContinuous = false;
             
             _startingTime = Time.time;
@@ -56,6 +57,8 @@ namespace Character.CharacterFSM
 
         public override void UpdateState()
         {
+            PlayerCharacter.LookAtEnemy();
+            
             if (!_isApplyFinalPosition)
             {
                 Vector3 characterPosition = this.CharacterTransform.position;

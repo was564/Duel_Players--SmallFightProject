@@ -5,11 +5,12 @@ namespace Character.CharacterFSM
     public class CrouchKickState : BehaviorStateInterface
     {
         public CrouchKickState(GameObject characterRoot, BehaviorStateSimulator stateManager) 
-            : base(BehaviorEnumSet.State.CrouchKick, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
+            : base(BehaviorEnumSet.State.CrouchKick, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.BasicAttack, PassiveStateEnumSet.CharacterPositionState.Crouch) {}
 
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             
             CharacterAnimator.PlayAnimation("CrouchKick", CharacterAnimator.Layer.LowerLayer,true);
         }
@@ -31,7 +32,7 @@ namespace Character.CharacterFSM
 
         public override void Quit()
         {
-            
+            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.CrouchKick);
         }
     }
 }

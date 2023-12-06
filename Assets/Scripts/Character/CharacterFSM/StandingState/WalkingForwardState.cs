@@ -9,7 +9,8 @@ namespace Character.CharacterFSM
         private Vector3 _finalVelocity;
         
         public WalkingForwardState(GameObject characterRoot, BehaviorStateSimulator stateManager) :
-            base(BehaviorEnumSet.State.Forward, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Move) {}
+            base(BehaviorEnumSet.State.Forward, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
         
         public override void Enter()
         {

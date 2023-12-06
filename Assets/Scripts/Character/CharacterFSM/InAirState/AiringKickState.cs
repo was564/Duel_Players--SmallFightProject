@@ -5,11 +5,12 @@ namespace Character.CharacterFSM
     public class AiringKickState : BehaviorStateInterface
     {
         public AiringKickState(GameObject characterRoot, BehaviorStateSimulator stateManager) 
-            : base(BehaviorEnumSet.State.AiringKick, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack) {}
+            : base(BehaviorEnumSet.State.AiringKick, stateManager, characterRoot, 
+                BehaviorEnumSet.AttackLevel.BasicAttack, PassiveStateEnumSet.CharacterPositionState.InAir) {}
 
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.InAir);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             
             CharacterAnimator.PlayAnimation("AiringKick", CharacterAnimator.Layer.UpperLayer,true);
             CharacterAnimator.PlayAnimation("AiringKick", CharacterAnimator.Layer.LowerLayer,true);
@@ -35,7 +36,7 @@ namespace Character.CharacterFSM
 
         public override void Quit()
         {
-            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.Kick);
+            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.AiringKick);
         }
     }
 }

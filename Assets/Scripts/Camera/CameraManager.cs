@@ -27,9 +27,9 @@ public class CameraManager : MonoBehaviour
         float wallsDistance = walls.Max(wall => wall.transform.position.x) 
                          - walls.Min(wall => wall.transform.position.x);
 
-        _leftBottomBorderPosition.x = wallsCenterPosition - (wallsDistance * 0.5f) + _depthZOffset;
+        _leftBottomBorderPosition.x = wallsCenterPosition - ((wallsDistance * 0.5f) + _depthZOffset);
         _leftBottomBorderPosition.y = _borderBottomOffset;
-        _rightTopBorderPosition.x = wallsCenterPosition + (wallsDistance * 0.5f) + _depthZOffset;
+        _rightTopBorderPosition.x = wallsCenterPosition + ((wallsDistance * 0.5f) + _depthZOffset);
         _rightTopBorderPosition.y = 100.0f;
         
         this.transform.position = Vector3.forward * _depthZOffset;

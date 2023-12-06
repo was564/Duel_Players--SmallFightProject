@@ -4,13 +4,14 @@ namespace Character.CharacterFSM
 {
     public class CrouchGuardState: GuardState
     {
-        public CrouchGuardState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(characterRoot, stateManager, BehaviorEnumSet.State.StandingGuard, BehaviorEnumSet.State.CrouchIdle) {}
+        public CrouchGuardState(GameObject characterRoot, GameObject wall, BehaviorStateSimulator stateManager) : 
+            base(characterRoot, wall, stateManager, BehaviorEnumSet.State.CrouchGuard, BehaviorEnumSet.State.CrouchIdle, 
+                PassiveStateEnumSet.CharacterPositionState.Crouch) {}
         
         public override void Enter()
         {
             base.Enter();
-            PlayerCharacter.ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.Crouch);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
             
             CharacterAnimator.PlayAnimation("CrouchStop", CharacterAnimator.Layer.LowerLayer, true);
         }
