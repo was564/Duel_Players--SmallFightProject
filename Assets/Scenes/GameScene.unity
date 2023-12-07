@@ -780,12 +780,22 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8365299437066443489, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 8943557575331623666, guid: 8b87ae062393fb04daac4776f38921d6,
         type: 3}
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 9157146894947978564, guid: 8b87ae062393fb04daac4776f38921d6,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 9170053536173388521, guid: 8b87ae062393fb04daac4776f38921d6,
         type: 3}
       propertyPath: m_TagString
       value: Enemy
@@ -1039,6 +1049,11 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 5289638902948078310, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: _pauseFrame
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
         type: 3}
       propertyPath: EnemyObject
@@ -1047,22 +1062,327 @@ PrefabInstance:
     - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
         type: 3}
       propertyPath: IsAcceptArtificialInput
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
-        type: 3}
-      propertyPath: ArtificialButtons.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
         type: 3}
+      propertyPath: ArtificialButtons.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
       propertyPath: ArtificialButtons.Array.data[0]
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
         type: 3}
       propertyPath: ArtificialButtons.Array.data[1]
-      value: 6
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[2]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[3]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[4]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[5]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[6]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[7]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[8]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[9]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[10]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[11]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[12]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[13]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[14]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[15]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[16]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[17]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[18]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[19]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[20]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[21]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[22]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[23]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[24]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[25]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[26]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[27]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[28]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[29]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[30]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[31]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[32]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[33]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[34]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[35]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[36]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[37]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[38]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[39]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[40]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[41]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[42]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[43]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[44]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[45]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[46]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[47]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[48]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[49]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[50]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[51]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[52]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[53]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[54]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[55]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[56]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[57]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[58]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[59]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtonsInSameTime.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtonsInSameTime.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
+        type: 3}
+      propertyPath: ArtificialButtonsInSameTime.Array.data[1]
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7077177932894380542, guid: 029a43b50a40c1140a3876e9f6e25ccb,
         type: 3}
@@ -1773,12 +2093,307 @@ PrefabInstance:
     - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
         type: 3}
       propertyPath: ArtificialButtons.Array.data[0]
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
         type: 3}
       propertyPath: ArtificialButtons.Array.data[1]
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[2]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[3]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[4]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[5]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[6]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[7]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[8]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[9]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[10]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[11]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[12]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[13]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[14]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[15]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[16]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[17]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[18]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[19]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[20]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[21]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[22]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[23]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[24]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[25]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[26]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[27]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[28]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[29]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[30]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[31]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[32]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[33]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[34]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[35]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[36]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[37]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[38]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[39]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[40]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[41]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[42]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[43]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[44]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[45]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[46]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[47]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[48]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[49]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[50]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[51]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[52]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[53]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[54]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[55]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[56]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[57]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[58]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208516248291697874, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: ArtificialButtons.Array.data[59]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947683632663410886, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
+        type: 3}
+      propertyPath: _pauseFrame
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4366017341616276572, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
         type: 3}

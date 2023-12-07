@@ -70,6 +70,18 @@ namespace Character.CharacterFSM.SkillState
                 case BehaviorEnumSet.Behavior.Backward:
                     StateManager.ChangeState(BehaviorEnumSet.State.Backward);
                     break;
+                case BehaviorEnumSet.Behavior.StandingKick236Skill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick236Skill);
+                    break;
+                case BehaviorEnumSet.Behavior.StandingKick623Skill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick623Skill);
+                    break;
+                case BehaviorEnumSet.Behavior.StandingPunch236Skill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch236Skill);
+                    break;
+                case BehaviorEnumSet.Behavior.StandingPunch623Skill:
+                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch623Skill);
+                    break;
                 default:
                     break;
             }

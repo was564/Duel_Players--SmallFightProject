@@ -17,9 +17,9 @@ public class HitBox : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    [SerializeField] private int _pauseFrame = 60;
+    [SerializeField] private int _pauseFrame = 8;
     private float _backMoveSpeedByAttack = 2.0f;
-    private int _blockingFrameForGuard = 18;
+    private int _blockingFrameForGuard = 12;
     
     // Start is called before the first frame update
     void Start()

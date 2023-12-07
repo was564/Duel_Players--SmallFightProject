@@ -134,6 +134,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackNameForUnique: 0
+  AttackPosition: 0
+  HitReactLevel: 0
 --- !u!65 &4098143893123686231
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -201,6 +203,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackNameForUnique: 1
+  AttackPosition: 0
+  HitReactLevel: 0
 --- !u!65 &3590993345964170846
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -288,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42668b7d79930043ac158655ee384e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pauseTime: 0.15
+  _pauseFrame: 15
 --- !u!1001 &202477850455802838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -466,6 +470,7 @@ MonoBehaviour:
   EnemyObject: {fileID: 0}
   IsAcceptArtificialInput: 1
   ArtificialButtons: 01000000
+  ArtificialButtonsInSameTime: 
 --- !u!114 &5418962317537635080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,8 +507,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b64ba6cba8b6ce43a89ad84a00fee60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SkillInputAcknowledgeTime: 1
-  MoveInputAcknowledgeTime: 0.5
+  SkillInputAcknowledgeFrame: 24
+  MoveInputAcknowledgeFrame: 12
 --- !u!114 &8276076524200336864
 MonoBehaviour:
   m_ObjectHideFlags: 0

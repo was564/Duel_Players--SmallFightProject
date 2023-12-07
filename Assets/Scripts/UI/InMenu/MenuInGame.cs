@@ -88,6 +88,8 @@ public class MenuInGame : MonoBehaviour
             _gameManager.PauseAllCharactersInFrame(100000000);
             
             _gameRoundManager.BlockAllPlayersInput();
+
+            _gameRoundManager.IsGameStopped = true;
         }
         else
         {
@@ -100,6 +102,8 @@ public class MenuInGame : MonoBehaviour
             _gameManager.ResumeAllCharacters();
             
             _gameRoundManager.AcceptAllPlayersInput();
+
+            _gameRoundManager.IsGameStopped = false;
         }
     }
 

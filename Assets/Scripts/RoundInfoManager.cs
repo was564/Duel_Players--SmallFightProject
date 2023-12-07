@@ -67,7 +67,7 @@ public class RoundInfoManager
     {
         _roundData.InfoElements.Clear();
         
-        GC.Collect();
+        //GC.Collect();
     }
 }
 

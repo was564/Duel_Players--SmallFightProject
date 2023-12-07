@@ -240,6 +240,7 @@ public class GameRoundManager : MonoObserverInterface
             if (player.Hp <= 0)
             {
                 _downPlayers.Add(player.PlayerUniqueIndex);
+                player.StateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
             }
         }
 

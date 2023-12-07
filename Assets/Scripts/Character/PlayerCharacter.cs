@@ -41,6 +41,8 @@ public class PlayerCharacter : MonoPublisherInterface
     public bool IsAcceptArtificialInput = false;
 
     public List<BehaviorEnumSet.Button> ArtificialButtons = new List<BehaviorEnumSet.Button>();
+    
+    public List<BehaviorEnumSet.Button> ArtificialButtonsInSameTime = new List<BehaviorEnumSet.Button>();
 
     private float _addingGravityMultiple = 1.3f;
 
@@ -78,7 +80,7 @@ public class PlayerCharacter : MonoPublisherInterface
             if(!_activatedPassiveStateSet.Remove(0));
         }
         */
-        if (_roundManager.IsGameStopped || _roundManager.IsGameEnded) return;
+        if (_roundManager.IsGameStopped) return;
             
         DecideBehaviorByInput();
         _passiveStateManager.UpdatePassiveState();
@@ -116,6 +118,12 @@ public class PlayerCharacter : MonoPublisherInterface
             BehaviorEnumSet.Button artficialInput = ArtificialButtons[_indexForReadInArtificialInput++];
             _inputManager.EnqueueInputQueue(artficialInput);
             if (_indexForReadInArtificialInput == ArtificialButtons.Count) _indexForReadInArtificialInput = 0;
+        }
+        
+        if (IsAcceptArtificialInput && ArtificialButtonsInSameTime.Count > 0)
+        {
+            for(int index = 0;index < ArtificialButtonsInSameTime.Count; index++)
+                _inputManager.EnqueueInputQueue(ArtificialButtonsInSameTime[index]);
         }
 
         while (!_inputManager.isEmptyInputQueue())
