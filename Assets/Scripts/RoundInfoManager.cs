@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class RoundInfoManager
 {
-    private RoundData _roundData;
+    private RoundInfo _roundData;
 
     public RoundInfoManager()
     {
-        _roundData = new RoundData();
-        _roundData.Round = new List<EntryInput>();
+        _roundData = new RoundInfo();
+        _roundData.InfoElements = new List<RoundInfoElement>();
     }
     
     public void SaveRoundInfoToJson()
@@ -23,57 +23,101 @@ public class RoundInfoManager
         Debug.Log("JSON 파일이 생성되었습니다.");
     }
 
-    public void LoadPreviousRoundInfoFromJson(Queue<BehaviorEnumSet.Button> playerInputQueue, Queue<BehaviorEnumSet.Button> enemyInputQueue)
+    public void LoadPreviousRoundInfoFromJson(
+        Queue<UnionInfo> playerInputQueue, Queue<UnionInfo> enemyInputQueue,
+        Queue<UnionInfo> playerPositionQueue, Queue<UnionInfo> enemyPositionQueue,
+        Transform playerTransform, Transform enemyTransform)
     {
         string json = File.ReadAllText("./Assets/RoundJson/PreviousRound.json");
 
-        _roundData = JsonUtility.FromJson<RoundData>(json);
+        _roundData = JsonUtility.FromJson<RoundInfo>(json);
 
         int frame = -1;
-        for (int index = 0; index < _roundData.Round.Count; index++)
+        for (int index = 0; index < _roundData.InfoElements.Count; index++)
         {
-            EntryInput input = _roundData.Round[index];
-            if (frame != input.Frame)
+            RoundInfoElement element = _roundData.InfoElements[index];
+            
+            switch (element.DataType)
             {
-                playerInputQueue.Enqueue(BehaviorEnumSet.Button.Null);
-                enemyInputQueue.Enqueue(BehaviorEnumSet.Button.Null);
-                frame = input.Frame;
+                case (int)DataType.Input:
+                    UnionInfo input = element.Info;
+                    if(input.TagName == "Enemy") enemyInputQueue.Enqueue(input);
+                    else if(input.TagName == "Player") playerInputQueue.Enqueue(input);
+                    break;
+                case (int)DataType.Position:
+                    UnionInfo position = element.Info;
+                    if(position.TagName == "Enemy") enemyPositionQueue.Enqueue(position);
+                    else if(position.TagName == "Player") playerPositionQueue.Enqueue(position);
+                    break;
             }
-            if(input.TagName == "Enemy") enemyInputQueue.Enqueue((BehaviorEnumSet.Button)input.Button);
-            else if(input.TagName == "Player") playerInputQueue.Enqueue((BehaviorEnumSet.Button)input.Button);
         }
     }
 
-    public void EnqueueEntryInput(string tagName, BehaviorEnumSet.Button button, int frame)
+    public void EnqueueInfoInput(string tagName, BehaviorEnumSet.Button button, int frame)
     {
-        _roundData.Round.Add(new EntryInput(tagName, button, frame));
+        _roundData.InfoElements.Add(new RoundInfoElement(new UnionInfo(tagName, button, frame), (int)DataType.Input));
+    }
+
+    public void EnqueueInfoPosition(string tagName, float x, float y, int frame)
+    {
+        _roundData.InfoElements.Add(new RoundInfoElement(new UnionInfo(tagName, x, y, frame), (int)DataType.Position) );
     }
 
     public void Clear()
     {
-        _roundData.Round.Clear();
+        _roundData.InfoElements.Clear();
         
         GC.Collect();
     }
 }
 
-[System.Serializable]
-public class RoundData
+public enum DataType
 {
-    public List<EntryInput> Round;
+    Position = 0,
+    Input,
+    Size
 }
 
 [System.Serializable]
-public class EntryInput
+public class RoundInfo
 {
-    public EntryInput(string tagName, BehaviorEnumSet.Button button, int frame)
+    public List<RoundInfoElement> InfoElements;
+}
+
+[System.Serializable]
+public class RoundInfoElement
+{
+    public RoundInfoElement(UnionInfo info, int dataType)
+    {
+        Info = info;
+        DataType = dataType;
+    }
+    
+    public UnionInfo Info;
+    public int DataType;
+}
+
+[System.Serializable]
+public class UnionInfo
+{
+    public UnionInfo(string tagName, BehaviorEnumSet.Button button, int frame)
     {
         TagName = tagName;
         Button = (int)button;
         Frame = frame;
     }
 
+    public UnionInfo(string tagName, float x, float y, int frame)
+    {
+        TagName = tagName;
+        X = x;
+        Y = y;
+        Frame = frame;
+    }
+
     public string TagName;
     public int Frame;
     public int Button;
+    public float X;
+    public float Y;
 }

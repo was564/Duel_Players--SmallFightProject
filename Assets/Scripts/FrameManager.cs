@@ -21,6 +21,11 @@ public class FrameManager : MonoBehaviour
 
     public static int CurrentFrame { get; private set; } = 0;
 
+    public static void Reset()
+    {
+        CurrentFrame = 0;
+    }
+
     private void Awake()
     {
         Application.targetFrameRate = 60;
