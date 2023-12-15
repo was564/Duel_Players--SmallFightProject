@@ -28,11 +28,8 @@ public class GameRoundManager : MonoObserverInterface
 
     private RoundInfoManager _roundInfoManager;
 
-    private Queue<UnionInfo> _playersInputQueueForReplay = new Queue<UnionInfo>();
-    private Queue<UnionInfo> _enemyInputQueueForReplay = new Queue<UnionInfo>();
-    
-    private Queue<UnionInfo> _playersPositionQueueForReplay = new Queue<UnionInfo>();
-    private Queue<UnionInfo> _enemyPositionQueueForReplay = new Queue<UnionInfo>();
+    private Queue<BehaviorEnumSet.Button> _playersInputQueueForReplay = new Queue<BehaviorEnumSet.Button>();
+    private Queue<BehaviorEnumSet.Button> _enemyInputQueueForReplay = new Queue<BehaviorEnumSet.Button>();
 
     private CharacterInputManager _playerInput;
     private CharacterInputManager _enemyInput;
@@ -73,7 +70,6 @@ public class GameRoundManager : MonoObserverInterface
         if (RoundRemainTime <= 0.0f)
             DrawRound();
 
-        if (!_isGameReplayed) return;
         bool endedPlayerInputEnqueue = false;
         bool endedEnemyInputEnqueue = false;
         while (true)
@@ -86,12 +82,12 @@ public class GameRoundManager : MonoObserverInterface
                 }
                 else
                 {
-                    UnionInfo enemyInput = _enemyInputQueueForReplay.Peek();
-                    if (enemyInput.Frame > FrameManager.CurrentFrame)
+                    BehaviorEnumSet.Button enemyInput = _enemyInputQueueForReplay.Dequeue();
+                    if (enemyInput == BehaviorEnumSet.Button.Null)
                     {
                         endedEnemyInputEnqueue = true;
                     }
-                    else _enemyInput.EnqueueInputQueue((BehaviorEnumSet.Button)_enemyInputQueueForReplay.Dequeue().Button);
+                    else _enemyInput.EnqueueInputQueue(enemyInput);
                 }
             }
             if (!endedPlayerInputEnqueue)
@@ -102,51 +98,17 @@ public class GameRoundManager : MonoObserverInterface
                 }
                 else
                 {
-                    UnionInfo playerInput = _playersInputQueueForReplay.Peek();
-                    if (playerInput.Frame > FrameManager.CurrentFrame)
+                    BehaviorEnumSet.Button playerInput = _playersInputQueueForReplay.Dequeue();
+                    if (playerInput == BehaviorEnumSet.Button.Null)
                     {
                         endedPlayerInputEnqueue = true;
                     }
-                    else _playerInput.EnqueueInputQueue((BehaviorEnumSet.Button)_playersInputQueueForReplay.Dequeue().Button);
+                    else _playerInput.EnqueueInputQueue(playerInput);
                 }
             }
             
             if (endedPlayerInputEnqueue && endedEnemyInputEnqueue)
                 break;
-        }
-
-        while (_enemyPositionQueueForReplay.Count > 0)
-        {
-            if (_enemyPositionQueueForReplay.Peek().Frame == FrameManager.CurrentFrame)
-            {
-                UnionInfo positionInfo = _enemyPositionQueueForReplay.Dequeue();
-                Vector3 enemyPosition = _enemyInput.transform.position;
-                enemyPosition.x = positionInfo.X;
-                enemyPosition.y = positionInfo.Y;
-                _enemyInput.transform.position = enemyPosition;
-                break;
-            }
-            else if (_enemyPositionQueueForReplay.Peek().Frame < FrameManager.CurrentFrame)
-            {
-                _enemyPositionQueueForReplay.Dequeue();
-            }
-        }
-        
-        while (_playersPositionQueueForReplay.Count > 0)
-        {
-            if (_playersPositionQueueForReplay.Peek().Frame == FrameManager.CurrentFrame)
-            {
-                UnionInfo positionInfo = _playersPositionQueueForReplay.Dequeue();
-                Vector3 playerPosition = _playerInput.transform.position;
-                playerPosition.x = positionInfo.X;
-                playerPosition.y = positionInfo.Y;
-                _playerInput.transform.position = playerPosition;
-                break;
-            }
-            else if (_playersPositionQueueForReplay.Peek().Frame < FrameManager.CurrentFrame)
-            {
-                _playersPositionQueueForReplay.Dequeue();
-            }
         }
     }
 
@@ -155,10 +117,7 @@ public class GameRoundManager : MonoObserverInterface
         StartRound();
         BlockAllPlayersInput();
         _isGameReplayed = true;
-        _roundInfoManager.LoadPreviousRoundInfoFromJson(
-            _playersInputQueueForReplay, _enemyInputQueueForReplay,
-            _playersPositionQueueForReplay, _enemyPositionQueueForReplay,
-            _playerInput.transform, _enemyInput.transform);
+        _roundInfoManager.LoadPreviousRoundInfoFromJson(_playersInputQueueForReplay, _enemyInputQueueForReplay);
     }
 
     public void SaveRoundUntilNow()
@@ -169,7 +128,6 @@ public class GameRoundManager : MonoObserverInterface
     
     public void StartRound()
     {
-        FrameManager.Reset();
         _isGameReplayed = false;
         
         _resultPanel.SetActive(false);
@@ -191,7 +149,6 @@ public class GameRoundManager : MonoObserverInterface
         }
         
         _downPlayers.Clear();
-        _roundInfoManager.Clear();
         IsGameEnded = false;
     }
     
@@ -257,11 +214,6 @@ public class GameRoundManager : MonoObserverInterface
 
     public void EnqueueRoundInput(string tagName, BehaviorEnumSet.Button button, int frame)
     {
-        _roundInfoManager.EnqueueInfoInput(tagName, button, frame);
-    }
-    
-    public void EnqueueRoundInput(string tagName, float x, float y, int frame)
-    {
-        _roundInfoManager.EnqueueInfoPosition(tagName, x, y, frame);
+        _roundInfoManager.EnqueueEntryInput(tagName, button, frame);
     }
 }

@@ -176,8 +176,6 @@ public class PlayerCharacter : MonoPublisherInterface
             if (!isPaused) StateManager.HandleInput(nextBehavior);
             else if (isPaused) _stateSimulatorInStoppedFrame.HandleInput(nextBehavior);
         }
-        _roundManager.EnqueueRoundInput(gameObject.tag, transform.position.x, transform.position.y, FrameManager.CurrentFrame);
-        
         // Debug.Log(inputCount);
         
         //Debug.Log(_rigidbody.velocity);

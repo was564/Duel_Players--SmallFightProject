@@ -37,6 +37,9 @@ public class AttackBox : MonoBehaviour
             else if (childTransform.tag.Equals("HitParticle"))
                 HitParticle = childTransform.GetComponent<ParticleSystem>();
         }
+
+        GuardParticle.transform.position += Vector3.back * 0.5f;
+        HitParticle.transform.position += Vector3.back * 0.5f;
         
         GuardParticle.Stop();
         HitParticle.Stop();
