@@ -4,6 +4,7 @@ using Character;
 using Character.CharacterFSM;
 using Character.CharacterPassiveState;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerCharacter : MonoPublisherInterface
 {
@@ -15,7 +16,7 @@ public class PlayerCharacter : MonoPublisherInterface
 
     private GameRoundManager _roundManager;
     
-    private Rigidbody _rigidbody;
+    public Rigidbody RigidBody { get; private set; }
     private bool _isLookingRight;
     
     private CharacterInputManager _inputManager;
@@ -60,7 +61,7 @@ public class PlayerCharacter : MonoPublisherInterface
         _stateSimulatorInStoppedFrame = new BehaviorStateSimulator(this.gameObject, _wall, ComboManagerInstance);
         
         RegisterObserver(GameObject.FindObjectOfType<GameRoundManager>());
-        _rigidbody = this.GetComponent<Rigidbody>();
+        RigidBody = this.GetComponent<Rigidbody>();
         _inputManager = this.GetComponent<CharacterInputManager>();
         _commandProcessor = this.GetComponent<CommandProcessor>();
         _passiveStateManager = this.GetComponent<PassiveStateManager>();
@@ -94,8 +95,8 @@ public class PlayerCharacter : MonoPublisherInterface
 
     private void FixedUpdate()
     {
-        if(_rigidbody.useGravity)
-            _rigidbody.AddForce(0.0f, -10.0f * _addingGravityMultiple, 0.0f);
+        if(RigidBody.useGravity)
+            RigidBody.AddForce(0.0f, -10.0f * _addingGravityMultiple, 0.0f);
     }
 
     // Switch가 아닌 Command Pattern을 써도 좋으나 필요가 있는가
@@ -129,7 +130,7 @@ public class PlayerCharacter : MonoPublisherInterface
         while (!_inputManager.isEmptyInputQueue())
         {
             BehaviorEnumSet.Button input = _inputManager.DequeueInputQueue();
-            _roundManager.EnqueueRoundInput(gameObject.tag, input, FrameManager.CurrentFrame);
+            //_roundManager.EnqueueRoundInput(gameObject.tag, input, FrameManager.CurrentFrame);
             _commandProcessor.EnqueueInput(input);
 
             BehaviorEnumSet.Behavior nextBehavior = BehaviorEnumSet.Behavior.Null;
@@ -196,8 +197,8 @@ public class PlayerCharacter : MonoPublisherInterface
         switch (state)
         {
             case PassiveStateEnumSet.CharacterPositionState.OnGround:
-                _rigidbody.useGravity = false;
-                _rigidbody.constraints =
+                RigidBody.useGravity = false;
+                RigidBody.constraints =
                     RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ |
                     RigidbodyConstraints.FreezeRotation;
                 characterPosition = this.transform.position;
@@ -207,8 +208,8 @@ public class PlayerCharacter : MonoPublisherInterface
                 CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.OnGround;
                 break;
             case PassiveStateEnumSet.CharacterPositionState.Crouch:
-                _rigidbody.useGravity = false;
-                _rigidbody.constraints =
+                RigidBody.useGravity = false;
+                RigidBody.constraints =
                     RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ |
                     RigidbodyConstraints.FreezeRotation;
                 characterPosition = this.transform.position;
@@ -218,8 +219,8 @@ public class PlayerCharacter : MonoPublisherInterface
                 CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.Crouch;
                 break;
             case PassiveStateEnumSet.CharacterPositionState.InAir:
-                _rigidbody.useGravity = true;
-                _rigidbody.constraints =
+                RigidBody.useGravity = true;
+                RigidBody.constraints =
                     RigidbodyConstraints.FreezePositionZ |
                     RigidbodyConstraints.FreezeRotation;
 

@@ -6,59 +6,138 @@ using UnityEngine;
 
 public class RoundInfoManager
 {
-    private RoundData _roundData;
+    public enum DataType
+    {
+        Input = 0,
+        State,
+        Size
+    }
+
+    public DataType Type { get; set; }
+    
+    private RoundDataByInput _roundDataByInput;
+    private RoundDataByState _roundDataByState;
 
     public RoundInfoManager()
     {
-        _roundData = new RoundData();
-        _roundData.Round = new List<EntryInput>();
+        Type = DataType.State;
+        _roundDataByInput = new RoundDataByInput();
+        _roundDataByInput.Round = new List<EntryInput>();
+        
+        _roundDataByState = new RoundDataByState();
+        _roundDataByState.Round = new List<EntryState>();
     }
     
     public void SaveRoundInfoToJson()
     {
-        string json = JsonUtility.ToJson(_roundData, true);
+        string json = JsonUtility.ToJson(_roundDataByInput, true);
 
         File.WriteAllText("./Assets/RoundJson/PreviousRound.json", json);
 
         Debug.Log("JSON 파일이 생성되었습니다.");
     }
 
-    public void LoadPreviousRoundInfoFromJson(Queue<BehaviorEnumSet.Button> playerInputQueue, Queue<BehaviorEnumSet.Button> enemyInputQueue)
+    public void LoadPreviousRoundInfoFromJson(Queue<int> playerInputQueue, Queue<int> enemyInputQueue)
     {
         string json = File.ReadAllText("./Assets/RoundJson/PreviousRound.json");
 
-        _roundData = JsonUtility.FromJson<RoundData>(json);
+        _roundDataByInput = JsonUtility.FromJson<RoundDataByInput>(json);
 
-        int frame = -1;
-        for (int index = 0; index < _roundData.Round.Count; index++)
+        switch (Type)
         {
-            EntryInput input = _roundData.Round[index];
-            if (frame != input.Frame)
-            {
-                playerInputQueue.Enqueue(BehaviorEnumSet.Button.Null);
-                enemyInputQueue.Enqueue(BehaviorEnumSet.Button.Null);
-                frame = input.Frame;
-            }
-            if(input.TagName == "Enemy") enemyInputQueue.Enqueue((BehaviorEnumSet.Button)input.Button);
-            else if(input.TagName == "Player") playerInputQueue.Enqueue((BehaviorEnumSet.Button)input.Button);
+            case DataType.Input:
+                ConvertReplayDataByInput(playerInputQueue, enemyInputQueue);
+                break;
+            case DataType.State:
+                ConvertReplayDataByState(playerInputQueue, enemyInputQueue);
+                break;
         }
     }
 
-    public void EnqueueEntryInput(string tagName, BehaviorEnumSet.Button button, int frame)
+    private void ConvertReplayDataByState(Queue<int> playerInputQueue, Queue<int> enemyInputQueue)
     {
-        _roundData.Round.Add(new EntryInput(tagName, button, frame));
+        int frame = -1;
+        for (int index = 0; index < _roundDataByState.Round.Count; index++)
+        {
+            EntryState input = _roundDataByState.Round[index];
+            if (frame != input.Frame)
+            {
+                playerInputQueue.Enqueue((int)BehaviorEnumSet.Button.Null);
+                enemyInputQueue.Enqueue((int)BehaviorEnumSet.Button.Null);
+                frame = input.Frame;
+            }
+            if(input.CharacterIndex == (int)GameRoundManager.CharacterIndex.Enemy) enemyInputQueue.Enqueue(input.State);
+            else if(input.CharacterIndex == (int)GameRoundManager.CharacterIndex.Player) playerInputQueue.Enqueue(input.State);
+        }
+    }
+    
+    private void ConvertReplayDataByInput(Queue<int> playerInputQueue, Queue<int> enemyInputQueue)
+    {
+        int frame = -1;
+        for (int index = 0; index < _roundDataByInput.Round.Count; index++)
+        {
+            EntryInput input = _roundDataByInput.Round[index];
+            if (frame != input.Frame)
+            {
+                playerInputQueue.Enqueue((int)BehaviorEnumSet.Button.Null);
+                enemyInputQueue.Enqueue((int)BehaviorEnumSet.Button.Null);
+                frame = input.Frame;
+            }
+            if(input.TagName == "Enemy") enemyInputQueue.Enqueue(input.Button);
+            else if(input.TagName == "Player") playerInputQueue.Enqueue(input.Button);
+        }
+    }
+
+    public void EnqueueEntryInput(string tagName, BehaviorEnumSet.Button button)
+    {
+        _roundDataByInput.Round.Add(new EntryInput(tagName, button, FrameManager.CurrentFrame));
+    }
+
+    public void EnqueueEntryState(GameRoundManager.CharacterIndex index, BehaviorEnumSet.State state, Vector2 position, Vector2 velocity)
+    {
+        _roundDataByState.Round.Add(new EntryState(index, state, FrameManager.CurrentFrame, position, velocity));
     }
 
     public void Clear()
     {
-        _roundData.Round.Clear();
+        _roundDataByInput.Round.Clear();
         
         //GC.Collect();
     }
 }
 
 [System.Serializable]
-public class RoundData
+public class RoundDataByState
+{
+    public List<EntryState> Round;
+}
+
+[System.Serializable]
+public class EntryState
+{
+    public EntryState(GameRoundManager.CharacterIndex index, BehaviorEnumSet.State state, int frame, Vector2 position, Vector2 velocity)
+    {
+        CharacterIndex = (int)index;
+        State = (int)state;
+        Frame = frame;
+        PositionX = position.x;
+        PositionY = position.y;
+        VelocityX = velocity.x;
+        VelocityY = velocity.y;
+    }
+
+    public int CharacterIndex;
+    public int Frame;
+    public int State;
+    public float PositionX;
+    public float PositionY;
+    public float VelocityX;
+    public float VelocityY;
+}
+
+
+[System.Serializable]
+public class RoundDataByInput
 {
     public List<EntryInput> Round;
 }
