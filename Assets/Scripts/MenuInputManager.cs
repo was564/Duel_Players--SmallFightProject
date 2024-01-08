@@ -11,7 +11,7 @@ public class MenuInputManager : MonoBehaviour
     [SerializeField] private InputActionAsset _inputPackage;
     
     private InputActionMap _inputInMenu;
-
+    
     private InputAction _verticalScrollKey; // up, down
     private InputAction _optionChangeKey; // left, right
 

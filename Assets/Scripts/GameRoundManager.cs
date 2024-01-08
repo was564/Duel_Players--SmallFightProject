@@ -206,8 +206,8 @@ public class GameRoundManager : MonoObserverInterface
     }
 
 
-    private BehaviorEnumSet.State previousPlayerState = BehaviorEnumSet.State.Null;
-    private BehaviorEnumSet.State previousEnemyState = BehaviorEnumSet.State.Null;
+    private BehaviorEnumSet.State _previousPlayerState = BehaviorEnumSet.State.Null;
+    private BehaviorEnumSet.State _previousEnemyState = BehaviorEnumSet.State.Null;
     
     public void EnqueueRoundState(CharacterIndex index, BehaviorEnumSet.State state, int frame, Vector2 position, Vector2 velocity)
     {
@@ -215,10 +215,10 @@ public class GameRoundManager : MonoObserverInterface
         switch (index)
         {
             case CharacterIndex.Player:
-                if (state == previousPlayerState) doEnqueue = false;
+                if (state == _previousPlayerState) doEnqueue = false;
                 break;
             case CharacterIndex.Enemy:
-                if (state == previousEnemyState) doEnqueue = false;
+                if (state == _previousEnemyState) doEnqueue = false;
                 break;
             default:
                 return;

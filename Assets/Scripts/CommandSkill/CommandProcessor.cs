@@ -10,15 +10,15 @@ public class CommandProcessor : MonoBehaviour
     // 반면 Tuple은 Allocation 속도가 느리나 동작 속도가 빠르다.
     // 참고 : https://codingcoding.tistory.com/206
 
-    public int SkillInputAcknowledgeFrame = 24;
-    public int MoveInputAcknowledgeFrame = 12;
+    public int SkillInputAcknowledgeFrame = 12;
+    public int MoveInputAcknowledgeFrame = 6;
     
     private Queue<BehaviorEnumSet.Button> _inputQueue = new Queue<BehaviorEnumSet.Button>();
 
     private HashSet<CommandStructure> _unAvailableCommandSet = new HashSet<CommandStructure>();
     private HashSet<CommandStructure> _availableCommandSet = new HashSet<CommandStructure>();
 
-    private List<CommandStructure> _commandForMovingState = new List<CommandStructure>();
+    //private List<CommandStructure> _commandForMovingState = new List<CommandStructure>();
     
     // Update is called once per frame
     void Update()
@@ -78,15 +78,17 @@ public class CommandProcessor : MonoBehaviour
             {
                 command.Depth = 0;
                 _unAvailableCommandSet.Add(command);
-                _commandForMovingState.Add(command);
+                //_commandForMovingState.Add(command);
             }
         }
 
+        /*
         foreach (var command in _commandForMovingState)
         {
             _availableCommandSet.Remove(command);
         }
         _commandForMovingState.Clear();
+        */
     }
 
     public BehaviorEnumSet.Behavior JudgeCommand(

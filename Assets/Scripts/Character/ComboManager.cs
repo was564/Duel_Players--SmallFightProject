@@ -19,7 +19,7 @@ namespace Character
         private PlayerCharacter _player;
 
         private PlayerCharacter _enemyCharacter;
-
+        
         public bool IsCanceled { get; set; } = false;
         
         public ComboManager(PlayerCharacter player)
