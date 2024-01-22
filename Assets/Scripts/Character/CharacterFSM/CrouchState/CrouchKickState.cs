@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class CrouchKickState : BehaviorStateInterface
     {
-        public CrouchKickState(GameObject characterRoot, BehaviorStateSimulator stateManager) 
-            : base(BehaviorEnumSet.State.CrouchKick, stateManager, characterRoot, 
+        public CrouchKickState(GameObject characterRoot) 
+            : base(BehaviorEnumSet.State.CrouchKick, characterRoot, 
                 BehaviorEnumSet.AttackLevel.BasicAttack, PassiveStateEnumSet.CharacterPositionState.Crouch) {}
 
         public override void Enter()
@@ -15,19 +15,21 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimation("CrouchKick", CharacterAnimator.Layer.LowerLayer,true);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("CrouchKick", CharacterAnimator.Layer.LowerLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.CrouchIdle);
+                return BehaviorEnumSet.State.CrouchIdle;
+
+            return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

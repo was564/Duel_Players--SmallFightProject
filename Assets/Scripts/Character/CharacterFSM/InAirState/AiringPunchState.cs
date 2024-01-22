@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class AiringPunchState : BehaviorStateInterface
     {
-        public AiringPunchState(GameObject characterRoot, BehaviorStateSimulator stateManager) 
-            : base(BehaviorEnumSet.State.AiringPunch, stateManager, characterRoot, 
+        public AiringPunchState(GameObject characterRoot) 
+            : base(BehaviorEnumSet.State.AiringPunch, characterRoot, 
                 BehaviorEnumSet.AttackLevel.BasicAttack, PassiveStateEnumSet.CharacterPositionState.InAir) {}
 
         public override void Enter()
@@ -15,22 +15,24 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimation("AiringPunch", CharacterAnimator.Layer.UpperLayer,true);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
             if (this.CharacterTransform.position.y <= this.PlayerCharacter.PositionYOffsetForLand)
-                StateManager.ChangeState(BehaviorEnumSet.State.Land);
+                return BehaviorEnumSet.State.Land;
+
+            if (CharacterAnimator.IsEndCurrentAnimation("AiringPunch", CharacterAnimator.Layer.UpperLayer))
+                return BehaviorEnumSet.State.InAirIdle;
             
-            if(CharacterAnimator.IsEndCurrentAnimation("AiringPunch", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.InAirIdle);
+            return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

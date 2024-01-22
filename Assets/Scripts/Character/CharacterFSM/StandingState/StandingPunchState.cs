@@ -5,8 +5,8 @@ namespace Character.CharacterFSM
 {
     public class StandingPunchState : PunchState
     {
-        public StandingPunchState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.StandingPunch, stateManager, characterRoot, BehaviorEnumSet.State.StandingIdle,
+        public StandingPunchState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.StandingPunch, characterRoot, BehaviorEnumSet.State.StandingIdle,
                 PassiveStateEnumSet.CharacterPositionState.OnGround) {}
         
         public override void Enter()
@@ -19,22 +19,24 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.LowerLayer);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 case BehaviorEnumSet.Behavior.Punch:
-                    break;
+                    return BehaviorEnumSet.State.Null;
+                
                 case BehaviorEnumSet.Behavior.Jump:
-                    break;
+                    return BehaviorEnumSet.State.Null;
+                
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
-            base.UpdateState();
+            return base.UpdateState();
         }
 
         public override void Quit()

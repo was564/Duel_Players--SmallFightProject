@@ -63,7 +63,7 @@ public class CommandProcessor : MonoBehaviour
             int inputAcknowledgeFrame = (command.AttackTrigger == BehaviorEnumSet.Behavior.Null)
                 ? MoveInputAcknowledgeFrame
                 : SkillInputAcknowledgeFrame;
-            if (FrameManager.CurrentFrame - command.InputStartingFrame > inputAcknowledgeFrame)
+            if (FrameManager.CurrentFrame - command.InputStartingFrame >= inputAcknowledgeFrame)
             {
                 command.Depth = 0;
             }

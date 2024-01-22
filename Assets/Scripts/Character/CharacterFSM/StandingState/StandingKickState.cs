@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class StandingKickState : BehaviorStateInterface
     {
-        public StandingKickState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.StandingKick, stateManager, characterRoot, 
+        public StandingKickState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.StandingKick, characterRoot, 
                 BehaviorEnumSet.AttackLevel.BasicAttack, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
 
         public override void Enter()
@@ -17,19 +17,20 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimation("StandingKick", CharacterAnimator.Layer.LowerLayer,true);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
-            if(CharacterAnimator.IsEndCurrentAnimation("StandingKick", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
+            if (CharacterAnimator.IsEndCurrentAnimation("StandingKick", CharacterAnimator.Layer.UpperLayer))
+                return BehaviorEnumSet.State.StandingIdle;
+            else return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

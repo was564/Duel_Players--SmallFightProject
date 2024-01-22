@@ -409,8 +409,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b64ba6cba8b6ce43a89ad84a00fee60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SkillInputAcknowledgeFrame: 12
-  MoveInputAcknowledgeFrame: 6
+  SkillInputAcknowledgeFrame: 36
+  MoveInputAcknowledgeFrame: 18
 --- !u!114 &1837647840332694665
 MonoBehaviour:
   m_ObjectHideFlags: 0

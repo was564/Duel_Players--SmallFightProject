@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class FallDownState : BehaviorStateInterface
     {
-        public FallDownState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.FallDown, stateManager, characterRoot, 
+        public FallDownState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.FallDown, characterRoot, 
                 BehaviorEnumSet.AttackLevel.SpecialMove, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
 
         private int stateStartingFrame;
@@ -21,21 +21,22 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimation("FallDown", CharacterAnimator.Layer.LowerLayer);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
-            if (PlayerCharacter.Hp <= 0) return;
+            if (PlayerCharacter.Hp <= 0) return BehaviorEnumSet.State.Null;
             stateStartingFrame += 1;
-            if(stateStartingFrame >= lyingDownFrame)
-                StateManager.ChangeState(BehaviorEnumSet.State.GetUp);
+            if (stateStartingFrame >= lyingDownFrame)
+                return BehaviorEnumSet.State.GetUp;
+            else return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

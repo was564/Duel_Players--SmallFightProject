@@ -8,7 +8,6 @@ public abstract class BehaviorStateInterface
 {
     protected BehaviorStateInterface(
         BehaviorEnumSet.State stateName,
-        BehaviorStateSimulator stateManager,
         GameObject characterRoot, 
         BehaviorEnumSet.AttackLevel attackLevel,
         PassiveStateEnumSet.CharacterPositionState positionState)
@@ -18,12 +17,10 @@ public abstract class BehaviorStateInterface
         this.CharacterTransform = characterRoot.transform;
         this.CharacterAnimator = characterRoot.GetComponent<CharacterAnimator>();
         this.CharacterRigidBody = characterRoot.GetComponent<Rigidbody>();
-        this.StateManager = stateManager;
         this.PlayerCharacter = characterRoot.GetComponent<PlayerCharacter>();
         this.CharacterJudgeBoxController = characterRoot.GetComponent<CharacterJudgeBoxController>();
         this.CharacterPositionStateInCurrentState = positionState;
     }
-
     public BehaviorEnumSet.State StateName { get; private set; }
     public PassiveStateEnumSet.CharacterPositionState CharacterPositionStateInCurrentState;
     
@@ -31,7 +28,6 @@ public abstract class BehaviorStateInterface
     protected CharacterAnimator CharacterAnimator;
     protected Transform CharacterTransform;
     protected Rigidbody CharacterRigidBody;
-    protected BehaviorStateSimulator StateManager;
     protected CharacterJudgeBoxController CharacterJudgeBoxController;
 
     
@@ -40,9 +36,10 @@ public abstract class BehaviorStateInterface
     public int AttackLevel { get; protected set; }
     
     public abstract void Enter();
-
-    public abstract void HandleInput(BehaviorEnumSet.Behavior behavior);
-    public abstract void UpdateState();
+    
+    public abstract BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior);
+    
+    public abstract BehaviorEnumSet.State UpdateState();
     
     public abstract void Quit();
 }

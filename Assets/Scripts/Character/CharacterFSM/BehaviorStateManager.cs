@@ -24,61 +24,29 @@ public class BehaviorStateManager : BehaviorStateSimulator
         = new Dictionary<BehaviorEnumSet.State, BehaviorStateInterface>();
 
     private GameObject _rootCharacterObject;
-    
+
     public BehaviorStateInterface CurrentState { get; protected set; }
-    
+
     protected ComboManager ComboManagerInstance;
     */
-    
-    public BehaviorStateManager(GameObject characterObject, GameObject wall, ComboManager comboManager)
-        : base(characterObject, wall, comboManager) { }
-    
-    public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+
+    public BehaviorStateManager(GameObject characterObject, GameObject wall, BehaviorStateSetInterface stateSet, ComboManager comboManager)
+        : base(characterObject, wall, stateSet, comboManager)
     {
-        if(!ComboManagerInstance.TryActivateSkillState(behavior, this))
-            CurrentState.HandleInput(behavior);
     }
-    
+
     public override void UpdateState()
     {
-        CurrentState.UpdateState();
+        BehaviorEnumSet.State resultState = this.CurrentState.UpdateState();
+        this.ChangeState(resultState);
         // Debug.Log(CurrentState);
     }
 
     public override void ChangeState(BehaviorEnumSet.State nextState)
     {
+        if (nextState == BehaviorEnumSet.State.Null) return;
         CurrentState.Quit();
-        CurrentState = BehaviorStateSet[nextState];
+        CurrentState = StateSet.GetStateInfo(nextState);
         CurrentState.Enter();
-    }
-    
-    protected virtual void InitStateSet()
-    {
-        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingHit, new StandingHitState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingIdle, new StandingIdleState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingPunch, new StandingPunchState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingKick, new StandingKickState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.Forward, new WalkingForwardState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.Backward, new WalkingBackwardState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.Jump, new JumpState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.InAirIdle, new AiringState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.Land, new LandState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchIdle, new CrouchIdleState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchPunch, new CrouchPunchState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchKick, new CrouchKickState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.AiringPunch, new AiringPunchState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.AiringKick, new AiringKickState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingPunch236Skill, new StandingPunch236SkillState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingKick236Skill, new StandingKick236SkillState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingPunch623Skill, new StandingPunch623SkillState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingKick623Skill, new StandingKick623SkillState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.DashOnGround, new DashOnGroundState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.BackStepOnGroundState, new BackStepOnGroundState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.StandingGuard, new StandingGuardState(RootCharacterObject, Wall, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchGuard, new CrouchGuardState(RootCharacterObject, Wall, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.CrouchHit, new CrouchHitState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.InAirHit, new InAirHitState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.FallDown, new FallDownState(RootCharacterObject, this));
-        BehaviorStateSet.Add(BehaviorEnumSet.State.GetUp, new GetUpState(RootCharacterObject, this));
     }
 }

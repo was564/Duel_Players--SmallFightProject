@@ -5,8 +5,8 @@ namespace Character.CharacterFSM
 {
     public class CrouchIdleState : BehaviorStateInterface
     {
-        public CrouchIdleState(GameObject characterRoot, BehaviorStateSimulator stateManager) 
-            : base(BehaviorEnumSet.State.CrouchIdle, stateManager, characterRoot, 
+        public CrouchIdleState(GameObject characterRoot) 
+            : base(BehaviorEnumSet.State.CrouchIdle, characterRoot, 
                 BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.Crouch) {}
 
         private int _startingFrame;
@@ -31,40 +31,40 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimationSmoothly("Crouch", CharacterAnimator.Layer.LowerLayer);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 case BehaviorEnumSet.Behavior.Stand:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
-                    break;
+                    return BehaviorEnumSet.State.StandingIdle;
+                
                 case BehaviorEnumSet.Behavior.Punch:
-                    StateManager.ChangeState(BehaviorEnumSet.State.CrouchPunch);
-                    break;
+                    return BehaviorEnumSet.State.CrouchPunch;
+                
                 case BehaviorEnumSet.Behavior.Kick:
-                    StateManager.ChangeState(BehaviorEnumSet.State.CrouchKick);
-                    break;
+                    return BehaviorEnumSet.State.CrouchKick;
+                
                 case BehaviorEnumSet.Behavior.Guard:
-                    StateManager.ChangeState(BehaviorEnumSet.State.CrouchGuard);
-                    break;
+                    return BehaviorEnumSet.State.CrouchGuard;
+                
                 case BehaviorEnumSet.Behavior.StandingPunch236Skill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch236Skill);
-                    break;
+                    return BehaviorEnumSet.State.StandingPunch236Skill;
+                
                 case BehaviorEnumSet.Behavior.StandingKick236Skill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick236Skill);
-                    break;
+                    return BehaviorEnumSet.State.StandingKick236Skill;
+                
                 case BehaviorEnumSet.Behavior.StandingPunch623Skill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch623Skill);
-                    break;
+                    return BehaviorEnumSet.State.StandingPunch623Skill;
+                
                 case BehaviorEnumSet.Behavior.StandingKick623Skill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick623Skill);
-                    break;
+                    return BehaviorEnumSet.State.StandingKick623Skill;
+                
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
             PlayerCharacter.LookAtEnemy();
             
@@ -83,6 +83,8 @@ namespace Character.CharacterFSM
                 if (animationDurationTime == 1.0f)
                     _isApplyFinalPosition = true;
             }
+            
+            return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

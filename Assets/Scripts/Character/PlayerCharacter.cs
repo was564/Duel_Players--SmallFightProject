@@ -55,10 +55,14 @@ public class PlayerCharacter : MonoPublisherInterface
     {
         _roundManager = GameObject.FindObjectOfType<GameRoundManager>();
         _wall = GameObject.FindWithTag("Wall");
+
+        BehaviorStateSetInterface stateSet = BehaviorStateSetManager.GetStateSet(
+                BehaviorStateSetManager.BehaviorStateSetIndex.Kohaku,
+                transform.root.gameObject);
+        ComboManagerInstance = new ComboManager(this, stateSet);
         
-        ComboManagerInstance = new ComboManager(this);
-        StateManager = new BehaviorStateManager(this.gameObject, _wall, ComboManagerInstance);
-        _stateSimulatorInStoppedFrame = new BehaviorStateSimulator(this.gameObject, _wall, ComboManagerInstance);
+        StateManager = new BehaviorStateManager(this.gameObject, _wall, stateSet, ComboManagerInstance);
+        _stateSimulatorInStoppedFrame = new BehaviorStateSimulator(this.gameObject, _wall, stateSet, ComboManagerInstance);
         
         RegisterObserver(GameObject.FindObjectOfType<GameRoundManager>());
         RigidBody = this.GetComponent<Rigidbody>();

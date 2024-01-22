@@ -5,8 +5,8 @@ namespace Character.CharacterFSM.SkillState
 {
     public class BackStepOnGroundState : SkillStateInterface
     {
-        public BackStepOnGroundState(GameObject characterRoot, BehaviorStateSimulator stateManager)
-            : base(BehaviorEnumSet.State.BackStepOnGroundState, stateManager, characterRoot, 
+        public BackStepOnGroundState(GameObject characterRoot)
+            : base(BehaviorEnumSet.State.BackStepOnGroundState, characterRoot, 
                 BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.InAir)
         {
             MoveCommand = new List<BehaviorEnumSet.InputSet>()
@@ -46,19 +46,20 @@ namespace Character.CharacterFSM.SkillState
             CharacterAnimator.PlayAnimationSmoothly("BackStep", CharacterAnimator.Layer.LowerLayer);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
             if (this.CharacterTransform.position.y <= this.PlayerCharacter.PositionYOffsetForLand)
-                StateManager.ChangeState(BehaviorEnumSet.State.Land);
+                return BehaviorEnumSet.State.Land;
+            else return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

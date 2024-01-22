@@ -16,14 +16,17 @@ namespace Character
 
         public bool IsDoingCombo { get; set; }
 
+        private BehaviorStateSetInterface _stateSet;
+        
         private PlayerCharacter _player;
 
         private PlayerCharacter _enemyCharacter;
         
         public bool IsCanceled { get; set; } = false;
         
-        public ComboManager(PlayerCharacter player)
+        public ComboManager(PlayerCharacter player, BehaviorStateSetInterface stateSet)
         {
+            _stateSet = stateSet;
             _player = player;
             _enemyCharacter = player.EnemyObject.GetComponent<PlayerCharacter>();
             
@@ -90,9 +93,9 @@ namespace Character
             return false;
         }
         
-        public bool TryActivateSkillState(BehaviorEnumSet.Behavior input, BehaviorStateSimulator stateManager)
+        public BehaviorEnumSet.State TryGetActivateSkillState(BehaviorEnumSet.State currentState, BehaviorEnumSet.Behavior input)
         {
-            if (!_enemyCharacter.IsHitContinuous) return false;
+            if (!_enemyCharacter.IsHitContinuous) return BehaviorEnumSet.State.Null;
             
             BehaviorEnumSet.State nextState = BehaviorEnumSet.State.Null;
             switch (input) // AttackLevel이 Cancelable Move 이상부터인 스킬 넣기
@@ -116,17 +119,20 @@ namespace Character
                     nextState = BehaviorEnumSet.State.StandingKick623Skill;
                     break;
                 default:
+                    nextState = BehaviorEnumSet.State.Null;
                     break;
             }
 
             if (nextState != BehaviorEnumSet.State.Null &&
-                CheckStateTransition(stateManager.CurrentState, stateManager.GetStateInfo(nextState)))
+                CheckStateTransition(_stateSet.GetStateInfo(currentState), _stateSet.GetStateInfo(nextState)))
             {
-                stateManager.ChangeState(nextState);
                 CountStateCancel(nextState);
-                return true;
+                return nextState;
             }
-            return false;
+            else
+            {
+                return BehaviorEnumSet.State.Null;
+            }
         }
 
         public void UpdateComboManager()

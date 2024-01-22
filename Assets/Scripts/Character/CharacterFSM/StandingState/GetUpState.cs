@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class GetUpState : BehaviorStateInterface
     {
-        public GetUpState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.GetUp, stateManager, characterRoot, 
+        public GetUpState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.GetUp, characterRoot, 
                 BehaviorEnumSet.AttackLevel.SpecialMove, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
 
         public override void Enter()
@@ -16,19 +16,20 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimation("GetUp", CharacterAnimator.Layer.LowerLayer);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
-            if(CharacterAnimator.IsEndCurrentAnimation("GetUp", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
+            if (CharacterAnimator.IsEndCurrentAnimation("GetUp", CharacterAnimator.Layer.UpperLayer))
+                return BehaviorEnumSet.State.StandingIdle;
+            else return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

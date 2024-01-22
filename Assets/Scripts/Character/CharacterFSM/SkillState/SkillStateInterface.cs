@@ -5,12 +5,11 @@ using UnityEngine;
 public abstract class SkillStateInterface : BehaviorStateInterface
 {
     public SkillStateInterface(
-        BehaviorEnumSet.State stateName, 
-        BehaviorStateSimulator stateManager,
+        BehaviorEnumSet.State stateName,
         GameObject characterRoot, 
         BehaviorEnumSet.AttackLevel attackLevel,
         PassiveStateEnumSet.CharacterPositionState positionState)
-        : base(stateName, stateManager, characterRoot, attackLevel, positionState)
+        : base(stateName, characterRoot, attackLevel, positionState)
     {
         CommandManager = characterRoot.GetComponent<CommandProcessor>();
     }

@@ -4,8 +4,9 @@ namespace Character.CharacterFSM
 {
     public class CrouchHitState : BehaviorStateInterface
     {
-        public CrouchHitState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.CrouchHit, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Hit, PassiveStateEnumSet.CharacterPositionState.Crouch) {}
+        public CrouchHitState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.CrouchHit, characterRoot, 
+                BehaviorEnumSet.AttackLevel.Hit, PassiveStateEnumSet.CharacterPositionState.Crouch) {}
         
         private float _backMoveSpeedByAttack = 2.0f;
         
@@ -20,19 +21,21 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimation("CrouchStop", CharacterAnimator.Layer.LowerLayer, true);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.CrouchIdle);
+                return BehaviorEnumSet.State.CrouchIdle;
+            
+            return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

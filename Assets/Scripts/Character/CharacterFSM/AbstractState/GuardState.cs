@@ -5,9 +5,9 @@ namespace Character.CharacterFSM
 {
     public abstract class GuardState : BehaviorStateInterface
     {
-        public GuardState(GameObject characterRoot, GameObject wall, BehaviorStateSimulator stateManager, BehaviorEnumSet.State guardStateName,
+        public GuardState(GameObject characterRoot, GameObject wall, BehaviorEnumSet.State guardStateName,
             BehaviorEnumSet.State nextState, PassiveStateEnumSet.CharacterPositionState positionState) :
-            base(guardStateName, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.Guard, positionState)
+            base(guardStateName, characterRoot, BehaviorEnumSet.AttackLevel.Guard, positionState)
         {
             _wallAcknowledgeDistance = math.abs(wall.transform.position.x) - 1.0f;
             _enemyRigidbody = PlayerCharacter.EnemyObject.transform.root.GetComponent<Rigidbody>();
@@ -33,18 +33,18 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimation("Guard", CharacterAnimator.Layer.UpperLayer, true);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             PressGuardKey(behavior);
             
             switch (behavior)
             {
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
             ContinuousFrameByBlockAttack -= 1;
 
@@ -70,8 +70,10 @@ namespace Character.CharacterFSM
             if (ContinuousFrameByBlockAttack < 0)
                 PlayerCharacter.IsHitContinuous = false;
             if (!_isPressGuardKeyContinuous && !PlayerCharacter.IsHitContinuous)
-                StateManager.ChangeState(_nextState);
+                return _nextState;
             else _isPressGuardKeyContinuous = false;
+
+            return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

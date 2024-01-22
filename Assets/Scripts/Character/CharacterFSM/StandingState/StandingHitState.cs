@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class StandingHitState : BehaviorStateInterface
     {
-        public StandingHitState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.StandingHit, stateManager, characterRoot, 
+        public StandingHitState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.StandingHit, characterRoot, 
                 BehaviorEnumSet.AttackLevel.Hit, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
         
         
@@ -19,19 +19,20 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimation("StandingIdle", CharacterAnimator.Layer.LowerLayer, true);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
-            if(CharacterAnimator.IsEndCurrentAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
+            if (CharacterAnimator.IsEndCurrentAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer))
+                return BehaviorEnumSet.State.StandingIdle;
+            else return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

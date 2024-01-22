@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class AiringState : BehaviorStateInterface
     {
-        public AiringState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.InAirIdle, stateManager, characterRoot, 
+        public AiringState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.InAirIdle, characterRoot, 
                 BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.InAir) {}
         
         public override void Enter()
@@ -16,25 +16,26 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimationSmoothly("InAirIdle", CharacterAnimator.Layer.LowerLayer);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 case BehaviorEnumSet.Behavior.Punch:
-                    StateManager.ChangeState(BehaviorEnumSet.State.AiringPunch);
-                    break;
+                    return BehaviorEnumSet.State.AiringPunch;
+                
                 case BehaviorEnumSet.Behavior.Kick:
-                    StateManager.ChangeState(BehaviorEnumSet.State.AiringKick);
-                    break;
+                    return BehaviorEnumSet.State.AiringKick;
+                
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
             if (this.CharacterTransform.position.y <= this.PlayerCharacter.PositionYOffsetForLand)
-                StateManager.ChangeState(BehaviorEnumSet.State.Land);
+                return BehaviorEnumSet.State.Land;
+            else return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

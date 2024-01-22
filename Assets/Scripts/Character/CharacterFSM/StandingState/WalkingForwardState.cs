@@ -8,8 +8,8 @@ namespace Character.CharacterFSM
 
         private Vector3 _finalVelocity;
         
-        public WalkingForwardState(GameObject characterRoot, BehaviorStateSimulator stateManager) :
-            base(BehaviorEnumSet.State.Forward, stateManager, characterRoot, 
+        public WalkingForwardState(GameObject characterRoot) :
+            base(BehaviorEnumSet.State.Forward, characterRoot, 
                 BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
         
         public override void Enter()
@@ -23,54 +23,55 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimationSmoothly("WalkForward", CharacterAnimator.Layer.LowerLayer);
         }
     
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 case BehaviorEnumSet.Behavior.Stop:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
-                    break;
+                    return BehaviorEnumSet.State.StandingIdle;
+                
                 case BehaviorEnumSet.Behavior.Punch:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch);
-                    break;
+                    return BehaviorEnumSet.State.StandingPunch;
+                
                 case BehaviorEnumSet.Behavior.Kick:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick);
-                    break;
+                    return BehaviorEnumSet.State.StandingKick;
+                
                 case BehaviorEnumSet.Behavior.Crouch:
-                    StateManager.ChangeState(BehaviorEnumSet.State.CrouchIdle);
-                    break;
+                    return BehaviorEnumSet.State.CrouchIdle;
+                
                 case BehaviorEnumSet.Behavior.Jump:
-                    StateManager.ChangeState(BehaviorEnumSet.State.Jump);
-                    break;
+                    return BehaviorEnumSet.State.Jump;
+                
                 case BehaviorEnumSet.Behavior.Backward:
-                    StateManager.ChangeState(BehaviorEnumSet.State.Backward);
-                    break;
+                    return BehaviorEnumSet.State.Backward;
+                
                 case BehaviorEnumSet.Behavior.Guard:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingGuard);
-                    break;
+                    return BehaviorEnumSet.State.StandingGuard;
+                
                 case BehaviorEnumSet.Behavior.Dash:
-                    StateManager.ChangeState(BehaviorEnumSet.State.DashOnGround);
-                    break;
+                    return BehaviorEnumSet.State.DashOnGround;
+                
                 case BehaviorEnumSet.Behavior.StandingPunch236Skill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch236Skill);
-                    break;
+                    return BehaviorEnumSet.State.StandingPunch236Skill;
+                
                 case BehaviorEnumSet.Behavior.StandingKick236Skill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick236Skill);
-                    break;
+                    return BehaviorEnumSet.State.StandingKick236Skill;
+                
                 case BehaviorEnumSet.Behavior.StandingPunch623Skill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch623Skill);
-                    break;
+                    return BehaviorEnumSet.State.StandingPunch623Skill;
+                
                 case BehaviorEnumSet.Behavior.StandingKick623Skill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick623Skill);
-                    break;
+                    return BehaviorEnumSet.State.StandingKick623Skill;
+                
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
     
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
             CharacterRigidBody.velocity = _finalVelocity;
+            return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

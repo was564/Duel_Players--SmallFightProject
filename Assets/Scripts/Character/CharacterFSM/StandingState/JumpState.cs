@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class JumpState : BehaviorStateInterface
     {
-        public JumpState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.Jump, stateManager, characterRoot, 
+        public JumpState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.Jump, characterRoot, 
                 BehaviorEnumSet.AttackLevel.BasicAttack, PassiveStateEnumSet.CharacterPositionState.InAir) {}
 
         public override void Enter()
@@ -19,25 +19,26 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimation("Jump", CharacterAnimator.Layer.LowerLayer);
         }
         
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 case BehaviorEnumSet.Behavior.Punch:
-                    StateManager.ChangeState(BehaviorEnumSet.State.AiringPunch);
-                    break;
+                    return BehaviorEnumSet.State.AiringPunch;
+                
                 case BehaviorEnumSet.Behavior.Kick:
-                    StateManager.ChangeState(BehaviorEnumSet.State.AiringKick);
-                    break;
+                    return BehaviorEnumSet.State.AiringKick;
+                
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
         
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
-            if(CharacterAnimator.IsEndCurrentAnimation("Jump", CharacterAnimator.Layer.LowerLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.InAirIdle);
+            if (CharacterAnimator.IsEndCurrentAnimation("Jump", CharacterAnimator.Layer.LowerLayer))
+                return BehaviorEnumSet.State.InAirIdle;
+            else return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

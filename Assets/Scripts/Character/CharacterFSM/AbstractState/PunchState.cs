@@ -5,9 +5,9 @@ namespace Character.CharacterFSM
 {
     public abstract class PunchState : BehaviorStateInterface
     {
-        public PunchState(BehaviorEnumSet.State state, BehaviorStateSimulator stateManager, GameObject characterRoot, 
+        public PunchState(BehaviorEnumSet.State state, GameObject characterRoot, 
             BehaviorEnumSet.State nextState, PassiveStateEnumSet.CharacterPositionState positionState) :
-            base(state, stateManager, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack, positionState)
+            base(state, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack, positionState)
         {
             _nextState = nextState;
         }
@@ -19,19 +19,20 @@ namespace Character.CharacterFSM
             //CharacterAnimator.PlayAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer,true);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
-            if(CharacterAnimator.IsEndCurrentAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ChangeState(_nextState);
+            if (CharacterAnimator.IsEndCurrentAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer))
+                return _nextState;
+            else return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

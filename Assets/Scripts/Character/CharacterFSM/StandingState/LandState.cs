@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class LandState : BehaviorStateInterface
     {
-        public LandState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.Land, stateManager, characterRoot, 
+        public LandState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.Land, characterRoot, 
                 BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
 
         public override void Enter()
@@ -19,19 +19,19 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimationSmoothly("Land", CharacterAnimator.Layer.LowerLayer);
         }
         
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
         
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
             if(CharacterAnimator.IsEndCurrentAnimation("Land", CharacterAnimator.Layer.LowerLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
+                return BehaviorEnumSet.State.StandingIdle;
             else
             {
                 Vector3 characterPosition = this.CharacterTransform.position;
@@ -43,6 +43,8 @@ namespace Character.CharacterFSM
                 characterPosition.y = positionY;
                 this.CharacterTransform.position = characterPosition;
             }
+
+            return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

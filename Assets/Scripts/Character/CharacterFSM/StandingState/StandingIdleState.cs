@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class StandingIdleState : BehaviorStateInterface
     {
-        public StandingIdleState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.StandingIdle, stateManager, characterRoot, 
+        public StandingIdleState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.StandingIdle, characterRoot, 
                 BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
         
         public override void Enter()
@@ -19,59 +19,61 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimation("StandingIdle", CharacterAnimator.Layer.LowerLayer);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 case BehaviorEnumSet.Behavior.Stand:
-                    break;
+                    return BehaviorEnumSet.State.Null;
+                    
                 case BehaviorEnumSet.Behavior.Punch:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch);
-                    break;
+                    return BehaviorEnumSet.State.StandingPunch;
+                
                 case BehaviorEnumSet.Behavior.Kick:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick);
-                    break;
+                    return BehaviorEnumSet.State.StandingKick;
+                
                 case BehaviorEnumSet.Behavior.Crouch:
-                    StateManager.ChangeState(BehaviorEnumSet.State.CrouchIdle);
-                    break;
+                    return BehaviorEnumSet.State.CrouchIdle;
+                
                 case BehaviorEnumSet.Behavior.Jump:
-                    StateManager.ChangeState(BehaviorEnumSet.State.Jump);
-                    break;
+                    return BehaviorEnumSet.State.Jump;
+                
                 case BehaviorEnumSet.Behavior.Backward:
-                    StateManager.ChangeState(BehaviorEnumSet.State.Backward);
-                    break;
+                    return BehaviorEnumSet.State.Backward;
+                
                 case BehaviorEnumSet.Behavior.Forward:
-                    StateManager.ChangeState(BehaviorEnumSet.State.Forward);
-                    break;
+                    return BehaviorEnumSet.State.Forward;
+                
                 case BehaviorEnumSet.Behavior.Guard:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingGuard);
-                    break;
+                    return BehaviorEnumSet.State.StandingGuard;
+                
                 case BehaviorEnumSet.Behavior.Dash:
-                    StateManager.ChangeState(BehaviorEnumSet.State.DashOnGround);
-                    break;
+                    return BehaviorEnumSet.State.DashOnGround;
+                
                 case BehaviorEnumSet.Behavior.BackStep:
-                    StateManager.ChangeState(BehaviorEnumSet.State.BackStepOnGroundState);
-                    break;
+                    return BehaviorEnumSet.State.BackStepOnGroundState;
+                
                 case BehaviorEnumSet.Behavior.StandingPunch236Skill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch236Skill);
-                    break;
+                    return BehaviorEnumSet.State.StandingPunch236Skill;
+                
                 case BehaviorEnumSet.Behavior.StandingKick236Skill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick236Skill);
-                    break;
+                    return BehaviorEnumSet.State.StandingKick236Skill;
+                
                 case BehaviorEnumSet.Behavior.StandingPunch623Skill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingPunch623Skill);
-                    break;
+                    return BehaviorEnumSet.State.StandingPunch623Skill;
+                
                 case BehaviorEnumSet.Behavior.StandingKick623Skill:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingKick623Skill);
-                    break;
+                    return BehaviorEnumSet.State.StandingKick623Skill;
+                
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
             PlayerCharacter.LookAtEnemy();
+            return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

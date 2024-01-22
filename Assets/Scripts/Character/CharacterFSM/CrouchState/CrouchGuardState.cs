@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class CrouchGuardState: GuardState
     {
-        public CrouchGuardState(GameObject characterRoot, GameObject wall, BehaviorStateSimulator stateManager) : 
-            base(characterRoot, wall, stateManager, BehaviorEnumSet.State.CrouchGuard, BehaviorEnumSet.State.CrouchIdle, 
+        public CrouchGuardState(GameObject characterRoot, GameObject wall) : 
+            base(characterRoot, wall, BehaviorEnumSet.State.CrouchGuard, BehaviorEnumSet.State.CrouchIdle, 
                 PassiveStateEnumSet.CharacterPositionState.Crouch) {}
         
         public override void Enter()
@@ -16,25 +16,25 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimation("CrouchStop", CharacterAnimator.Layer.LowerLayer, true);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             PressGuardKey(behavior);
             
-            if(ContinuousFrameByBlockAttack > 0) return;
+            if(ContinuousFrameByBlockAttack > 0) return BehaviorEnumSet.State.Null;
             
             switch (behavior)
             {
                 case BehaviorEnumSet.Behavior.Stand:
-                    StateManager.ChangeState(BehaviorEnumSet.State.StandingGuard);
-                    break;
+                    return BehaviorEnumSet.State.StandingGuard;
+                
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
-            base.UpdateState();
+            return base.UpdateState();
         }
 
         public override void Quit()

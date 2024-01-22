@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class CrouchPunchState : PunchState
     {
-        public CrouchPunchState(GameObject characterRoot, BehaviorStateSimulator stateManager) : 
-            base(BehaviorEnumSet.State.CrouchPunch, stateManager, characterRoot, BehaviorEnumSet.State.CrouchIdle, 
+        public CrouchPunchState(GameObject characterRoot) : 
+            base(BehaviorEnumSet.State.CrouchPunch, characterRoot, BehaviorEnumSet.State.CrouchIdle, 
                 PassiveStateEnumSet.CharacterPositionState.Crouch) {}
         
         public override void Enter()
@@ -19,23 +19,25 @@ namespace Character.CharacterFSM
             this.CharacterTransform.position = characterPosition;
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 case BehaviorEnumSet.Behavior.Punch:
-                    // StateManager.ChangeState(BehaviorEnumSet.State.Punch);
-                    break;
+                    // return BehaviorEnumSet.State.Punch;
+                    return BehaviorEnumSet.State.Null;
+                
                 case BehaviorEnumSet.Behavior.Jump:
-                    break;
+                    return BehaviorEnumSet.State.Null;
+                    
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
-            base.UpdateState();
+            return base.UpdateState();
         }
 
         public override void Quit()

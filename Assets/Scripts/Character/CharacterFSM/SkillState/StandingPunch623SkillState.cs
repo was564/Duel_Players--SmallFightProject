@@ -5,8 +5,8 @@ namespace Character.CharacterFSM.SkillState
 {
     public class StandingPunch623SkillState : SkillStateInterface
     {
-        public StandingPunch623SkillState(GameObject characterRoot, BehaviorStateSimulator stateManager)
-            : base(BehaviorEnumSet.State.StandingPunch236Skill, stateManager, characterRoot, 
+        public StandingPunch623SkillState(GameObject characterRoot)
+            : base(BehaviorEnumSet.State.StandingPunch236Skill, characterRoot, 
                 BehaviorEnumSet.AttackLevel.Technique, PassiveStateEnumSet.CharacterPositionState.OnGround)
         {
             AttackTrigger = BehaviorEnumSet.Behavior.Punch;
@@ -49,19 +49,20 @@ namespace Character.CharacterFSM.SkillState
             CharacterAnimator.PlayAnimation("StandingPunch623Skill", CharacterAnimator.Layer.LowerLayer,true);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             switch (behavior)
             {
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
-            if(CharacterAnimator.IsEndCurrentAnimation("StandingPunch623Skill", CharacterAnimator.Layer.UpperLayer))
-                StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
+            if (CharacterAnimator.IsEndCurrentAnimation("StandingPunch623Skill", CharacterAnimator.Layer.UpperLayer))
+                return BehaviorEnumSet.State.StandingIdle;
+            else return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()

@@ -4,8 +4,8 @@ namespace Character.CharacterFSM
 {
     public class StandingGuardState: GuardState
     {
-        public StandingGuardState(GameObject characterRoot, GameObject wall, BehaviorStateSimulator stateManager) : 
-            base(characterRoot, wall, stateManager, BehaviorEnumSet.State.StandingGuard, BehaviorEnumSet.State.StandingIdle, 
+        public StandingGuardState(GameObject characterRoot, GameObject wall) : 
+            base(characterRoot, wall, BehaviorEnumSet.State.StandingGuard, BehaviorEnumSet.State.StandingIdle, 
                 PassiveStateEnumSet.CharacterPositionState.OnGround) {}
         
         public override void Enter()
@@ -16,32 +16,32 @@ namespace Character.CharacterFSM
             CharacterAnimator.PlayAnimation("StandingStop", CharacterAnimator.Layer.LowerLayer, true);
         }
 
-        public override void HandleInput(BehaviorEnumSet.Behavior behavior)
+        public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
             PressGuardKey(behavior);
 
-            if (ContinuousFrameByBlockAttack > 0) return;
+            if (ContinuousFrameByBlockAttack > 0) return BehaviorEnumSet.State.Null;
             
             switch (behavior)
             {
                 case BehaviorEnumSet.Behavior.Jump:
                     CharacterRigidBody.velocity = (CharacterTransform.forward.x > 0 ? -1.0f : 1.0f) * 2.5f * Vector3.right;
-                    StateManager.ChangeState(BehaviorEnumSet.State.Jump);
-                    break;
+                    return BehaviorEnumSet.State.Jump;
+                
                 case BehaviorEnumSet.Behavior.Crouch:
-                    StateManager.ChangeState(BehaviorEnumSet.State.CrouchGuard);
-                    break;
+                    return BehaviorEnumSet.State.CrouchGuard;
+                
                 case BehaviorEnumSet.Behavior.BackStep:
-                    StateManager.ChangeState(BehaviorEnumSet.State.BackStepOnGroundState);
-                    break;
+                    return BehaviorEnumSet.State.BackStepOnGroundState;
+                
                 default:
-                    break;
+                    return BehaviorEnumSet.State.Null;
             }
         }
 
-        public override void UpdateState()
+        public override BehaviorEnumSet.State UpdateState()
         {
-            base.UpdateState();
+            return base.UpdateState();
         }
 
         public override void Quit()
