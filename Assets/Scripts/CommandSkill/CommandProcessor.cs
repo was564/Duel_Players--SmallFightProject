@@ -114,12 +114,11 @@ public class CommandProcessor : MonoBehaviour
         
         if (result == null)
             return attack;
-        
-        _unAvailableCommandSet.Add(result);
-        result.Depth = 0;
-        _availableCommandSet.Remove(result);
-        
-        return result.CommandBehavior;
+        else
+        {
+            ResetCommandToUnAvailable();
+            return result.CommandBehavior;
+        }
     }
 
     public void EnqueueInput(BehaviorEnumSet.Button button)
@@ -135,6 +134,15 @@ public class CommandProcessor : MonoBehaviour
     {
         _unAvailableCommandSet.Add(
             new CommandStructure(command, attackTrigger, availableCommandPositionStates, behavior));
+    }
+    
+    public void ResetCommandToUnAvailable()
+    {
+        foreach (var command in _availableCommandSet)
+        {
+            _unAvailableCommandSet.Add(command);
+        }
+        _availableCommandSet.Clear();
     }
     /*
     
