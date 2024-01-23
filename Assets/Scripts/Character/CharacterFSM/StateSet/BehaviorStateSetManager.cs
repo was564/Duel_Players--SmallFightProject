@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Character.CharacterFSM.KohakuState;
 
 namespace Character.CharacterFSM
 {

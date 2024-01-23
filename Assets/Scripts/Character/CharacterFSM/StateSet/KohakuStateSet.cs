@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Character.CharacterFSM.SkillState;
+using Character.CharacterFSM.KohakuState.SkillState;
 using UnityEngine;
 
-namespace Character.CharacterFSM
+namespace Character.CharacterFSM.KohakuState
 {
     public class KohakuStateSet : BehaviorStateSetInterface
     {

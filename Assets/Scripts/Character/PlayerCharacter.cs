@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Character;
 using Character.CharacterFSM;
 using Character.CharacterPassiveState;
+using Character.PlayerMode;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -22,14 +23,16 @@ public class PlayerCharacter : MonoPublisherInterface
     private CharacterInputManager _inputManager;
     private CommandProcessor _commandProcessor;
     private PassiveStateManager _passiveStateManager;
-    
+
+    private PlayerModeManager _playerModeManager;
     public BehaviorStateManager StateManager { get; private set; }
     private BehaviorStateSimulator _stateSimulatorInStoppedFrame;
+    private BehaviorStateSimulator _currentStateManager;
     public ComboManager ComboManagerInstance { get; private set; }
     
     public float PositionYOffsetForLand { get; private set; } = -0.6f;
 
-    private bool isPaused = false;
+    //private bool isPaused = false;
     
     public PassiveStateEnumSet.CharacterPositionState CharacterPositionState { get; set; }
         = PassiveStateEnumSet.CharacterPositionState.Size;
@@ -61,6 +64,7 @@ public class PlayerCharacter : MonoPublisherInterface
                 transform.root.gameObject);
         ComboManagerInstance = new ComboManager(this, stateSet);
         
+        _playerModeManager = new PlayerModeManager(this);
         StateManager = new BehaviorStateManager(this.gameObject, _wall, stateSet, ComboManagerInstance);
         _stateSimulatorInStoppedFrame = new BehaviorStateSimulator(this.gameObject, _wall, stateSet, ComboManagerInstance);
         
@@ -69,10 +73,12 @@ public class PlayerCharacter : MonoPublisherInterface
         _inputManager = this.GetComponent<CharacterInputManager>();
         _commandProcessor = this.GetComponent<CommandProcessor>();
         _passiveStateManager = this.GetComponent<PassiveStateManager>();
+        _currentStateManager = StateManager;
 
         _enemyCharacter = EnemyObject.GetComponent<PlayerCharacter>();
         
         ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
+        _playerModeManager.SetMode(PlayerModeManager.PlayerMode.NormalPlaying);
     }
     
     // Update is called once per frame
@@ -85,13 +91,17 @@ public class PlayerCharacter : MonoPublisherInterface
             if(!_activatedPassiveStateSet.Remove(0));
         }
         */
+        /*
         if (_roundManager.IsGameStopped) return;
-            
+        
         DecideBehaviorByInput();
-        _passiveStateManager.UpdatePassiveState();
+        UpdatePassiveState();
         if(isPaused) return;
         StateManager.UpdateState();
         ComboManagerInstance.UpdateComboManager();
+        */
+        
+        _playerModeManager.Update();
         
          //Debug.Log(StateManager.CurrentState.StateName);
          //Debug.Log(gameObject.name + CharacterPositionState);
@@ -116,6 +126,7 @@ public class PlayerCharacter : MonoPublisherInterface
     // 상담해보기 (굳이 안해도 될 듯)
     // 나중에 나온 답 : FSM에 직접 전달하자 (사실상 State가 Process를 진행한다)
     private int _indexForReadInArtificialInput = 0;
+    
     public void DecideBehaviorByInput()
     {
         if (IsAcceptArtificialInput && ArtificialButtons.Count > 0)
@@ -153,6 +164,7 @@ public class PlayerCharacter : MonoPublisherInterface
                     nextBehavior = BehaviorEnumSet.Behavior.Forward;
                     break;
                 case BehaviorEnumSet.Button.Backward:
+                    // backward State에 일임하기
                     if ((int)_enemyCharacter.StateManager.CurrentState.AttackLevel >= (int)BehaviorEnumSet.AttackLevel.BasicAttack &&
                         (int)_enemyCharacter.StateManager.CurrentState.AttackLevel < (int)BehaviorEnumSet.AttackLevel.Hit)
                         nextBehavior = BehaviorEnumSet.Behavior.Guard;
@@ -178,8 +190,11 @@ public class PlayerCharacter : MonoPublisherInterface
             BehaviorEnumSet.Behavior commandBehavior 
                 = _commandProcessor.JudgeCommand(nextBehavior, CharacterPositionState);
             nextBehavior = (commandBehavior == BehaviorEnumSet.Behavior.Null) ? nextBehavior : commandBehavior;
+            _currentStateManager.HandleInput(nextBehavior);
+            /*
             if (!isPaused) StateManager.HandleInput(nextBehavior);
             else if (isPaused) _stateSimulatorInStoppedFrame.HandleInput(nextBehavior);
+            */
         }
         // Debug.Log(inputCount);
         
@@ -233,18 +248,20 @@ public class PlayerCharacter : MonoPublisherInterface
         }
     }
 
-    public void Stop()
+    public void FrameStop()
     {
-        isPaused = true;
+        _playerModeManager.SetMode(PlayerModeManager.PlayerMode.FramePause);
+        _currentStateManager = _stateSimulatorInStoppedFrame;
         if(CharacterPositionState == PassiveStateEnumSet.CharacterPositionState.InAir)
             _stateSimulatorInStoppedFrame.ChangeState(BehaviorEnumSet.State.InAirIdle);
         else
             _stateSimulatorInStoppedFrame.ChangeState(BehaviorEnumSet.State.StandingIdle);
     }
     
-    public void Resume()
+    public void FrameResume()
     {
-        isPaused = false;
+        _playerModeManager.SetMode(PlayerModeManager.PlayerMode.NormalPlaying);
+        _currentStateManager = StateManager;
         BehaviorEnumSet.State previousInputState = _stateSimulatorInStoppedFrame.CurrentState.StateName;
         if (previousInputState == BehaviorEnumSet.State.CrouchGuard || previousInputState == BehaviorEnumSet.State.StandingGuard)
             return;
@@ -271,5 +288,9 @@ public class PlayerCharacter : MonoPublisherInterface
         
         if(forwardDirection * positionDirection < 0.0f) this.transform.Rotate(Vector3.up, 180.0f);
     }
-    
+
+    public void UpdatePassiveState()
+    {
+        _passiveStateManager.UpdatePassiveState();
+    }
 }

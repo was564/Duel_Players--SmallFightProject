@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Character.CharacterFSM;
 using UnityEngine;
+using Character.CharacterFSM.KohakuState;
 
 public class HitBox : MonoBehaviour
 {

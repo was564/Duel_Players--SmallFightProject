@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Character;
 using Character.CharacterFSM;
-using Character.CharacterFSM.SkillState;
 using UnityEngine;
 
 public class BehaviorStateManager : BehaviorStateSimulator

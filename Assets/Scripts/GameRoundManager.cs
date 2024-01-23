@@ -128,7 +128,7 @@ public class GameRoundManager : MonoObserverInterface
         foreach (var player in _players)
         {
             player.IsAcceptArtificialInput = false;
-            player.ComboManagerInstance.IsCanceled = true;
+             player.ComboManagerInstance.IsCanceled = true;
             player.IsGuarded = false;
             player.ResetHp();
             player.StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
