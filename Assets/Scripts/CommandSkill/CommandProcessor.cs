@@ -11,14 +11,22 @@ public class CommandProcessor : MonoBehaviour
     // 참고 : https://codingcoding.tistory.com/206
 
     public int SkillInputAcknowledgeFrame = 12;
-    public int MoveInputAcknowledgeFrame = 6;
+    public int MoveInputAcknowledgeFrame = 18;
     
     private Queue<BehaviorEnumSet.Button> _inputQueue = new Queue<BehaviorEnumSet.Button>();
 
+    
+    // 배열로 bool 타입을 넣어 만드는게 빠를까? HashSet으로 만드는게 빠를까?
+    // HashSet : 가변적인 데이터 크기, List : 데이터 지역성
+    // 빠른 거는 잘 모르겠지만 List로 만드는 것이 코드가 직관적이기 때문에 List로 구현
+    /*
     private HashSet<CommandStructure> _unAvailableCommandSet = new HashSet<CommandStructure>();
     private HashSet<CommandStructure> _availableCommandSet = new HashSet<CommandStructure>();
-
-    //private List<CommandStructure> _commandForMovingState = new List<CommandStructure>();
+    
+    private Stack<CommandStructure> _commandSetForSwitchingAvailable = new Stack<CommandStructure>();
+    */
+    
+    private List<CommandStructure> _characterCommandSet = new List<CommandStructure>();
     
     // Update is called once per frame
     void Update()
@@ -48,11 +56,15 @@ public class CommandProcessor : MonoBehaviour
         BehaviorEnumSet.InputSet resultInput = (BehaviorEnumSet.InputSet)resultInputAsInt;
         //Debug.Log(resultInput.ToString() + resultInputAsInt.ToString());
         
-        foreach (var command in _unAvailableCommandSet)
+        
+        
+        foreach (var command in _characterCommandSet)
         {
+            if (command.IsAvailable == true) continue;
+            
             if(command.Depth >= command.Command.Count)
             {
-                _availableCommandSet.Add(command);
+                command.IsAvailable = true;
             }
             else if (command.Command[command.Depth].Condition == resultInput)
             {
@@ -66,19 +78,21 @@ public class CommandProcessor : MonoBehaviour
             if (FrameManager.CurrentFrame - command.InputStartingFrame >= inputAcknowledgeFrame)
             {
                 command.Depth = 0;
+                command.IsAvailable = false;
             }
         }
         
-        foreach (var command in _availableCommandSet)
+        foreach (var command in _characterCommandSet)
         {
+            if (command.IsAvailable == false) continue;
+            
             float inputAcknowledgeTime = (command.AttackTrigger == BehaviorEnumSet.Behavior.Null)
                 ? MoveInputAcknowledgeFrame
                 : SkillInputAcknowledgeFrame;
             if (FrameManager.CurrentFrame - command.InputStartingFrame > inputAcknowledgeTime)
             {
                 command.Depth = 0;
-                _unAvailableCommandSet.Add(command);
-                //_commandForMovingState.Add(command);
+                command.IsAvailable = false;
             }
         }
 
@@ -96,8 +110,10 @@ public class CommandProcessor : MonoBehaviour
         PassiveStateEnumSet.CharacterPositionState positionState)
     {
         CommandStructure result = null;
-        foreach (var command in _availableCommandSet)
+        foreach (var command in _characterCommandSet)
         {
+            if (command.IsAvailable == false) continue;
+            
             if (command.AvailableCommandPositionState.Contains(positionState) == false)
                 continue;
             if (command.AttackTrigger == BehaviorEnumSet.Behavior.Null)
@@ -132,17 +148,16 @@ public class CommandProcessor : MonoBehaviour
         List<PassiveStateEnumSet.CharacterPositionState> availableCommandPositionStates,
         BehaviorEnumSet.Behavior behavior)
     {
-        _unAvailableCommandSet.Add(
+        _characterCommandSet.Add(
             new CommandStructure(command, attackTrigger, availableCommandPositionStates, behavior));
     }
     
     public void ResetCommandToUnAvailable()
     {
-        foreach (var command in _availableCommandSet)
+        foreach (var command in _characterCommandSet)
         {
-            _unAvailableCommandSet.Add(command);
+            command.IsAvailable = false;
         }
-        _availableCommandSet.Clear();
     }
     /*
     

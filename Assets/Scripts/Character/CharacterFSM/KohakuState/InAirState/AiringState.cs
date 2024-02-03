@@ -10,7 +10,7 @@ namespace Character.CharacterFSM.KohakuState
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
             CharacterAnimator.PlayAnimationSmoothly("InAirIdle", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimationSmoothly("InAirIdle", CharacterAnimator.Layer.LowerLayer);

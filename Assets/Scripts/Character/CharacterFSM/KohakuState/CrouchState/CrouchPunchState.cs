@@ -10,7 +10,7 @@ namespace Character.CharacterFSM.KohakuState
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
             this.CharacterAnimator.PlayAnimation("CrouchPunch", CharacterAnimator.Layer.UpperLayer,true);
             this.CharacterAnimator.PlayAnimation("CrouchStop", CharacterAnimator.Layer.LowerLayer, true);

@@ -14,7 +14,7 @@ namespace Character.CharacterFSM.KohakuState
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             _finalVelocity = (CharacterTransform.transform.forward.x < 0.0f)
                     ? (Vector3.right * _walkingVelocity)
                     : (Vector3.left * _walkingVelocity);

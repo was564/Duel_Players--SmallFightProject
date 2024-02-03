@@ -62,7 +62,7 @@ public class AttackBox : MonoBehaviour
         
         if (HitReactLevel == BehaviorEnumSet.HitReactLevel.HitInPlace)
         {
-            switch (enemyPlayer.CharacterPositionState)
+            switch (enemyPlayer.CurrentCharacterPositionState)
             {
                 case PassiveStateEnumSet.CharacterPositionState.OnGround:
                     stateManager.ChangeState(BehaviorEnumSet.State.StandingHit);

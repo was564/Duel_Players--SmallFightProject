@@ -6,8 +6,8 @@ namespace Character.CharacterFSM.KohakuState
     public abstract class GuardState : BehaviorStateInterface
     {
         public GuardState(GameObject characterRoot, GameObject wall, BehaviorEnumSet.State guardStateName,
-            BehaviorEnumSet.State nextState, PassiveStateEnumSet.CharacterPositionState positionState) :
-            base(guardStateName, characterRoot, BehaviorEnumSet.AttackLevel.Guard, positionState)
+            BehaviorEnumSet.State nextState, PassiveStateEnumSet.CharacterPositionState positionInitialState) :
+            base(guardStateName, characterRoot, BehaviorEnumSet.AttackLevel.Guard, positionInitialState)
         {
             _wallAcknowledgeDistance = math.abs(wall.transform.position.x) - 1.0f;
             _enemyRigidbody = PlayerCharacter.EnemyObject.transform.root.GetComponent<Rigidbody>();

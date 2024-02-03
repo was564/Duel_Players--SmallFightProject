@@ -20,7 +20,7 @@ namespace Character.CharacterPassiveState
 
         public override void UpdatePassiveState()
         {
-            if (_chatacter.CharacterPositionState == PassiveStateEnumSet.CharacterPositionState.InAir) return;
+            if (_chatacter.CurrentCharacterPositionState == PassiveStateEnumSet.CharacterPositionState.InAir) return;
             
             _characterTransform.velocity *= 0.8f;
             if (_characterTransform.velocity.sqrMagnitude <= 0.1f)

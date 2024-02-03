@@ -6,8 +6,8 @@ namespace Character.CharacterFSM.KohakuState
     public abstract class PunchState : BehaviorStateInterface
     {
         public PunchState(BehaviorEnumSet.State state, GameObject characterRoot, 
-            BehaviorEnumSet.State nextState, PassiveStateEnumSet.CharacterPositionState positionState) :
-            base(state, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack, positionState)
+            BehaviorEnumSet.State nextState, PassiveStateEnumSet.CharacterPositionState positionInitialState) :
+            base(state, characterRoot, BehaviorEnumSet.AttackLevel.BasicAttack, positionInitialState)
         {
             _nextState = nextState;
         }

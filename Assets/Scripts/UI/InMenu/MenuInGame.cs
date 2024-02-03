@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuInGame : MonoBehaviour
 {
-    private FrameManager _gameManager;
+    private FrameManager _frameManager;
     private RectTransform _canvas;
     
     // width 700, height 60
@@ -29,7 +29,7 @@ public class MenuInGame : MonoBehaviour
     void Start()
     {
         _gameRoundManager = GameObject.FindObjectOfType<GameRoundManager>();
-        _gameManager = GameObject.FindObjectOfType<FrameManager>();
+        _frameManager = GameObject.FindObjectOfType<FrameManager>();
         _canvas = GameObject.FindObjectOfType<Canvas>().GetComponent<RectTransform>();
         
         _menuSelectingUI = Instantiate(MenuSelectingPrefab, Vector3.zero, Quaternion.identity, _canvas)
@@ -85,11 +85,10 @@ public class MenuInGame : MonoBehaviour
             }
             _menuSelectingUI.gameObject.SetActive(true);
             
-            _gameManager.PauseAllCharactersInFrame(100000000);
+            //_frameManager.PauseAllCharactersInFrame(100000000);
+            _gameRoundManager.PauseGame();
             
             _gameRoundManager.BlockAllPlayersInput();
-
-            _gameRoundManager.IsGameStopped = true;
         }
         else
         {
@@ -99,11 +98,10 @@ public class MenuInGame : MonoBehaviour
             }
             _menuSelectingUI.gameObject.SetActive(false);
             
-            _gameManager.ResumeAllCharacters();
+            //_frameManager.ResumeAllCharacters();
+            _gameRoundManager.ResumeGame();
             
             _gameRoundManager.AcceptAllPlayersInput();
-
-            _gameRoundManager.IsGameStopped = false;
         }
     }
 

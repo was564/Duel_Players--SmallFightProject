@@ -2,18 +2,17 @@
 
 namespace Character.CharacterFSM.KohakuState
 {
-    public class InAirHitState : BehaviorStateInterface
+    public class InAirHitState : HitState
     {
         public InAirHitState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.InAirHit, characterRoot, 
-                BehaviorEnumSet.AttackLevel.Hit, PassiveStateEnumSet.CharacterPositionState.InAir) {}
+            base(characterRoot, BehaviorEnumSet.State.InAirHit, PassiveStateEnumSet.CharacterPositionState.InAir) {}
         
-        private Vector3 _hittedAwayDirection = new Vector3(1.5f, 5.0f, 0);
+        //private Vector3 _hittedAwayDirection = new Vector3(1.5f, 5.0f, 0);
         
         public override void Enter()
         {
             
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
             /*
             Vector3 resultDirection = _hittedAwayDirection;
@@ -27,11 +26,7 @@ namespace Character.CharacterFSM.KohakuState
 
         public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
-            switch (behavior)
-            {
-                default:
-                    return BehaviorEnumSet.State.Null;
-            }
+            return base.GetResultStateByHandleInput(behavior);
         }
 
         public override BehaviorEnumSet.State UpdateState()

@@ -10,7 +10,7 @@ namespace Character.CharacterFSM.KohakuState
 
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             PlayerCharacter.LookAtEnemy();
             
             CharacterRigidBody.velocity += (Vector3.up * 8.0f);

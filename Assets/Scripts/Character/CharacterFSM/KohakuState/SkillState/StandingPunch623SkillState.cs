@@ -43,7 +43,7 @@ namespace Character.CharacterFSM.KohakuState.SkillState
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
             CharacterAnimator.PlayAnimation("StandingPunch623Skill", CharacterAnimator.Layer.UpperLayer,true);
             CharacterAnimator.PlayAnimation("StandingPunch623Skill", CharacterAnimator.Layer.LowerLayer,true);

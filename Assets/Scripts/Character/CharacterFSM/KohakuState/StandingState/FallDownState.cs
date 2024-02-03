@@ -14,7 +14,7 @@ namespace Character.CharacterFSM.KohakuState
         public override void Enter()
         {
             stateStartingFrame = 0;
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             CharacterJudgeBoxController.DisableHitBox();
              
             CharacterAnimator.PlayAnimation("FallDown", CharacterAnimator.Layer.UpperLayer);

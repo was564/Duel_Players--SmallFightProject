@@ -12,7 +12,7 @@ namespace Character.CharacterFSM.KohakuState
         public override void Enter()
         {
             base.Enter();
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
             //CharacterRigidBody.velocity = Vector3.zero;
             CharacterAnimator.PlayAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer,true);

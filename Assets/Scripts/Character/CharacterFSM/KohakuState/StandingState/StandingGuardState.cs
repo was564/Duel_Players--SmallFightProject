@@ -11,7 +11,7 @@ namespace Character.CharacterFSM.KohakuState
         public override void Enter()
         {
             base.Enter();
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
             CharacterAnimator.PlayAnimation("StandingStop", CharacterAnimator.Layer.LowerLayer, true);
         }

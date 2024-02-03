@@ -14,16 +14,16 @@ namespace Character.CharacterFSM.KohakuState
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             PlayerCharacter.IsHitContinuous = false;
             
             _startingFrame = FrameManager.CurrentFrame;
-            if (PlayerCharacter.CharacterPositionState == PassiveStateEnumSet.CharacterPositionState.Crouch) 
+            if (PlayerCharacter.CurrentCharacterPositionState == PassiveStateEnumSet.CharacterPositionState.Crouch) 
                 _isApplyFinalPosition = true;
             else
             {
                 _isApplyFinalPosition = false;
-                PlayerCharacter.CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.Crouch;
+                PlayerCharacter.CurrentCharacterPositionState = PassiveStateEnumSet.CharacterPositionState.Crouch;
             }
                 
             CharacterRigidBody.velocity = Vector3.zero;

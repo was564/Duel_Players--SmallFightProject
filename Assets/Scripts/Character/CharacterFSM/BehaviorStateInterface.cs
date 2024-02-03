@@ -10,7 +10,7 @@ public abstract class BehaviorStateInterface
         BehaviorEnumSet.State stateName,
         GameObject characterRoot, 
         BehaviorEnumSet.AttackLevel attackLevel,
-        PassiveStateEnumSet.CharacterPositionState positionState)
+        PassiveStateEnumSet.CharacterPositionState positionInitialState)
     {
         this.AttackLevel = (int)attackLevel;
         this.StateName = stateName;
@@ -19,10 +19,10 @@ public abstract class BehaviorStateInterface
         this.CharacterRigidBody = characterRoot.GetComponent<Rigidbody>();
         this.PlayerCharacter = characterRoot.GetComponent<PlayerCharacter>();
         this.CharacterJudgeBoxController = characterRoot.GetComponent<CharacterJudgeBoxController>();
-        this.CharacterPositionStateInCurrentState = positionState;
+        this.CharacterPositionInitialState = positionInitialState;
     }
     public BehaviorEnumSet.State StateName { get; private set; }
-    public PassiveStateEnumSet.CharacterPositionState CharacterPositionStateInCurrentState;
+    public PassiveStateEnumSet.CharacterPositionState CharacterPositionInitialState { get; private set; }
     
     protected PlayerCharacter PlayerCharacter;
     protected CharacterAnimator CharacterAnimator;

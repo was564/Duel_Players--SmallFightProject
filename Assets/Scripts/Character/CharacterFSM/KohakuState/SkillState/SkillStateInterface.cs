@@ -9,8 +9,8 @@ namespace Character.CharacterFSM.KohakuState.SkillState
             BehaviorEnumSet.State stateName,
             GameObject characterRoot, 
             BehaviorEnumSet.AttackLevel attackLevel,
-            PassiveStateEnumSet.CharacterPositionState positionState)
-            : base(stateName, characterRoot, attackLevel, positionState)
+            PassiveStateEnumSet.CharacterPositionState positionInitialState)
+            : base(stateName, characterRoot, attackLevel, positionInitialState)
         {
             CommandManager = characterRoot.GetComponent<CommandProcessor>();
         }

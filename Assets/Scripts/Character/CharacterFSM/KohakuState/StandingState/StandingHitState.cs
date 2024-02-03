@@ -2,16 +2,15 @@
 
 namespace Character.CharacterFSM.KohakuState
 {
-    public class StandingHitState : BehaviorStateInterface
+    public class StandingHitState : HitState
     {
         public StandingHitState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.StandingHit, characterRoot, 
-                BehaviorEnumSet.AttackLevel.Hit, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
+            base(characterRoot, BehaviorEnumSet.State.StandingHit, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
         
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
             //CharacterRigidBody.velocity = Vector3.left * ((CharacterTransform.forward.x < 0.0f ? -1.0f : 1.0f) * _backMoveSpeedByAttack);
 
@@ -21,11 +20,7 @@ namespace Character.CharacterFSM.KohakuState
 
         public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
-            switch (behavior)
-            {
-                default:
-                    return BehaviorEnumSet.State.Null;
-            }
+            return base.GetResultStateByHandleInput(behavior);
         }
 
         public override BehaviorEnumSet.State UpdateState()

@@ -37,7 +37,7 @@ namespace Character.CharacterFSM.KohakuState.SkillState
         {
             _startingFrame = FrameManager.CurrentFrame;
             
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
                 
             _moveVelocity = (CharacterTransform.transform.forward.x > 0.0f)
                 ? (Vector3.right * _moveSpeed)

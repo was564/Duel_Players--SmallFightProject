@@ -22,6 +22,8 @@ namespace CommandSkill
 
         public List<PassiveStateEnumSet.CharacterPositionState> AvailableCommandPositionState { get; private set; }
         
+        public bool IsAvailable { get; set; } = false;
+        
         public CommandStructure(
             List<BehaviorEnumSet.InputSet> command,
             BehaviorEnumSet.Behavior attackTrigger,

@@ -34,7 +34,7 @@ public class PlayerCharacter : MonoPublisherInterface
 
     //private bool isPaused = false;
     
-    public PassiveStateEnumSet.CharacterPositionState CharacterPositionState { get; set; }
+    public PassiveStateEnumSet.CharacterPositionState CurrentCharacterPositionState { get; set; }
         = PassiveStateEnumSet.CharacterPositionState.Size;
     
     public int Hp { get; private set; } = 100;
@@ -188,7 +188,7 @@ public class PlayerCharacter : MonoPublisherInterface
                     break;
             }
             BehaviorEnumSet.Behavior commandBehavior 
-                = _commandProcessor.JudgeCommand(nextBehavior, CharacterPositionState);
+                = _commandProcessor.JudgeCommand(nextBehavior, CurrentCharacterPositionState);
             nextBehavior = (commandBehavior == BehaviorEnumSet.Behavior.Null) ? nextBehavior : commandBehavior;
             _currentStateManager.HandleInput(nextBehavior);
             /*
@@ -224,7 +224,7 @@ public class PlayerCharacter : MonoPublisherInterface
                 characterPosition.y = 0.05f;
                 this.transform.position = characterPosition;
 
-                CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.OnGround;
+                CurrentCharacterPositionState = PassiveStateEnumSet.CharacterPositionState.OnGround;
                 break;
             case PassiveStateEnumSet.CharacterPositionState.Crouch:
                 RigidBody.useGravity = false;
@@ -235,7 +235,7 @@ public class PlayerCharacter : MonoPublisherInterface
                 characterPosition.y = -0.4f;
                 this.transform.position = characterPosition;
                 
-                CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.Crouch;
+                CurrentCharacterPositionState = PassiveStateEnumSet.CharacterPositionState.Crouch;
                 break;
             case PassiveStateEnumSet.CharacterPositionState.InAir:
                 RigidBody.useGravity = true;
@@ -243,24 +243,24 @@ public class PlayerCharacter : MonoPublisherInterface
                     RigidbodyConstraints.FreezePositionZ |
                     RigidbodyConstraints.FreezeRotation;
 
-                CharacterPositionState = PassiveStateEnumSet.CharacterPositionState.InAir;
+                CurrentCharacterPositionState = PassiveStateEnumSet.CharacterPositionState.InAir;
                 break;
         }
     }
 
-    public void FrameStop()
+    public void StopFrame()
     {
         _playerModeManager.SetMode(PlayerModeManager.PlayerMode.FramePause);
         _currentStateManager = _stateSimulatorInStoppedFrame;
-        if(CharacterPositionState == PassiveStateEnumSet.CharacterPositionState.InAir)
+        if(CurrentCharacterPositionState == PassiveStateEnumSet.CharacterPositionState.InAir)
             _stateSimulatorInStoppedFrame.ChangeState(BehaviorEnumSet.State.InAirIdle);
         else
             _stateSimulatorInStoppedFrame.ChangeState(BehaviorEnumSet.State.StandingIdle);
     }
     
-    public void FrameResume()
+    public void ResumeFrame()
     {
-        _playerModeManager.SetMode(PlayerModeManager.PlayerMode.NormalPlaying);
+        SetPlayerMode(PlayerModeManager.PlayerMode.NormalPlaying);
         _currentStateManager = StateManager;
         BehaviorEnumSet.State previousInputState = _stateSimulatorInStoppedFrame.CurrentState.StateName;
         if (previousInputState == BehaviorEnumSet.State.CrouchGuard || previousInputState == BehaviorEnumSet.State.StandingGuard)
@@ -274,6 +274,11 @@ public class PlayerCharacter : MonoPublisherInterface
                 ComboManagerInstance.CountStateCancel(_stateSimulatorInStoppedFrame.CurrentState.StateName);
                 StateManager.ChangeState(_stateSimulatorInStoppedFrame.CurrentState.StateName);
             }
+    }
+    
+    public void SetPlayerMode(PlayerModeManager.PlayerMode mode)
+    {
+        _playerModeManager.SetMode(mode);
     }
     
     public void ResetHp()

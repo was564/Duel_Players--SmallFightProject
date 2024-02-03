@@ -11,7 +11,7 @@ namespace Character.CharacterFSM.KohakuState
         public override void Enter()
         {
             base.Enter();
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
             CharacterAnimator.PlayAnimation("CrouchStop", CharacterAnimator.Layer.LowerLayer, true);
         }

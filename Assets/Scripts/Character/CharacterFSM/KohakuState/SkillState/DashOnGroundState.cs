@@ -38,7 +38,7 @@ namespace Character.CharacterFSM.KohakuState.SkillState
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
             _finalVelocity = (CharacterTransform.transform.forward.x > 0.0f)
                 ? (Vector3.right * _dashVelocity)

@@ -10,7 +10,7 @@ namespace Character.CharacterFSM.KohakuState
 
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
              
             CharacterAnimator.PlayAnimation("GetUp", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimation("GetUp", CharacterAnimator.Layer.LowerLayer);

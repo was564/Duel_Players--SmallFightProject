@@ -10,7 +10,7 @@ namespace Character.CharacterFSM.KohakuState
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             PlayerCharacter.IsHitContinuous = false;
             
             CharacterRigidBody.velocity = Vector3.zero;

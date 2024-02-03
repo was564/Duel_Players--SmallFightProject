@@ -2,17 +2,16 @@
 
 namespace Character.CharacterFSM.KohakuState
 {
-    public class CrouchHitState : BehaviorStateInterface
+    public class CrouchHitState : HitState
     {
         public CrouchHitState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.CrouchHit, characterRoot, 
-                BehaviorEnumSet.AttackLevel.Hit, PassiveStateEnumSet.CharacterPositionState.Crouch) {}
+            base(characterRoot, BehaviorEnumSet.State.CrouchHit, PassiveStateEnumSet.CharacterPositionState.Crouch) {}
         
         private float _backMoveSpeedByAttack = 2.0f;
         
         public override void Enter()
         {
-            PlayerCharacter.ChangeCharacterPosition(CharacterPositionStateInCurrentState);
+            PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
             CharacterRigidBody.velocity = Vector3.left * ((CharacterTransform.forward.x < 0.0f ? -1.0f : 1.0f) * _backMoveSpeedByAttack);
 
@@ -23,11 +22,7 @@ namespace Character.CharacterFSM.KohakuState
 
         public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
         {
-            switch (behavior)
-            {
-                default:
-                    return BehaviorEnumSet.State.Null;
-            }
+            return base.GetResultStateByHandleInput(behavior);
         }
 
         public override BehaviorEnumSet.State UpdateState()
