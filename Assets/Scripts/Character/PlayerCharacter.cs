@@ -7,15 +7,13 @@ using Character.PlayerMode;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class PlayerCharacter : MonoPublisherInterface
+public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
 {
     [SerializeField] public GameObject EnemyObject;
 
     private GameObject _wall;
 
     private PlayerCharacter _enemyCharacter;
-
-    private GameRoundManager _roundManager;
     
     public Rigidbody RigidBody { get; private set; }
     private bool _isLookingRight;
@@ -56,7 +54,6 @@ public class PlayerCharacter : MonoPublisherInterface
 
     void Start()
     {
-        _roundManager = GameObject.FindObjectOfType<GameRoundManager>();
         _wall = GameObject.FindWithTag("Wall");
 
         BehaviorStateSetInterface stateSet = BehaviorStateSetManager.GetStateSet(

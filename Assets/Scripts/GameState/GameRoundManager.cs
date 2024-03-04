@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class GameRoundManager : MonoObserverInterface
 {
+    // monoObserver 대신 delegate 함수 사용
     public enum GameState
     {
         NormalPlay = 0,
@@ -62,7 +63,7 @@ public class GameRoundManager : MonoObserverInterface
         PlayerCharacter player = GameObject.FindGameObjectWithTag("Player").transform.root.GetComponent<PlayerCharacter>();
         PlayerCharacter enemy = GameObject.FindGameObjectWithTag("Enemy").transform.root.GetComponent<PlayerCharacter>();
         
-        
+         
         _players.Insert((int)CharacterIndex.Player, player);
         player.PlayerUniqueIndex = _players.Count;
        
@@ -85,18 +86,18 @@ public class GameRoundManager : MonoObserverInterface
         _playerInput = player.GetComponent<CharacterInputManager>();
         _enemyInput = enemy.GetComponent<CharacterInputManager>();
         */
-    }
+    } 
 
     // Update is called once per frame
     void Update()
     {
         if(IsGameStopped || IsGameEnded) return;
         RoundRemainTime -= Time.deltaTime;
-
+    
         if (RoundRemainTime <= 0.0f)
             DrawRound();
 
-        switch (_gameState)
+        switch (_gameState)                     
         {
             case GameState.Replay:
                 break;
