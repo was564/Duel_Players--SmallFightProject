@@ -9,14 +9,13 @@ namespace GameState
         
         private GameStateInterface _currentState;
         
-        // implement the RoundManager later to avoid inclusion in circular reference
         public GameRoundManager RoundManager { get; set; }
         
         public GameStateManager()
         {
             InitStates();
             RoundManager = GameObject.FindObjectOfType<GameRoundManager>();
-            _currentState = _states[GameRoundManager.GameState.NormalPlay];
+            _currentState = _states[GameRoundManager.GameState.Start];
         }
         
         public void Update()
@@ -26,7 +25,9 @@ namespace GameState
 
         public void ChangeState(GameRoundManager.GameState state)
         {
+            _currentState.Quit();
             _currentState = _states[state];
+            _currentState.Enter();
         }
 
         private void InitStates()
