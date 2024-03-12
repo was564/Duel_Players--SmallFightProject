@@ -1,0 +1,45 @@
+﻿namespace GameState
+{
+    public class GameEndingState : GameStateInterface
+    {
+        private bool _isEndedWaiting = false;
+        private int _waitFrame = 0;
+        
+        public GameEndingState(GameRoundStateManager manager) 
+            : base(manager, GameRoundManager.GameState.End) { }
+
+        public override void Enter()
+        {
+            _isEndedWaiting = false;
+            _waitFrame = 0;
+            RoundManager.ApplySettingInStateByPausing(false);
+        }
+        
+        public override void Update()
+        {
+            if (!_isEndedWaiting)
+            {
+                _waitFrame++;
+                if (_waitFrame >= 60)
+                {
+                    _waitFrame = 0;
+                    _isEndedWaiting = true;
+                    
+                }
+                else return;
+            }
+
+            if (RoundManager.CheckAnimationEndedOfAllPlayers())
+            {
+                
+            }
+            
+            throw new System.NotImplementedException();
+        }
+        
+        public override void Quit()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+}

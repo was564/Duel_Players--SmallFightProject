@@ -1,0 +1,28 @@
+﻿using UnityEngine;
+
+namespace GameState
+{
+    public abstract class GameStateInterface
+    {
+
+        public GameStateInterface(GameRoundStateManager roundStateManager, GameRoundManager.GameState stateName)
+        {
+            StateName = stateName;
+            RoundStateManager = roundStateManager;
+            RoundManager = roundStateManager.RoundManager;
+            InputManager = GameObject.FindObjectOfType<MenuInputManager>();
+        }
+
+        public GameRoundManager.GameState StateName { get; private set; }
+        
+        protected GameRoundStateManager RoundStateManager { get; private set; }
+        
+        protected GameRoundManager RoundManager { get; private set; }
+
+        protected MenuInputManager InputManager { get; private set; }
+        
+        public abstract void Enter();
+        public abstract void Update();
+        public abstract void Quit();
+    }
+}

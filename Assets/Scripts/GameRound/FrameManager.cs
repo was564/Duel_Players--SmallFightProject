@@ -29,6 +29,7 @@ public class FrameManager : MonoBehaviour
     private void Start()
     {
         CurrentFrame = 0;
+        IsFramePaused = true;
         PlayerCharacter[] characters = GameObject.FindObjectsOfType<PlayerCharacter>();
         foreach (var character in characters)
         {

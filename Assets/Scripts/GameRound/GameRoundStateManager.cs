@@ -1,20 +1,23 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameState
+namespace GameRound
 {
-    public class GameStateManager
+    public class GameRoundStateManager
     {
         private Dictionary<GameRoundManager.GameState, GameStateInterface> _states;
         
         private GameStateInterface _currentState;
         
-        public GameRoundManager RoundManager { get; set; }
+        public GameRoundManager RoundManager { get; private set; }
         
-        public GameStateManager()
+        public FrameManager FrameManager { get; private set; }
+        
+        public GameRoundStateManager(GameRoundManager roundManager, FrameManager frameManager)
         {
+            RoundManager = roundManager;
+            FrameManager = frameManager;
             InitStates();
-            RoundManager = GameObject.FindObjectOfType<GameRoundManager>();
             _currentState = _states[GameRoundManager.GameState.Start];
         }
         
