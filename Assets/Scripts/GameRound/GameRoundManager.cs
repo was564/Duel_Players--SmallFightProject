@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Character.PlayerMode;
-using GameState;
+using GameRound;
 using TMPro;
 using UnityEngine;
 
@@ -14,17 +14,18 @@ public class GameRoundManager : MonoObserverInterface
         Replay,
         Start,
         Pause,
-        ResultJudge,
         End,
         Size
     }
 
+    /*
     public enum CharacterIndex
     {
         Player = 0,
         Enemy,
         Size
     }
+    */
     
     public GameObject ResultTextPrefab;
 
@@ -37,9 +38,12 @@ public class GameRoundManager : MonoObserverInterface
     private FrameManager _frameManager;
 
     private GameRoundStateManager _gameRoundStateManager;
+
     
-    private List<PlayerCharacter> _players = new List<PlayerCharacter>();
-    private CharacterInputManager[] _inputManagers;
+    private PlayersInRoundControlManager _playersControlManager;
+    
+    //private List<PlayerCharacter> _players = new List<PlayerCharacter>();
+    //private CharacterInputManager[] _inputManagers;
 
     public float RoundRemainTime { get; private set; }
 
@@ -49,11 +53,10 @@ public class GameRoundManager : MonoObserverInterface
 
     public bool IsGameEnded { get; set; } = false;
 
+    // case : NormalPlaying, Replaying
     private GameState _initGameRoundState;
     
     private bool _isGameRecorded = false;
-    
-    private List<int> _downPlayers = new List<int>();
 
     private RoundInfoManager _roundInfoManager;
 
@@ -66,12 +69,14 @@ public class GameRoundManager : MonoObserverInterface
         _roundInfoManager = new RoundInfoManager();
 
         _frameManager = GameObject.FindObjectOfType<FrameManager>();
+        _playersControlManager = new PlayersInRoundControlManager();
         
+        _gameRoundStateManager = new GameRoundStateManager(this, _playersControlManager, _frameManager);
+        
+        /*
         PlayerCharacter player = GameObject.FindGameObjectWithTag("Player").transform.root.GetComponent<PlayerCharacter>();
         PlayerCharacter enemy = GameObject.FindGameObjectWithTag("Enemy").transform.root.GetComponent<PlayerCharacter>();
 
-        _gameRoundStateManager = new GameRoundStateManager(this, _frameManager);
-        
         _players.Insert((int)CharacterIndex.Player, player);
         player.PlayerUniqueIndex = _players.Count;
        
@@ -79,7 +84,8 @@ public class GameRoundManager : MonoObserverInterface
         enemy.PlayerUniqueIndex = _players.Count;
 
         _inputManagers = GameObject.FindObjectsOfType<CharacterInputManager>();
-
+        */
+        
         _canvas = GameObject.FindObjectOfType<Canvas>().GetComponent<RectTransform>();
         _resultPanel = Instantiate(ResultTextPrefab, Vector3.zero, Quaternion.identity, _canvas);
         _resultPanel.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
@@ -87,7 +93,7 @@ public class GameRoundManager : MonoObserverInterface
         _resultPanel.SetActive(false);
         
         RoundRemainTime = InitRemainTime;
-        StartRound();
+        StartRoundFromIntro();
         
         /*
         // -- for Replay By Input -- //
@@ -123,11 +129,8 @@ public class GameRoundManager : MonoObserverInterface
         if (isPaused)
         {
             Time.timeScale = 0.0f;
-
-            foreach (var player in _players)
-            {
-                player.SetPlayerMode(PlayerModeManager.PlayerMode.GamePause);
-            }
+            
+            _playersControlManager.ChangeModeOfAllPlayers(PlayerModeManager.PlayerMode.GamePause);
         }
         else
         {
@@ -135,14 +138,11 @@ public class GameRoundManager : MonoObserverInterface
 
             PlayerModeManager.PlayerMode mode;
             if (_initGameRoundState == GameState.Replay)
-                mode = PlayerModeManager.PlayerMode.Replaying;
+                _playersControlManager.ChangeModeOfAllPlayers(PlayerModeManager.PlayerMode.Replaying);
             else if (_initGameRoundState == GameState.NormalPlay)
-                mode = PlayerModeManager.PlayerMode.NormalPlaying;
-            else mode = PlayerModeManager.PlayerMode.NormalPlaying;
-            foreach (var player in _players)
-            {
-                player.SetPlayerMode(mode);
-            }
+                _playersControlManager.ChangeModeOfAllPlayers(PlayerModeManager.PlayerMode.NormalPlaying);
+            
+            else _playersControlManager.ChangeModeOfAllPlayers(PlayerModeManager.PlayerMode.NormalPlaying);
         }
     
     }
@@ -157,21 +157,13 @@ public class GameRoundManager : MonoObserverInterface
         _gameRoundStateManager.ChangeState(GameState.NormalPlay);
     }
     
-    public void ResetCharactersAnimationEndedPoint()
-    {
-        foreach (var player in _players)
-        {
-            player.IsEndedPoseAnimation = false;
-        }
-    }
-    
     public void Replay()
     {
         _initGameRoundState = GameState.Replay;
-        StartRound();
-        BlockAllPlayersInput();
+        StartRoundFromIntro();
+        _playersControlManager.BlockAllPlayersInput();
         _isGameRecorded = false;
-        _roundInfoManager.LoadPreviousRoundInfoFromJson(_playersInputQueueForReplay, _enemyInputQueueForReplay);
+        //_roundInfoManager.LoadPreviousRoundInfoFromJson(_playersInputQueueForReplay, _enemyInputQueueForReplay);
     }
 
     public void DecreaseRemainTimePerFrame(int frame)
@@ -182,129 +174,67 @@ public class GameRoundManager : MonoObserverInterface
     public void SaveRoundUntilNow()
     {
         DrawRound();
-        StartRound();
+        StartRoundFromIntro();
     }
     
-    public void StartRound()
+    public void StartRoundFromIntro()
     {
         _initGameRoundState = GameState.NormalPlay;
         _isGameRecorded = true;
+        IsGameEnded = false;
         
         _resultPanel.SetActive(false);
-        AcceptAllPlayersInput();
+        _playersControlManager.AcceptAllPlayersInput();
         
         RoundRemainTime = InitRemainTime;
-        _players[(int)CharacterIndex.Player].transform.position = Vector3.left;
-        _players[(int)CharacterIndex.Enemy].transform.position = Vector3.right;
-        
-        foreach (var player in _players)
-        {
-            player.IsAcceptArtificialInput = false;
-            player.ComboManagerInstance.IsCanceled = true;
-            player.IsGuarded = false;
-            player.ResetHp();
-            player.StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
-            player.GetComponent<CharacterJudgeBoxController>().EnableHitBox();
-            player.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        }
         
         _gameRoundStateManager.ChangeState(GameState.Start);
+        _playersControlManager.ChangeInitializeRoundState(GameState.Start);
         
-        _downPlayers.Clear();
-        IsGameEnded = false;
-    }
-
-    public void InitializeCharacterForStartingRound()
-    {
-        foreach (var player in _players)
-        {
-            player.StateManager.ChangeState(BehaviorEnumSet.State.IntroPose);
-        }
-    }
-
-    public void InitializeCharacterForNormalPlayingRound()
-    {
-        
+        _playersControlManager.InitializePlayersInRound();
     }
     
-    private void EndRound(int playerUnique)
+    private void EndRound(PlayersInRoundControlManager.CharacterIndex characterIndex)
     {
         IsGameEnded = true;
-        BlockAllPlayersInput();
-        _text.text = "Player " + playerUnique + " Win";
+        _playersControlManager.BlockAllPlayersInput();
+        _text.text = "Player " + (int)characterIndex + " Win";
         _resultPanel.SetActive(true);
         
         _roundInfoManager.SaveRoundInfoToJson();
         _roundInfoManager.Clear();
     }
 
-    public void game();
-
     private void DrawRound()
     {
         IsGameEnded = true;
-        BlockAllPlayersInput();
+        _playersControlManager.BlockAllPlayersInput();
         _text.text = "Draw";
         _resultPanel.SetActive(true);
         
         _roundInfoManager.SaveRoundInfoToJson();
         _roundInfoManager.Clear();
     }
-    
-    public void BlockAllPlayersInput()
-    {
-        foreach (var manager in _inputManagers)
-        {
-            manager.IsAvailableInput = false;
-        }
-    }
-
-    public void AcceptAllPlayersInput()
-    {
-        foreach (var manager in _inputManagers)
-        {
-            manager.IsAvailableInput = true;
-        }
-    }
-    
-    public bool CheckAnimationEndedOfAllPlayers()
-    {
-        foreach (var player in _players)
-        {
-            if (!player.IsEndedPoseAnimation) return false;
-        }
-
-        return true;
-    }
 
     public override void Notify()
     {
-        foreach (var player in _players)
+        int countingDownPlayers = _playersControlManager.CountDownPlayers();
+        switch (countingDownPlayers)
         {
-            if (player.Hp <= 0)
-            {
-                _downPlayers.Add(player.PlayerUniqueIndex);
-                player.IsEndedPoseAnimation = true;
-                player.StateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
-            }
-        }
-
-        switch (_downPlayers.Count)
-        {
+            case 0:
+                break;
             case 1:
-                EndRound(_downPlayers[0]);
+                EndRound(_playersControlManager.GetDownPlayerIndex());
                 break;
             case 2:
                 DrawRound();
                 break;
+            default:
+                break;
         }
     }
-
-    public void HandleAnimationEndSignal()
-    {
-        
-    }
     
+    /*
     public void EnqueueRoundInput(string tagName, BehaviorEnumSet.Button button, int frame)
     {
         _roundInfoManager.EnqueueEntryInput(tagName, button);
@@ -313,7 +243,7 @@ public class GameRoundManager : MonoObserverInterface
 
     private BehaviorEnumSet.State _previousPlayerState = BehaviorEnumSet.State.Null;
     private BehaviorEnumSet.State _previousEnemyState = BehaviorEnumSet.State.Null;
-    
+
     public void EnqueueRoundState(CharacterIndex index, BehaviorEnumSet.State state, int frame, Vector2 position, Vector2 velocity)
     {
         bool doEnqueue = true;
@@ -330,13 +260,13 @@ public class GameRoundManager : MonoObserverInterface
         }
         if(doEnqueue) _roundInfoManager.EnqueueEntryState(index, state, position, velocity);
     }
-    
+
     private void RecordGameByState()
     {
         for (CharacterIndex index = 0; index < CharacterIndex.Size; index++)
         {
             PlayerCharacter player = _players[(int)index];
-            
+
         }
     }
 
@@ -382,9 +312,10 @@ public class GameRoundManager : MonoObserverInterface
                     else _playerInput.EnqueueInputQueue(playerInput);
                 }
             }
-            
+
             if (endedPlayerInputEnqueue && endedEnemyInputEnqueue)
                 break;
         }
     }
+    */
 }

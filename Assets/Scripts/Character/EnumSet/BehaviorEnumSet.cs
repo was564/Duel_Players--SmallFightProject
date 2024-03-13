@@ -46,6 +46,8 @@
         AirGuard,
         FallDown,
         GetUp,
+        IntroPose,
+        OutroPose,
         Size
     }
 

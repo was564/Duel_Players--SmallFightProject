@@ -1,4 +1,4 @@
-﻿namespace GameState
+﻿namespace GameRound
 {
     public class GameStartingState : GameStateInterface
     {
@@ -7,14 +7,13 @@
 
         public override void Enter()
         {
-            
             RoundManager.ApplySettingInStateByPausing(false);
-            RoundManager.BlockAllPlayersInput();
+            PlayersControlManager.BlockAllPlayersInput();
         }
         
         public override void Update()
         {
-            if (!RoundManager.CheckAnimationEndedOfAllPlayers()) return;
+            if (PlayersControlManager.CountAnimationEndedOfAllPlayers() < 2) return;
             
             
             RoundStateManager.ChangeState(GameRoundManager.GameState.NormalPlay);
@@ -22,8 +21,8 @@
         
         public override void Quit()
         {
-            RoundManager.ResetCharactersAnimationEndedPoint();
-            RoundManager.AcceptAllPlayersInput();
+            PlayersControlManager.ResetPlayersAnimationEndedPoint();
+            PlayersControlManager.AcceptAllPlayersInput();
         }
     }
 }

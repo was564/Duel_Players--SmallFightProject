@@ -2,7 +2,8 @@
 {
     public class ReplayingMode : PlayerModeInterface
     {
-        public ReplayingMode(PlayerCharacter character) : base(character) { }
+        public ReplayingMode(PlayerCharacter character) 
+            : base(PlayerModeManager.PlayerMode.Replaying, character) { }
         
         public override void Update()
         {

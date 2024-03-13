@@ -47,7 +47,10 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
     public List<BehaviorEnumSet.Button> ArtificialButtonsInSameTime = new List<BehaviorEnumSet.Button>();
 
     private float _addingGravityMultiple = 1.3f;
-
+    
+    // for checking end point of intro animation and outro animation
+    public bool IsEndedPoseAnimation { get; set; } = false;
+    
     public int PlayerUniqueIndex { get; set; }
 
     private List<MonoObserverInterface> _observers = new List<MonoObserverInterface>();
@@ -73,6 +76,8 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         _currentStateManager = StateManager;
 
         _enemyCharacter = EnemyObject.GetComponent<PlayerCharacter>();
+
+        IsEndedPoseAnimation = false;
         
         ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
         _playerModeManager.SetMode(PlayerModeManager.PlayerMode.NormalPlaying);
@@ -135,7 +140,7 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         
         if (IsAcceptArtificialInput && ArtificialButtonsInSameTime.Count > 0)
         {
-            for(int index = 0;index < ArtificialButtonsInSameTime.Count; index++)
+            for(int index = 0; index < ArtificialButtonsInSameTime.Count; index++)
                 _inputManager.EnqueueInputQueue(ArtificialButtonsInSameTime[index]);
         }
 
@@ -201,7 +206,11 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
     public void DecreaseHp(int damage)
     {
         Hp -= damage;
-        Notify();
+        if (Hp <= 0)
+        {
+            IsEndedPoseAnimation = true;
+            Notify();
+        }
     }
 
     // this function provide auto setting position and rigidbody
@@ -276,6 +285,11 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
     public void SetPlayerMode(PlayerModeManager.PlayerMode mode)
     {
         _playerModeManager.SetMode(mode);
+    }
+
+    public PlayerModeManager.PlayerMode GetPlayerMode()
+    {
+        return _playerModeManager.GetCurrentModeName();
     }
     
     public void ResetHp()

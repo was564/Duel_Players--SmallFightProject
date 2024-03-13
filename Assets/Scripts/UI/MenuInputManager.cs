@@ -35,37 +35,33 @@ public class MenuInputManager : MonoBehaviour
         _enterMenuKey = _inputInMenu.FindAction("EnterMenu");
     }
 
-    // Update is called once per frame
-    void Update()
+    // 0 : no input, 1 : up, -1 : down
+    public short GetPressedMoveKey()
     {
-        EnterMenu();
-        MoveMenuOption();
-        SelectMenuOption();
-    }
-
-    private void MoveMenuOption()
-    {
-        if (!_verticalScrollKey.WasPressedThisFrame()) return;
+        if (!_verticalScrollKey.WasPressedThisFrame()) return 0;
         float optionMoveDirection = _verticalScrollKey.ReadValue<float>();
-        
-        if(optionMoveDirection < 0.0f) _menu.MenuScrollDown();
-        else if(optionMoveDirection > 0.0f) _menu.MenuScrollUp();
-    }
 
-    private void SelectMenuOption()
+        if (optionMoveDirection < 0.0f) return -1; //_menu.MenuScrollDown();
+        else if (optionMoveDirection > 0.0f) return 1; //_menu.MenuScrollUp();
+        else return 0;
+    }
+    
+    public bool IsPressedMenuEnterKey()
     {
-        if (!_selectionKey.WasPressedThisFrame()) return;
+        if (!_selectionKey.WasPressedThisFrame()) return false;
         float selectButton = _selectionKey.ReadValue<float>();
-        
-        if(selectButton > 0.0f) _menu.SelectMenuOption();
+
+        if (selectButton > 0.0f) return true;
+        else return false;
+        //_menu.SelectMenuOption();
     }
 
-    private void EnterMenu()
+    public bool IsPressedMenuKey()
     {
-        if (!_enterMenuKey.WasPressedThisFrame()) return;
+        if (!_enterMenuKey.WasPressedThisFrame()) return false;
         float menuOpenButton = _enterMenuKey.ReadValue<float>();
         
-        if (menuOpenButton <= 0.0f) return;
-        _menu.ControlMenu();
+        if (menuOpenButton > 0.0f) return true;
+        else return false;
     }
 }

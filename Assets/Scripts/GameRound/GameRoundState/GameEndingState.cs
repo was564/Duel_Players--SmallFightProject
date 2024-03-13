@@ -1,4 +1,4 @@
-﻿namespace GameState
+﻿namespace GameRound
 {
     public class GameEndingState : GameStateInterface
     {
@@ -29,7 +29,7 @@
                 else return;
             }
 
-            if (RoundManager.CheckAnimationEndedOfAllPlayers())
+            if (PlayersControlManager.CountAnimationEndedOfAllPlayers() >= 1)
             {
                 
             }

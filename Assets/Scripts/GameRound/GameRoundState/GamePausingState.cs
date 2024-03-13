@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameState
+namespace GameRound
 {
     public class GamePausingState : GameStateInterface
     {
@@ -15,7 +15,7 @@ namespace GameState
         public override void Enter()
         {
             RoundManager.ApplySettingInStateByPausing(true);
-            RoundManager.BlockAllPlayersInput();
+            PlayersControlManager.BlockAllPlayersInput();
             _menuManager.OnEnableMenu();
         }
         
@@ -52,7 +52,7 @@ namespace GameState
         {
             RoundManager.ApplySettingInStateByPausing(false);
             _menuManager.OnDisableMenu();
-            RoundManager.AcceptAllPlayersInput();
+            PlayersControlManager.AcceptAllPlayersInput();
         }
     }
 }

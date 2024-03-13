@@ -1,4 +1,4 @@
-﻿namespace GameState
+﻿namespace GameRound
 {
     public class GameReplayingState : GameStateInterface
     {

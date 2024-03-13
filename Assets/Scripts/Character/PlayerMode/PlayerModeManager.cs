@@ -29,6 +29,11 @@ namespace Character.PlayerMode
             _currentMode = _playerModes[mode];
         }
         
+        public PlayerMode GetCurrentModeName()
+        {
+            return _currentMode.ModeName;
+        }
+        
         public void Update()
         {
             _currentMode.Update();

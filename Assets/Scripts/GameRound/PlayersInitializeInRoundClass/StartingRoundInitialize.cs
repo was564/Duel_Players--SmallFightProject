@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace GameRound.PlayersInitializeInRoundClass
 {
-    public class StartingRoundIntialize : PlayersInitializeInRoundFactory
+    public class StartingRoundInitialize : PlayersInitializeInRoundFactory
     {
-        public StartingRoundIntialize(List<PlayerCharacter> players)
+        public StartingRoundInitialize(List<PlayerCharacter> players)
             : base(players) {}
         
         protected override void InitializePlayersPosition()

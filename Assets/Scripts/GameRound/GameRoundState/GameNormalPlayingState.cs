@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameState
+namespace GameRound
 {
     public class GameNormalPlayingState : GameStateInterface
     {

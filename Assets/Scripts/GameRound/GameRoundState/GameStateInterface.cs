@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameState
+namespace GameRound
 {
     public abstract class GameStateInterface
     {
@@ -10,6 +10,7 @@ namespace GameState
             StateName = stateName;
             RoundStateManager = roundStateManager;
             RoundManager = roundStateManager.RoundManager;
+            PlayersControlManager = roundStateManager.PlayersControlManager;
             InputManager = GameObject.FindObjectOfType<MenuInputManager>();
         }
 
@@ -18,8 +19,10 @@ namespace GameState
         protected GameRoundStateManager RoundStateManager { get; private set; }
         
         protected GameRoundManager RoundManager { get; private set; }
-
+        
         protected MenuInputManager InputManager { get; private set; }
+        
+        protected PlayersInRoundControlManager PlayersControlManager { get; private set; }
         
         public abstract void Enter();
         public abstract void Update();

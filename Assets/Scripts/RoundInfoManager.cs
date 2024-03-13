@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using GameRound;
 using UnityEngine;
 
 
@@ -66,8 +67,8 @@ public class RoundInfoManager
                 enemyInputQueue.Enqueue((int)BehaviorEnumSet.Button.Null);
                 frame = input.Frame;
             }
-            if(input.CharacterIndex == (int)GameRoundManager.CharacterIndex.Enemy) enemyInputQueue.Enqueue(input.State);
-            else if(input.CharacterIndex == (int)GameRoundManager.CharacterIndex.Player) playerInputQueue.Enqueue(input.State);
+            if(input.CharacterIndex == (int)PlayersInRoundControlManager.CharacterIndex.Enemy) enemyInputQueue.Enqueue(input.State);
+            else if(input.CharacterIndex == (int)PlayersInRoundControlManager.CharacterIndex.Player) playerInputQueue.Enqueue(input.State);
         }
     }
     
@@ -93,7 +94,7 @@ public class RoundInfoManager
         _roundDataByInput.Round.Add(new EntryInput(tagName, button, FrameManager.CurrentFrame));
     }
 
-    public void EnqueueEntryState(GameRoundManager.CharacterIndex index, BehaviorEnumSet.State state, Vector2 position, Vector2 velocity)
+    public void EnqueueEntryState(PlayersInRoundControlManager.CharacterIndex index, BehaviorEnumSet.State state, Vector2 position, Vector2 velocity)
     {
         _roundDataByState.Round.Add(new EntryState(index, state, FrameManager.CurrentFrame, position, velocity));
     }
@@ -115,7 +116,7 @@ public class RoundDataByState
 [System.Serializable]
 public class EntryState
 {
-    public EntryState(GameRoundManager.CharacterIndex index, BehaviorEnumSet.State state, int frame, Vector2 position, Vector2 velocity)
+    public EntryState(PlayersInRoundControlManager.CharacterIndex index, BehaviorEnumSet.State state, int frame, Vector2 position, Vector2 velocity)
     {
         CharacterIndex = (int)index;
         State = (int)state;

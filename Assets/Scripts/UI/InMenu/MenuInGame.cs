@@ -9,7 +9,6 @@ using UnityEngine.SceneManagement;
 
 public class MenuInGame : MonoBehaviour
 {
-    private FrameManager _frameManager;
     private RectTransform _canvas;
     
     // width 700, height 60
@@ -21,15 +20,11 @@ public class MenuInGame : MonoBehaviour
     private int _selectingIndexInMenu = 0;
     private RectTransform _menuSelectingUI;
     
-    private bool _isOpenedMenu = false;
-
-    private GameRoundManager _gameRoundManager;
+    //private bool _isOpenedMenu = false;
     
     // Start is called before the first frame update
     void Start()
     {
-        _gameRoundManager = GameObject.FindObjectOfType<GameRoundManager>();
-        _frameManager = GameObject.FindObjectOfType<FrameManager>();
         _canvas = GameObject.FindObjectOfType<Canvas>().GetComponent<RectTransform>();
         
         _menuSelectingUI = Instantiate(MenuSelectingPrefab, Vector3.zero, Quaternion.identity, _canvas)
@@ -50,59 +45,44 @@ public class MenuInGame : MonoBehaviour
         }
 
         SyncPositionPanelAndMenuOption();
-        _isOpenedMenu = !_isOpenedMenu;
-        ControlMenu();
+        OnDisableMenu();
     }
 
     public void MenuScrollUp()
     {
-        if(!_isOpenedMenu || _selectingIndexInMenu == _menuList.Count - 1) return;
+        if(_selectingIndexInMenu == _menuList.Count - 1) return;
         _selectingIndexInMenu += 1;
         SyncPositionPanelAndMenuOption();
     }
     
     public void MenuScrollDown()
     {
-        if (!_isOpenedMenu || _selectingIndexInMenu == 0) return;
+        if (_selectingIndexInMenu == 0) return;
         _selectingIndexInMenu -= 1;
         SyncPositionPanelAndMenuOption();
     }
 
     public void SelectMenuOption()
     {
-        if (!_isOpenedMenu) return;
         _menuList[_selectingIndexInMenu].OnSelect();
     }
 
-    public void ControlMenu()
+    public void OnEnableMenu()
     {
-        _isOpenedMenu = !_isOpenedMenu;
-        if (_isOpenedMenu)
+        foreach (var menuOption in _menuList)
         {
-            foreach (var menuOption in _menuList)
-            {
-                menuOption.Transform.gameObject.SetActive(true);
-            }
-            _menuSelectingUI.gameObject.SetActive(true);
-            
-            //_frameManager.PauseAllCharactersInFrame(100000000);
-            _gameRoundManager.PauseGame();
-            
-            _gameRoundManager.BlockAllPlayersInput();
+            menuOption.Transform.gameObject.SetActive(true);
         }
-        else
+        _menuSelectingUI.gameObject.SetActive(true);
+    }
+    
+    public void OnDisableMenu()
+    {
+        foreach (var menuOption in _menuList)
         {
-            foreach (var menuOption in _menuList)
-            {
-                menuOption.Transform.gameObject.SetActive(false);
-            }
-            _menuSelectingUI.gameObject.SetActive(false);
-            
-            //_frameManager.ResumeAllCharacters();
-            _gameRoundManager.ResumeGame();
-            
-            _gameRoundManager.AcceptAllPlayersInput();
+            menuOption.Transform.gameObject.SetActive(false);
         }
+        _menuSelectingUI.gameObject.SetActive(false);
     }
 
     public void SyncPositionPanelAndMenuOption()

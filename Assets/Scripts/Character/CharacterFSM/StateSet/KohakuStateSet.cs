@@ -39,6 +39,7 @@ namespace Character.CharacterFSM.KohakuState
             BindState(BehaviorEnumSet.State.InAirHit, new InAirHitState(characterRoot));
             BindState(BehaviorEnumSet.State.FallDown, new FallDownState(characterRoot));
             BindState(BehaviorEnumSet.State.GetUp, new GetUpState(characterRoot));
+            BindState(BehaviorEnumSet.State.IntroPose, new IntroPoseState(characterRoot));
         }
     }
 }

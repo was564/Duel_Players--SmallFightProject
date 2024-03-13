@@ -2,7 +2,8 @@
 {
     public class NormalPlayingMode : PlayerModeInterface
     {
-        public NormalPlayingMode(PlayerCharacter character) : base(character) { }
+        public NormalPlayingMode(PlayerCharacter character) 
+            : base(PlayerModeManager.PlayerMode.NormalPlaying, character) { }
         
         public override void Update()
         {
