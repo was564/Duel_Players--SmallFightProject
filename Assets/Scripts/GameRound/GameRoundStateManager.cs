@@ -5,9 +5,9 @@ namespace GameRound
 {
     public class GameRoundStateManager
     {
-        private Dictionary<GameRoundManager.GameState, GameStateInterface> _states;
+        private Dictionary<GameRoundManager.GameState, GameRoundStateInterface> _states;
         
-        private GameStateInterface _currentState;
+        private GameRoundStateInterface _currentRoundState;
         
         public GameRoundManager RoundManager { get; private set; }
         
@@ -21,29 +21,30 @@ namespace GameRound
             FrameManager = frameManager;
             PlayersControlManager = controlManager;
             InitStates();
-            _currentState = _states[GameRoundManager.GameState.Start];
+            _currentRoundState = _states[GameRoundManager.GameState.Start];
         }
         
         public void Update()
         {
-            _currentState.Update();
+            _currentRoundState.Update();
         }
 
         public void ChangeState(GameRoundManager.GameState state)
         {
-            _currentState.Quit();
-            _currentState = _states[state];
-            _currentState.Enter();
+            _currentRoundState.Quit();
+            _currentRoundState = _states[state];
+            _currentRoundState.Enter();
         }
 
         private void InitStates()
         {
-            _states = new Dictionary<GameRoundManager.GameState, GameStateInterface>();
-            _states.Add(GameRoundManager.GameState.NormalPlay, new GameNormalPlayingState(this));
-            _states.Add(GameRoundManager.GameState.Start, new GameStartingState(this));
-            _states.Add(GameRoundManager.GameState.Replay, new GameReplayingState(this));
-            _states.Add(GameRoundManager.GameState.Pause, new GamePausingState(this));
-            _states.Add(GameRoundManager.GameState.End, new GameEndingState(this));
+            _states = new Dictionary<GameRoundManager.GameState, GameRoundStateInterface>();
+            _states.Add(GameRoundManager.GameState.NormalPlay, new GameRoundNormalPlayingState(this));
+            _states.Add(GameRoundManager.GameState.Start, new GameRoundStartingState(this));
+            _states.Add(GameRoundManager.GameState.Replay, new GameRoundReplayingState(this));
+            _states.Add(GameRoundManager.GameState.Pause, new GameRoundPausingState(this));
+            _states.Add(GameRoundManager.GameState.End, new GameRoundEndingState(this));
+            _states.Add(GameRoundManager.GameState.Wait, new GameRoundWaitingUntilEndState(this));
         }
     }
 }

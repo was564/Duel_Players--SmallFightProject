@@ -14,6 +14,7 @@ public class GameRoundManager : MonoObserverInterface
         Replay,
         Start,
         Pause,
+        Wait,
         End,
         Size
     }
@@ -203,6 +204,8 @@ public class GameRoundManager : MonoObserverInterface
         
         _roundInfoManager.SaveRoundInfoToJson();
         _roundInfoManager.Clear();
+        
+        _gameRoundStateManager.ChangeState(GameState.End);
     }
 
     private void DrawRound()
@@ -218,6 +221,8 @@ public class GameRoundManager : MonoObserverInterface
 
     public override void Notify()
     {
+        IsGameEnded = true;
+        
         int countingDownPlayers = _playersControlManager.CountDownPlayers();
         switch (countingDownPlayers)
         {
