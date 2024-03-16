@@ -19,7 +19,7 @@ namespace GameRound
         private List<PlayerCharacter> _players = new List<PlayerCharacter>();
         private CharacterInputManager[] _inputManagers;
         
-        private PlayersInitializeInRoundFactory _playersInitializationManager;
+        //private PlayersInitializeInRoundFactory _playersInitializationManager;
         
         public PlayersInRoundControlManager()
         {
@@ -37,19 +37,25 @@ namespace GameRound
             _initializationRoundStates.Add(GameRoundManager.GameState.Start, new StartingRoundInitialize(_players));
             _initializationRoundStates.Add(GameRoundManager.GameState.NormalPlay, new NormalPlayingRoundInitialize(_players));
             _initializationRoundStates.Add(GameRoundManager.GameState.Replay, new ReplayingRoundInitialize(_players));
+            _initializationRoundStates.Add(GameRoundManager.GameState.End, new EndingRoundInitialize(_players));
             
-            _playersInitializationManager = _initializationRoundStates[GameRoundManager.GameState.NormalPlay];
+            //_playersInitializationManager = _initializationRoundStates[GameRoundManager.GameState.NormalPlay];
         }
 
-        public void InitializePlayersInRound()
+        public void InitializePlayersInRound(GameRoundManager.GameState state)
         {
-            _playersInitializationManager.InitializePlayersInRound();
+            if (!_initializationRoundStates.ContainsKey(state)) return;
+            
+            _initializationRoundStates[state].InitializePlayersInRound();
+            //_playersInitializationManager.InitializePlayersInRound();
         }
         
+        /*
         public void ChangeInitializeRoundState(GameRoundManager.GameState state)
         {
             _playersInitializationManager = _initializationRoundStates[state];
         }
+        */
         
         public void ChangeModeOfAllPlayers(PlayerModeManager.PlayerMode mode)
         {
@@ -116,7 +122,15 @@ namespace GameRound
             if (_players[(int)CharacterIndex.Enemy].Hp <= 0) return CharacterIndex.Enemy;
             return CharacterIndex.Size;
         }
-        
-        
+
+        public CharacterIndex GetLowestHpCharacterIndex()
+        {
+            int playerHp = _players[(int)CharacterIndex.Player].Hp;
+            int enemyHp = _players[(int)CharacterIndex.Enemy].Hp;
+            
+            if (playerHp > enemyHp) return CharacterIndex.Enemy;
+            else if (playerHp == enemyHp) return CharacterIndex.Size;
+            else return CharacterIndex.Player;
+        }
     }
 }

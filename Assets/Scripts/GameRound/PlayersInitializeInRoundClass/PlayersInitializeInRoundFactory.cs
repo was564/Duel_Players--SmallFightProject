@@ -20,7 +20,6 @@ namespace GameRound
             {
                 player.ComboManagerInstance.IsCanceled = true;
                 player.IsGuarded = false;
-                player.ResetHp();
                 
                 player.GetComponent<CharacterJudgeBoxController>().EnableHitBox();
                 player.GetComponent<Rigidbody>().velocity = Vector3.zero;

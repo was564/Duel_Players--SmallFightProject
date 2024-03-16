@@ -9,6 +9,7 @@
         {
             RoundManager.ApplySettingInStateByPausing(false);
             PlayersControlManager.BlockAllPlayersInput();
+            PlayersControlManager.InitializePlayersInRound(StateName);
         }
         
         public override void Update()

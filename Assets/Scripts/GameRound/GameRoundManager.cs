@@ -16,9 +16,10 @@ public class GameRoundManager : MonoObserverInterface
         Pause,
         Wait,
         End,
+        Result,
         Size
     }
-
+    
     /*
     public enum CharacterIndex
     {
@@ -190,25 +191,23 @@ public class GameRoundManager : MonoObserverInterface
         RoundRemainTime = InitRemainTime;
         
         _gameRoundStateManager.ChangeState(GameState.Start);
-        _playersControlManager.ChangeInitializeRoundState(GameState.Start);
-        
-        _playersControlManager.InitializePlayersInRound();
+        _playersControlManager.InitializePlayersInRound(GameState.Start);
     }
     
-    private void EndRound(PlayersInRoundControlManager.CharacterIndex characterIndex)
+    public void EndRound(PlayersInRoundControlManager.CharacterIndex winCharacterIndex)
     {
         IsGameEnded = true;
         _playersControlManager.BlockAllPlayersInput();
-        _text.text = "Player " + (int)characterIndex + " Win";
+        _text.text = "Player " + (int)winCharacterIndex + " Win";
         _resultPanel.SetActive(true);
         
         _roundInfoManager.SaveRoundInfoToJson();
         _roundInfoManager.Clear();
         
-        _gameRoundStateManager.ChangeState(GameState.End);
+        //_gameRoundStateManager.ChangeState(GameState.Wait);
     }
 
-    private void DrawRound()
+    public void DrawRound()
     {
         IsGameEnded = true;
         _playersControlManager.BlockAllPlayersInput();
@@ -223,6 +222,7 @@ public class GameRoundManager : MonoObserverInterface
     {
         IsGameEnded = true;
         
+        /*
         int countingDownPlayers = _playersControlManager.CountDownPlayers();
         switch (countingDownPlayers)
         {
@@ -237,6 +237,7 @@ public class GameRoundManager : MonoObserverInterface
             default:
                 break;
         }
+        */
     }
     
     /*

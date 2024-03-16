@@ -14,7 +14,8 @@
         
         public override void Update()
         {
-            
+            if(PlayersControlManager.CountAnimationEndedOfAllPlayers() >= 1)
+                RoundStateManager.ChangeState(GameRoundManager.GameState.End);
         }
         
         public override void Quit()

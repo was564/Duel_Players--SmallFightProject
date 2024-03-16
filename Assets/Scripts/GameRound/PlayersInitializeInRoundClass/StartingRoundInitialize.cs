@@ -17,8 +17,10 @@ namespace GameRound.PlayersInitializeInRoundClass
 
         protected override void InitializePlayersInitState()
         {
+            
             foreach (var player in Players)
             {
+                player.ResetHp();
                 player.StateManager.ChangeState(BehaviorEnumSet.State.IntroPose);
             }
         }

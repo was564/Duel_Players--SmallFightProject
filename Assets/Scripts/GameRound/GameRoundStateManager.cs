@@ -45,6 +45,7 @@ namespace GameRound
             _states.Add(GameRoundManager.GameState.Pause, new GameRoundPausingState(this));
             _states.Add(GameRoundManager.GameState.End, new GameRoundEndingState(this));
             _states.Add(GameRoundManager.GameState.Wait, new GameRoundWaitingUntilEndState(this));
+            _states.Add(GameRoundManager.GameState.Result, new GameRoundResultState(this));
         }
     }
 }

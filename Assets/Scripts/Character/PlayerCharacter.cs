@@ -209,6 +209,7 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         if (Hp <= 0)
         {
             IsEndedPoseAnimation = true;
+            StateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
             Notify();
         }
     }

@@ -15,10 +15,23 @@ namespace GameRound.PlayersInitializeInRoundClass
 
         protected override void InitializePlayersInitState()
         {
-            foreach (var player in Players)
+            PlayerCharacter losePlayer = null, winPlayer = null;
+
+            // reference : https://stackoverflow.com/questions/804706/swap-two-variables-without-using-a-temporary-variable
+            (losePlayer, winPlayer) = (Players[0], Players[1]);
+
+            if (losePlayer.Hp > winPlayer.Hp)
+                (losePlayer, winPlayer) = (winPlayer, losePlayer);
+
+            if (winPlayer.Hp <= 0) {}
+            else if (losePlayer.Hp > 0)
             {
-                
-                player.StateManager.ChangeState(BehaviorEnumSet.State.OutroPose);
+                winPlayer.StateManager.ChangeState(BehaviorEnumSet.State.OutroPose);
+                losePlayer.StateManager.ChangeState(BehaviorEnumSet.State.OutroPose);
+            }
+            else
+            {
+                winPlayer.StateManager.ChangeState(BehaviorEnumSet.State.OutroPose);
             }
         }
 

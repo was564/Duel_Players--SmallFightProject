@@ -40,6 +40,7 @@ namespace Character.CharacterFSM.KohakuState
             BindState(BehaviorEnumSet.State.FallDown, new FallDownState(characterRoot));
             BindState(BehaviorEnumSet.State.GetUp, new GetUpState(characterRoot));
             BindState(BehaviorEnumSet.State.IntroPose, new IntroPoseState(characterRoot));
+            BindState(BehaviorEnumSet.State.OutroPose, new OutroPoseState(characterRoot));
         }
     }
 }
