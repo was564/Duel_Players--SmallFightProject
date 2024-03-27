@@ -1,4 +1,7 @@
-﻿namespace Character.PlayerMode
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace Character.PlayerMode
 {
     public abstract class PlayerModeInterface
     {
@@ -11,6 +14,6 @@
             Character = character;
         }
         
-        public abstract void Update();
+        public virtual void Update() {}
     }
 }

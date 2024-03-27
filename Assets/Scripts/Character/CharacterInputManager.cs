@@ -113,7 +113,7 @@ public class CharacterInputManager : MonoBehaviour
         return _inputQueue.Dequeue();
     }
     
-    public void EnqueueInputQueue(BehaviorEnumSet.Button button)
+    public void EnqueueInput(BehaviorEnumSet.Button button)
     {
         _inputQueue.Enqueue(button);
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BehaviorTree;
 using Character;
 using Character.CharacterFSM;
 using Character.CharacterPassiveState;
@@ -26,6 +27,7 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
     public BehaviorStateManager StateManager { get; private set; }
     private BehaviorStateSimulator _stateSimulatorInStoppedFrame;
     private BehaviorStateSimulator _currentStateManager;
+    
     public ComboManager ComboManagerInstance { get; private set; }
     
     public float PositionYOffsetForLand { get; private set; } = -0.6f;
@@ -74,7 +76,7 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         _commandProcessor = this.GetComponent<CommandProcessor>();
         _passiveStateManager = this.GetComponent<PassiveStateManager>();
         _currentStateManager = StateManager;
-
+        
         _enemyCharacter = EnemyObject.GetComponent<PlayerCharacter>();
 
         IsEndedPoseAnimation = false;
@@ -105,9 +107,14 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         
         _playerModeManager.Update();
         
+        
+        // Debug.Log(name + ":" + GetPlayerMode());
+        
          //Debug.Log(StateManager.CurrentState.StateName);
          //Debug.Log(gameObject.name + CharacterPositionState);
     }
+    
+    
 
     private void FixedUpdate()
     {
@@ -134,14 +141,14 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         if (IsAcceptArtificialInput && ArtificialButtons.Count > 0)
         {
             BehaviorEnumSet.Button artficialInput = ArtificialButtons[_indexForReadInArtificialInput++];
-            _inputManager.EnqueueInputQueue(artficialInput);
+            _inputManager.EnqueueInput(artficialInput);
             if (_indexForReadInArtificialInput == ArtificialButtons.Count) _indexForReadInArtificialInput = 0;
         }
         
         if (IsAcceptArtificialInput && ArtificialButtonsInSameTime.Count > 0)
         {
             for(int index = 0; index < ArtificialButtonsInSameTime.Count; index++)
-                _inputManager.EnqueueInputQueue(ArtificialButtonsInSameTime[index]);
+                _inputManager.EnqueueInput(ArtificialButtonsInSameTime[index]);
         }
 
         while (!_inputManager.isEmptyInputQueue())

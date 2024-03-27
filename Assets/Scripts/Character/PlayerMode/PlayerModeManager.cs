@@ -8,6 +8,7 @@ namespace Character.PlayerMode
         {
             NormalPlaying = 0,
             Replaying,
+            AI,
             GamePause,
             FramePause,
             Size
@@ -45,6 +46,7 @@ namespace Character.PlayerMode
             _playerModes.Add(PlayerMode.Replaying, new ReplayingMode(character));
             _playerModes.Add(PlayerMode.GamePause, new GamePauseMode(character));
             _playerModes.Add(PlayerMode.FramePause, new FramePauseMode(character));
+            _playerModes.Add(PlayerMode.AI, new AIMode(character));
         }
     }
 }

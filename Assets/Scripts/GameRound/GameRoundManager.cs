@@ -108,6 +108,7 @@ public class GameRoundManager : MonoObserverInterface
     void Update()
     {
         _gameRoundStateManager.Update();
+        
         /*
         if(IsGameStopped || IsGameEnded) return;
         RoundRemainTime -= Time.deltaTime;
@@ -132,19 +133,13 @@ public class GameRoundManager : MonoObserverInterface
         {
             Time.timeScale = 0.0f;
             
-            _playersControlManager.ChangeModeOfAllPlayers(PlayerModeManager.PlayerMode.GamePause);
+            _playersControlManager.ChangeModeToStopOfAllPlayers();
         }
         else
         {
             Time.timeScale = 1.0f;
 
-            PlayerModeManager.PlayerMode mode;
-            if (_initGameRoundState == GameState.Replay)
-                _playersControlManager.ChangeModeOfAllPlayers(PlayerModeManager.PlayerMode.Replaying);
-            else if (_initGameRoundState == GameState.NormalPlay)
-                _playersControlManager.ChangeModeOfAllPlayers(PlayerModeManager.PlayerMode.NormalPlaying);
-            
-            else _playersControlManager.ChangeModeOfAllPlayers(PlayerModeManager.PlayerMode.NormalPlaying);
+            _playersControlManager.ChangePreviousModeOfAllPlayers();
         }
     
     }
@@ -192,6 +187,8 @@ public class GameRoundManager : MonoObserverInterface
         
         _gameRoundStateManager.ChangeState(GameState.Start);
         _playersControlManager.InitializePlayersInRound(GameState.Start);
+        _playersControlManager.ChangeModeToStopOfAllPlayers();
+        _playersControlManager.ChangePreviousModeOfAllPlayers();
     }
     
     public void EndRound(PlayersInRoundControlManager.CharacterIndex winCharacterIndex)

@@ -27,11 +27,11 @@ namespace GameRound.PlayersInitializeInRoundClass
 
         protected override void InitializePlayersMode()
         {
-            foreach (var player in Players)
-            {
-                player.SetPlayerMode(PlayerModeManager.PlayerMode.NormalPlaying);
-                player.IsAcceptArtificialInput = false;
-            }
+            Players[(int)PlayersInRoundControlManager.CharacterIndex.Player].SetPlayerMode(PlayerModeManager.PlayerMode.NormalPlaying);
+            Players[(int)PlayersInRoundControlManager.CharacterIndex.Enemy].SetPlayerMode(PlayerModeManager.PlayerMode.AI);
+
+            Players[(int)PlayersInRoundControlManager.CharacterIndex.Player].IsAcceptArtificialInput = false;
+            Players[(int)PlayersInRoundControlManager.CharacterIndex.Enemy].IsAcceptArtificialInput = false;
         }
     }
 }

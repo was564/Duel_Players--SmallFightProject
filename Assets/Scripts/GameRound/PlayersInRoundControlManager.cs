@@ -17,6 +17,7 @@ namespace GameRound
         private Dictionary<GameRoundManager.GameState, PlayersInitializeInRoundFactory> _initializationRoundStates;
         
         private List<PlayerCharacter> _players = new List<PlayerCharacter>();
+        private List<PlayerModeManager.PlayerMode> _previousStates = new List<PlayerModeManager.PlayerMode>();
         private CharacterInputManager[] _inputManagers;
         
         //private PlayersInitializeInRoundFactory _playersInitializationManager;
@@ -27,6 +28,9 @@ namespace GameRound
             PlayerCharacter enemy = GameObject.FindGameObjectWithTag("Enemy").transform.root.GetComponent<PlayerCharacter>();
             _inputManagers = GameObject.FindObjectsOfType<CharacterInputManager>();
 
+            _previousStates = new List<PlayerModeManager.PlayerMode>(2) 
+                { PlayerModeManager.PlayerMode.GamePause, PlayerModeManager.PlayerMode.GamePause };
+            
             _players.Insert((int)CharacterIndex.Player, player);
             player.PlayerUniqueIndex = _players.Count;
        
@@ -70,6 +74,23 @@ namespace GameRound
             _players[(int)index].SetPlayerMode(mode);
         }
 
+        public void ChangeModeToStopOfAllPlayers()
+        {
+            for (int i=0;i<_players.Count;i++)
+            {
+                _previousStates[i] = _players[i].GetPlayerMode();
+                _players[i].SetPlayerMode(PlayerModeManager.PlayerMode.GamePause);
+            }
+        }
+        
+        public void ChangePreviousModeOfAllPlayers()
+        {
+            for (int i=0;i<_players.Count;i++)
+            {
+                _players[i].SetPlayerMode(_previousStates[i]);
+            }
+        }
+        
         public void ResetPlayersAnimationEndedPoint()
         {
             foreach (var player in _players)
