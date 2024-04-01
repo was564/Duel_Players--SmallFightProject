@@ -6,7 +6,7 @@ namespace Character.CharacterFSM.KohakuState
     {
         public GetUpState(GameObject characterRoot) : 
             base(BehaviorEnumSet.State.GetUp, characterRoot, 
-                BehaviorEnumSet.AttackLevel.SpecialMove, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
+                BehaviorEnumSet.AttackLevel.Hit, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
 
         public override void Enter()
         {

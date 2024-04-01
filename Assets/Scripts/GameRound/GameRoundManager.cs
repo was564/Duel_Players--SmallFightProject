@@ -40,7 +40,6 @@ public class GameRoundManager : MonoObserverInterface
     private FrameManager _frameManager;
 
     private GameRoundStateManager _gameRoundStateManager;
-
     
     private PlayersInRoundControlManager _playersControlManager;
     
@@ -56,7 +55,7 @@ public class GameRoundManager : MonoObserverInterface
     public bool IsGameEnded { get; set; } = false;
 
     // case : NormalPlaying, Replaying
-    private GameState _initGameRoundState;
+    //private GameState _initGameRoundState;
     
     private bool _isGameRecorded = false;
 
@@ -67,7 +66,7 @@ public class GameRoundManager : MonoObserverInterface
     // Start is called before the first frame update
     void Start()
     {
-        _initGameRoundState = GameState.NormalPlay;
+        
         _roundInfoManager = new RoundInfoManager();
 
         _frameManager = GameObject.FindObjectOfType<FrameManager>();
@@ -156,7 +155,6 @@ public class GameRoundManager : MonoObserverInterface
     
     public void Replay()
     {
-        _initGameRoundState = GameState.Replay;
         StartRoundFromIntro();
         _playersControlManager.BlockAllPlayersInput();
         _isGameRecorded = false;
@@ -176,7 +174,6 @@ public class GameRoundManager : MonoObserverInterface
     
     public void StartRoundFromIntro()
     {
-        _initGameRoundState = GameState.NormalPlay;
         _isGameRecorded = true;
         IsGameEnded = false;
         

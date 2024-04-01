@@ -41,6 +41,8 @@
             if (_isDraw) RoundManager.DrawRound();
             else RoundManager.EndRound(
                 (PlayersInRoundControlManager.CharacterIndex)((short)PlayersControlManager.GetDownPlayerIndex() ^ 1));
+
+            _isShowResults = true;
         }
         
         public override void Quit()

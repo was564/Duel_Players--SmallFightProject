@@ -2,9 +2,9 @@
 
 namespace BehaviorTree
 {
-    public class NullNode : StateExecutionNode
+    public class NullNodeByButton : StateExecutionNodeByButton
     {
-        public NullNode(int nodeId, PlayerCharacter player)
+        public NullNodeByButton(int nodeId, PlayerCharacter player)
             : base(nodeId, BehaviorEnumSet.State.Null, player, new List<BehaviorEnumSet.Button>())
         { }
     }

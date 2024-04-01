@@ -9,7 +9,7 @@ public class AttackBox : MonoBehaviour
     public ParticleSystem HitParticle { get; private set; }
     public ParticleSystem GuardParticle { get; private set; }
     
-    [SerializeField] private BehaviorEnumSet.AttackName AttackNameForUnique;
+    [SerializeField] private BehaviorEnumSet.State StateNameForUnique;
     [SerializeField] public BehaviorEnumSet.AttackPosition AttackPosition;
     [SerializeField] private BehaviorEnumSet.HitReactLevel HitReactLevel;
     
@@ -28,7 +28,7 @@ public class AttackBox : MonoBehaviour
         _attackBoxCollider = this.GetComponent<BoxCollider>();
         DisableAttackBox();
         
-        _myCharacterJudgeBoxController.BindAttackBoxByAttackName(AttackNameForUnique, this);
+        _myCharacterJudgeBoxController.BindAttackBoxByAttackName(StateNameForUnique, this);
 
         foreach (var childTransform in this.transform.GetComponentsInChildren<Transform>())
         {

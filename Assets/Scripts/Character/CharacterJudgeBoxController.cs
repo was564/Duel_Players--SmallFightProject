@@ -7,8 +7,8 @@ public class CharacterJudgeBoxController : MonoBehaviour
     private PlayerCharacter _playerCharacter;
     private HitBox _hitBox;
     
-    private Dictionary<BehaviorEnumSet.AttackName, AttackBox> _attackBoxTable =
-        new Dictionary<BehaviorEnumSet.AttackName, AttackBox>();
+    private Dictionary<BehaviorEnumSet.State, AttackBox> _attackBoxTable =
+        new Dictionary<BehaviorEnumSet.State, AttackBox>();
     
     // Start is called before the first frame update
     void Start()
@@ -23,22 +23,22 @@ public class CharacterJudgeBoxController : MonoBehaviour
         
     }
 
-    public AttackBox GetAttackBox(BehaviorEnumSet.AttackName attackName)
+    public AttackBox GetAttackBox(BehaviorEnumSet.State attackName)
     {
         return _attackBoxTable[attackName];
     }
     
-    public void EnableAttackBoxByAttackName(BehaviorEnumSet.AttackName attackName)
+    public void EnableAttackBoxByAttackName(BehaviorEnumSet.State attackName)
     {
         _attackBoxTable[attackName].EnableAttackBox();
     }
     
-    public void DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName attackName)
+    public void DisableAttackBoxByAttackName(BehaviorEnumSet.State attackName)
     {
         _attackBoxTable[attackName].DisableAttackBox();
     }
 
-    public void BindAttackBoxByAttackName(BehaviorEnumSet.AttackName attackName, AttackBox attackArea)
+    public void BindAttackBoxByAttackName(BehaviorEnumSet.State attackName, AttackBox attackArea)
     {
         _attackBoxTable.Add(attackName, attackArea);
     }

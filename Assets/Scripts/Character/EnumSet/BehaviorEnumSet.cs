@@ -20,8 +20,6 @@
     {
         Null = -1,
         StandingIdle,
-        StandingPunch,
-        StandingKick,
         Forward,
         Backward,
         StandingHit,
@@ -31,6 +29,10 @@
         InAirIdle,
         Land,
         CrouchIdle,
+        
+        AttackStartIndex, // 10
+        StandingPunch,
+        StandingKick,
         CrouchPunch,
         CrouchKick,
         AiringPunch,
@@ -39,11 +41,17 @@
         StandingKick236Skill,
         StandingPunch623Skill,
         StandingKick623Skill,
+        AttackEndIndex, // 21
+        
         DashOnGround,
         BackStepOnGroundState,
+        
+        GuardStartIndex,
         StandingGuard,
         CrouchGuard,
         AirGuard,
+        GuardEndIndex,
+        
         FallDown,
         GetUp,
         IntroPose,
@@ -51,6 +59,7 @@
         Size
     }
 
+    /* Instead of using AttackName, use BehaviorState
     public enum AttackName
     {
         StandingPunch = 0,
@@ -65,6 +74,7 @@
         StandingKick623Skill = 9,
         Size
     }
+    */
 
     public enum AttackPosition
     {
@@ -81,8 +91,8 @@
         BasicAttack,
         Technique,
         SpecialMove,
-        Hit,
         Guard,
+        Hit,
         Size
     }
 

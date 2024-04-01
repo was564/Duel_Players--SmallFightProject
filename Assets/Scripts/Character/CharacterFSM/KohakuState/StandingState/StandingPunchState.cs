@@ -41,7 +41,7 @@ namespace Character.CharacterFSM.KohakuState
 
         public override void Quit()
         {
-            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.StandingPunch);
+            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.State.StandingPunch);
         }
     }
 }

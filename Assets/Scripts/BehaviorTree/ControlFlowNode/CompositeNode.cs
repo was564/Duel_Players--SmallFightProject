@@ -4,7 +4,7 @@ namespace BehaviorTree
 {
     public abstract class CompositeNode : Node
     {
-        private List<Node> _children;
+        protected List<Node> _children;
 
         protected CompositeNode(int nodeId)
             : base(nodeId)

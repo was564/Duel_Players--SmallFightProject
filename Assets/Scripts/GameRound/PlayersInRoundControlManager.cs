@@ -63,14 +63,16 @@ namespace GameRound
         
         public void ChangeModeOfAllPlayers(PlayerModeManager.PlayerMode mode)
         {
-            foreach (var player in _players)
+            for (int i = 0; i < _players.Count; i++)
             {
-                player.SetPlayerMode(mode);
+                _previousStates[i] = _players[i].GetPlayerMode();
+                _players[i].SetPlayerMode(mode);
             }
         }
 
         public void ChangeModeOfPlayer(CharacterIndex index, PlayerModeManager.PlayerMode mode)
         {
+            _previousStates[(int)index] = _players[(int)index].GetPlayerMode();
             _players[(int)index].SetPlayerMode(mode);
         }
 
@@ -113,6 +115,11 @@ namespace GameRound
             {
                 manager.IsAvailableInput = true;
             }
+        }
+        
+        public float GetDistanceBetweenPlayers()
+        {
+            return Mathf.Abs(_players[(int)CharacterIndex.Player].transform.position.x - _players[(int)CharacterIndex.Enemy].transform.position.x);
         }
         
         public int CountAnimationEndedOfAllPlayers()

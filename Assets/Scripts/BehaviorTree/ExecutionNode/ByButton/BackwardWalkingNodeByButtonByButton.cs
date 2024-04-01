@@ -2,9 +2,9 @@
 
 namespace BehaviorTree
 {
-    public class BackwardWalkingNode : StateExecutionNode
+    public class BackwardWalkingNodeByButtonByButton : StateExecutionNodeByButton
     {
-        public BackwardWalkingNode(int nodeId, PlayerCharacter player)
+        public BackwardWalkingNodeByButtonByButton(int nodeId, PlayerCharacter player)
             : base(nodeId, BehaviorEnumSet.State.Backward, player,
                 new List<BehaviorEnumSet.Button>()
                 {

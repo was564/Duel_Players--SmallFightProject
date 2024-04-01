@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3945fd5de14c639489604c5cdf87323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackNameForUnique: 0
+  StateNameForUnique: 11
   AttackPosition: 1
   HitReactLevel: 0
 --- !u!65 &8612595571436654022
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3945fd5de14c639489604c5cdf87323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackNameForUnique: 1
+  StateNameForUnique: 12
   AttackPosition: 1
   HitReactLevel: 0
 --- !u!65 &5652331989596902903
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3945fd5de14c639489604c5cdf87323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackNameForUnique: 3
+  StateNameForUnique: 14
   AttackPosition: 2
   HitReactLevel: 0
 --- !u!65 &4116943834125621909
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3945fd5de14c639489604c5cdf87323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackNameForUnique: 4
+  StateNameForUnique: 15
   AttackPosition: 0
   HitReactLevel: 0
 --- !u!65 &1098947988076424106
@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3945fd5de14c639489604c5cdf87323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackNameForUnique: 5
+  StateNameForUnique: 16
   AttackPosition: 0
   HitReactLevel: 0
 --- !u!65 &2477568717322451968
@@ -443,7 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3945fd5de14c639489604c5cdf87323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackNameForUnique: 2
+  StateNameForUnique: 13
   AttackPosition: 2
   HitReactLevel: 0
 --- !u!65 &1090319878684882648
@@ -514,7 +514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3945fd5de14c639489604c5cdf87323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackNameForUnique: 9
+  StateNameForUnique: 20
   AttackPosition: 0
   HitReactLevel: 0
 --- !u!65 &2840041761750909461
@@ -585,7 +585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3945fd5de14c639489604c5cdf87323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackNameForUnique: 6
+  StateNameForUnique: 17
   AttackPosition: 1
   HitReactLevel: 0
 --- !u!65 &508487556258491664
@@ -656,7 +656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3945fd5de14c639489604c5cdf87323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackNameForUnique: 7
+  StateNameForUnique: 18
   AttackPosition: 1
   HitReactLevel: 1
 --- !u!65 &4094006695079809228
@@ -727,7 +727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3945fd5de14c639489604c5cdf87323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackNameForUnique: 8
+  StateNameForUnique: 19
   AttackPosition: 1
   HitReactLevel: 1
 --- !u!65 &3903383796104176180

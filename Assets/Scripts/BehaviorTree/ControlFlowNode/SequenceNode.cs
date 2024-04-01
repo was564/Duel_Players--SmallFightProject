@@ -18,7 +18,7 @@
                     break;
             }
             
-            foreach (var child in GetChildren())
+            foreach (var child in _children)
             {
                 switch (child.Evaluate())
                 {

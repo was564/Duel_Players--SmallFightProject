@@ -66,7 +66,6 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
                 transform.root.gameObject);
         ComboManagerInstance = new ComboManager(this, stateSet);
         
-        _playerModeManager = new PlayerModeManager(this);
         StateManager = new BehaviorStateManager(this.gameObject, _wall, stateSet, ComboManagerInstance);
         _stateSimulatorInStoppedFrame = new BehaviorStateSimulator(this.gameObject, _wall, stateSet, ComboManagerInstance);
         
@@ -76,6 +75,7 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         _commandProcessor = this.GetComponent<CommandProcessor>();
         _passiveStateManager = this.GetComponent<PassiveStateManager>();
         _currentStateManager = StateManager;
+        _playerModeManager = new PlayerModeManager(this);
         
         _enemyCharacter = EnemyObject.GetComponent<PlayerCharacter>();
 
@@ -174,8 +174,7 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
                     break;
                 case BehaviorEnumSet.Button.Backward:
                     // backward State에 일임하기
-                    if ((int)_enemyCharacter.StateManager.CurrentState.AttackLevel >= (int)BehaviorEnumSet.AttackLevel.BasicAttack &&
-                        (int)_enemyCharacter.StateManager.CurrentState.AttackLevel < (int)BehaviorEnumSet.AttackLevel.Hit)
+                    if (PlayerStateCheckingMethodSet.IsAttackState(_enemyCharacter.StateManager.CurrentState.StateName))
                         nextBehavior = BehaviorEnumSet.Behavior.Guard;
                     else
                         nextBehavior = BehaviorEnumSet.Behavior.Backward;
@@ -262,8 +261,10 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         }
     }
 
+    private PlayerModeManager.PlayerMode _previousMode;
     public void StopFrame()
     {
+        _previousMode = _playerModeManager.GetCurrentModeName();
         _playerModeManager.SetMode(PlayerModeManager.PlayerMode.FramePause);
         _currentStateManager = _stateSimulatorInStoppedFrame;
         if(CurrentCharacterPositionState == PassiveStateEnumSet.CharacterPositionState.InAir)
@@ -274,7 +275,7 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
     
     public void ResumeFrame()
     {
-        SetPlayerMode(PlayerModeManager.PlayerMode.NormalPlaying);
+        SetPlayerMode(_previousMode);
         _currentStateManager = StateManager;
         BehaviorEnumSet.State previousInputState = _stateSimulatorInStoppedFrame.CurrentState.StateName;
         if (previousInputState == BehaviorEnumSet.State.CrouchGuard || previousInputState == BehaviorEnumSet.State.StandingGuard)

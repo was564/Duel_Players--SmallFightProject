@@ -27,7 +27,9 @@ namespace Character.PlayerMode
         
         public void SetMode(PlayerMode mode)
         {
+            _currentMode.Quit();
             _currentMode = _playerModes[mode];
+            _currentMode.Enter();
         }
         
         public PlayerMode GetCurrentModeName()

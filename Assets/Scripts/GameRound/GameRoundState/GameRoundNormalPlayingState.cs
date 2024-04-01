@@ -16,6 +16,8 @@ namespace GameRound
         
         public override void Update()
         {
+            //Debug.Log(PlayersControlManager.GetDistanceBetweenPlayers());
+            
             if (RoundManager.IsGameEnded)
                 RoundStateManager.ChangeState(GameRoundManager.GameState.Wait);
             

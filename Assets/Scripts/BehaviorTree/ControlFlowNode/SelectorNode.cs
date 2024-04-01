@@ -1,6 +1,6 @@
 ﻿namespace BehaviorTree
 {
-    public sealed class SelectorNode : CompositeNode
+    public class SelectorNode : CompositeNode
     {
         public SelectorNode(int nodeId)
             : base(nodeId)
@@ -18,7 +18,7 @@
                     break;
             }
             
-            foreach (var child in GetChildren())
+            foreach (var child in _children)
             {
                 switch (child.Evaluate())
                 {

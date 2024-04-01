@@ -26741,26 +26741,26 @@ AnimationClip:
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 8
+    intParameter: 0
     messageOptions: 0
   - time: 0.2
     functionName: DisableGuardPointDuringAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 8
+    intParameter: 0
     messageOptions: 0
   - time: 0.23333333
     functionName: EnableAttackBoxByAttackName
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 8
+    intParameter: 19
     messageOptions: 0
   - time: 0.31666666
     functionName: DisableAttackBoxByAttackName
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 8
+    intParameter: 19
     messageOptions: 0

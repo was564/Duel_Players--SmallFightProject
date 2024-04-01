@@ -32,6 +32,7 @@ public class BehaviorStateManager : BehaviorStateSimulator
     public BehaviorStateManager(GameObject characterObject, GameObject wall, BehaviorStateSetInterface stateSet, ComboManager comboManager)
         : base(characterObject, wall, stateSet, comboManager)
     {
+        
     }
 
     public override void UpdateState()

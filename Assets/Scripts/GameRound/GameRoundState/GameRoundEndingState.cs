@@ -2,8 +2,8 @@
 {
     public class GameRoundEndingState : GameRoundStateInterface
     {
-        private bool _isEndedWaiting = false;
-        private int _waitFrame = 0;
+        // private bool _isEndedWaiting = false;
+        // private int _waitFrame = 0;
         
         public GameRoundEndingState(GameRoundStateManager manager) 
             : base(manager, GameRoundManager.GameState.End) { }

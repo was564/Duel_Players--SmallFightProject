@@ -9062,12 +9062,12 @@ AnimationClip:
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 3
+    intParameter: 14
     messageOptions: 0
   - time: 0.15
     functionName: DisableAttackBoxByAttackName
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 3
+    intParameter: 14
     messageOptions: 0

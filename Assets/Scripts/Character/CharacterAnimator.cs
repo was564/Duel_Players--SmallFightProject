@@ -103,7 +103,8 @@ public class CharacterAnimator : MonoBehaviour
         int layerIndex = (int)layer;
         if (!_animator.GetCurrentAnimatorStateInfo(layerIndex).IsName(animationName))
         {
-            Debug.Assert(true, "State and Animation Mismatch : " + _animator.GetCurrentAnimatorStateInfo((int)layer).ToString());
+            //Debug.Assert(true, "State and Animation Mismatch : " + _animator.GetCurrentAnimatorStateInfo((int)layer).ToString());
+            return false;
         }
 
         // normalizeTime이 재생된 직후에는 초기화 되지 않는 현상 발생

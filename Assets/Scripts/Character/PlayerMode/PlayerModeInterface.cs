@@ -13,7 +13,10 @@ namespace Character.PlayerMode
             ModeName = mode;
             Character = character;
         }
+
+        public virtual void Enter() { }
+        public abstract void Update();
         
-        public virtual void Update() {}
+        public virtual void Quit() { }
     }
 }

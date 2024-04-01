@@ -6,7 +6,7 @@ namespace Character.CharacterFSM.KohakuState
     {
         public FallDownState(GameObject characterRoot) : 
             base(BehaviorEnumSet.State.FallDown, characterRoot, 
-                BehaviorEnumSet.AttackLevel.SpecialMove, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
+                BehaviorEnumSet.AttackLevel.Hit, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
 
         private int stateStartingFrame;
         [SerializeField]

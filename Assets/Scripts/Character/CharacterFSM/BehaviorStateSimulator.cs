@@ -9,7 +9,7 @@ namespace Character.CharacterFSM
         protected Dictionary<BehaviorEnumSet.State, BehaviorStateInterface> BehaviorStateSet
             = new Dictionary<BehaviorEnumSet.State, BehaviorStateInterface>();
         */
-        protected BehaviorStateSetInterface StateSet;
+        public BehaviorStateSetInterface StateSet { get; private set; }
         protected GameObject RootCharacterObject;
         protected GameObject Wall;
         

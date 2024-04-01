@@ -67,7 +67,7 @@ namespace Character.CharacterFSM.KohakuState.SkillState
 
         public override void Quit()
         {
-            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.AttackName.StandingPunch623Skill);
+            CharacterJudgeBoxController.DisableAttackBoxByAttackName(BehaviorEnumSet.State.StandingPunch623Skill);
             CharacterJudgeBoxController.DisableGuardPointDuringAttack();
         }
     }
