@@ -3,19 +3,17 @@ using Character.PlayerMode;
 
 namespace BehaviorTree
 {
-    public class StateExecutionNode : Node
+    public class StateExecutionNode : ExecutionNode
     {
         private BehaviorEnumSet.State _executionState;
-
-        private PlayerCharacter _player;
         
         private BehaviorStateSetInterface _stateSet;
         
-        public StateExecutionNode(int nodeId, BehaviorEnumSet.State executionState, PlayerCharacter player) : base(nodeId)
+        public StateExecutionNode(int nodeId, BehaviorEnumSet.State executionState, PlayerCharacter player) : base(nodeId, player)
         {
             _executionState = executionState;
-            _player = player;
-            _stateSet = _player.StateManager.StateSet;
+            _playerCharacter = player;
+            _stateSet = _playerCharacter.StateManager.StateSet;
         }
 
         /*
@@ -37,24 +35,26 @@ namespace BehaviorTree
                     break;
             }
 
-            if(_player.GetPlayerMode() == PlayerModeManager.PlayerMode.FramePause)
+            if(_playerCharacter.GetPlayerMode() == PlayerModeManager.PlayerMode.FramePause)
             {
                 SetResult(ResultNode.Running);
                 return ResultNode.Running;
             }
 
             int nextStateAttackLevel = _stateSet.GetStateInfo(_executionState).AttackLevel;
-            int currentStateAttackLevel = _stateSet.GetStateInfo(_player.StateManager.CurrentState.StateName).AttackLevel;
+            int currentStateAttackLevel = _stateSet.GetStateInfo(_playerCharacter.StateManager.CurrentState.StateName).AttackLevel;
             if(currentStateAttackLevel > nextStateAttackLevel)
             {
                 SetResult(ResultNode.Failure);
                 return ResultNode.Failure;
             }
             
-            if(!PlayerStateCheckingMethodSet.CheckState(_player.StateManager.CurrentState.StateName, _executionState))
-                _player.StateManager.ChangeState(_executionState);
+            if(!PlayerStateCheckingMethodSet.CheckState(_playerCharacter.StateManager.CurrentState.StateName, _executionState))
+                _playerCharacter.StateManager.ChangeState(_executionState);
             
-            if (PlayerStateCheckingMethodSet.CheckState(_player.StateManager.CurrentState.StateName, _executionState))
+            if (PlayerStateCheckingMethodSet.CheckState(
+                    _playerCharacter.StateManager.CurrentState.StateName, 
+                    _executionState))
             {
                 SetResult(ResultNode.Success);
                 return ResultNode.Success;

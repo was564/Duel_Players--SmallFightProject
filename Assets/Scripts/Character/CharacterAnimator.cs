@@ -71,8 +71,8 @@ public class CharacterAnimator : MonoBehaviour
             if (animationInfo.IsSmoothAnimation)
             {
                 if (animationInfo.IsStartedAtAnimationStarting) 
-                    _animator.CrossFade(animationInfo.AnimationName, 0.1f, layerIndex, 0.0f);
-                else _animator.CrossFade(animationInfo.AnimationName, 0.1f, layerIndex);
+                    _animator.CrossFade(animationInfo.AnimationName, 0.05f, layerIndex, 0.0f);
+                else _animator.CrossFade(animationInfo.AnimationName, 0.05f, layerIndex);
             }
             else
             {
@@ -139,7 +139,7 @@ public class CharacterAnimator : MonoBehaviour
         _animationWillBeChangedSet.Add(layer);
     }
  
-    public void PlayAnimation(string animationName, Layer layer, bool atStarting = false)
+    public void PlayAnimation(string animationName, Layer layer, bool atStarting = false, float startingTime = 0f)
     {
         AnimationInfo animationInfo = _animationInfoByLayer[layer];
 
@@ -150,6 +150,12 @@ public class CharacterAnimator : MonoBehaviour
             _animator.GetCurrentAnimatorStateInfo((int)layer).normalizedTime;
 
         _animationWillBeChangedSet.Add(layer);
+    }
+    
+    public void SetPoseInAnimation(string animationName, Layer layer, float duration)
+    {
+        _animator.Play(animationName, (int)layer, duration);
+        PauseAnimation();
     }
 
     public void PauseAnimation()

@@ -14,13 +14,13 @@ namespace BehaviorTree
         
         public List<Node> GetChildren() => _children;
 
-        public void AddChild(Node child) 
+        public virtual void AddChild(Node child) 
             => _children.Add(child);
 
-        public void AddChild(Node child, int index)
+        public virtual void AddChild(Node child, int index)
             => _children.Insert(index, child);
 
-        public void RemoveChild(int nodeId)
+        public virtual void RemoveChild(int nodeId)
         {
             for (int i = 0; i < _children.Count; i++)
                 if (_children[i]._nodeId == nodeId)

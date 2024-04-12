@@ -65,6 +65,9 @@ namespace Character.CharacterFSM.KohakuState
                 case BehaviorEnumSet.Behavior.StandingKick623Skill:
                     return BehaviorEnumSet.State.StandingKick623Skill;
                 
+                case BehaviorEnumSet.Behavior.Grab:
+                    return BehaviorEnumSet.State.GrabStart;
+                
                 default:
                     return BehaviorEnumSet.State.Null;
             }

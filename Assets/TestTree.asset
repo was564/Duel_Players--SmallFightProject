@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d285eb63c2cdd74180de7cfceaa96ad, type: 3}
+  m_Name: TestTree
+  m_EditorClassIdentifier: 
+  rootNode:
+    rid: 7902510695766556672
+  nodes:
+  - rid: 7902510695766556672
+  - rid: 7902510695766556674
+  treeState: 0
+  blackboard:
+    keys: []
+  viewPosition: {x: 646, y: 286, z: 0}
+  viewScale: {x: 1, y: 1, z: 1}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 7902510695766556672
+      type: {class: RootNode, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
+      data:
+        state: 0
+        started: 0
+        guid: 5aff3cc6-9b6f-4717-ba87-3ce94ea56d20
+        position: {x: 0, y: 0}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        child:
+          rid: -2
+    - rid: 7902510695766556674
+      type: {class: Selector, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
+      data:
+        state: 0
+        started: 0
+        guid: efaf638eac103f949a22f125a0798630
+        position: {x: -525, y: -83}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        children: []

@@ -12,7 +12,7 @@ namespace Character.CharacterFSM.KohakuState
         {
             PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
-            this.CharacterAnimator.PlayAnimation("CrouchPunch", CharacterAnimator.Layer.UpperLayer,true);
+            this.CharacterAnimator.PlayAnimation("StandingPunch", CharacterAnimator.Layer.UpperLayer,true);
             this.CharacterAnimator.PlayAnimation("CrouchStop", CharacterAnimator.Layer.LowerLayer, true);
             Vector3 characterPosition = this.CharacterTransform.position;
             characterPosition.y = -0.4f;

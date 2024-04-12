@@ -9,7 +9,7 @@ namespace BehaviorTree
         protected DecoratorNode(int nodeId)
             : base(nodeId)
         {
-            // 추후에 null State 만들기
+            // 추후에 null State 만들기2
             _child = null;
         }
         

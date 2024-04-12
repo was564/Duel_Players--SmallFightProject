@@ -57,28 +57,42 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
 
     private List<MonoObserverInterface> _observers = new List<MonoObserverInterface>();
 
+    public bool IsInitializedStartMethod { get; private set; } = false;
     void Start()
     {
         _wall = GameObject.FindWithTag("Wall");
-
-        BehaviorStateSetInterface stateSet = BehaviorStateSetManager.GetStateSet(
-                BehaviorStateSetManager.BehaviorStateSetIndex.Kohaku,
-                transform.root.gameObject);
-        ComboManagerInstance = new ComboManager(this, stateSet);
-        
-        StateManager = new BehaviorStateManager(this.gameObject, _wall, stateSet, ComboManagerInstance);
-        _stateSimulatorInStoppedFrame = new BehaviorStateSimulator(this.gameObject, _wall, stateSet, ComboManagerInstance);
         
         RegisterObserver(GameObject.FindObjectOfType<GameRoundManager>());
         RigidBody = this.GetComponent<Rigidbody>();
         _inputManager = this.GetComponent<CharacterInputManager>();
         _commandProcessor = this.GetComponent<CommandProcessor>();
         _passiveStateManager = this.GetComponent<PassiveStateManager>();
+        _enemyCharacter = EnemyObject.GetComponent<PlayerCharacter>();
+        
+        ComboManagerInstance = new ComboManager(this);
+
+        StateManager = new BehaviorStateManager(this.gameObject, _wall, ComboManagerInstance);
+        _stateSimulatorInStoppedFrame = new BehaviorStateSimulator(this.gameObject, _wall, ComboManagerInstance);
+        
+        IsInitializedStartMethod = true;
+        
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        BehaviorStateSetInterface stateSet = BehaviorStateSetManager.GetStateSet(
+            BehaviorStateSetManager.BehaviorStateSetIndex.Kohaku,
+            transform.root.gameObject);
+        
+        ComboManagerInstance.Initialize(stateSet);
+        
+        StateManager.Initialize(stateSet);
+        _stateSimulatorInStoppedFrame.Initialize(stateSet);
+        
         _currentStateManager = StateManager;
         _playerModeManager = new PlayerModeManager(this);
         
-        _enemyCharacter = EnemyObject.GetComponent<PlayerCharacter>();
-
         IsEndedPoseAnimation = false;
         
         ChangeCharacterPosition(PassiveStateEnumSet.CharacterPositionState.OnGround);
@@ -187,6 +201,9 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
                     break;
                 case BehaviorEnumSet.Button.Kick:
                     nextBehavior = BehaviorEnumSet.Behavior.Kick;
+                    break;
+                case BehaviorEnumSet.Button.Grab:
+                    nextBehavior = BehaviorEnumSet.Behavior.Grab;
                     break;
                 case BehaviorEnumSet.Button.Guard:
                     nextBehavior = BehaviorEnumSet.Behavior.Guard;

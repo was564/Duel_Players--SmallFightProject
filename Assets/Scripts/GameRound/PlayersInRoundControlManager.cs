@@ -117,6 +117,25 @@ namespace GameRound
             }
         }
         
+        public bool GetIsInitializedPlayers()
+        {
+            foreach (var player in _players)
+            {
+                if (!player.IsInitializedStartMethod)
+                    return false;
+            }
+
+            return true;
+        }
+        
+        public void InitializePlayersInStartingGame()
+        {
+            foreach (var player in _players)
+            {
+                player.Initialize();
+            }
+        }
+        
         public float GetDistanceBetweenPlayers()
         {
             return Mathf.Abs(_players[(int)CharacterIndex.Player].transform.position.x - _players[(int)CharacterIndex.Enemy].transform.position.x);

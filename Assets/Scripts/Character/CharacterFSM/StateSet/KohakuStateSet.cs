@@ -41,6 +41,11 @@ namespace Character.CharacterFSM.KohakuState
             BindState(BehaviorEnumSet.State.GetUp, new GetUpState(characterRoot));
             BindState(BehaviorEnumSet.State.IntroPose, new IntroPoseState(characterRoot));
             BindState(BehaviorEnumSet.State.OutroPose, new OutroPoseState(characterRoot));
+            BindState(BehaviorEnumSet.State.GrabStart, new GrabStartState(characterRoot));
+            BindState(BehaviorEnumSet.State.GrabWait, new GrabWaitState(characterRoot));
+            BindState(BehaviorEnumSet.State.GrabAttack, new GrabAttackState(characterRoot));
+            BindState(BehaviorEnumSet.State.BeCaught, new BeCaughtState(characterRoot));
+            BindState(BehaviorEnumSet.State.GrabEscape, new EscapeGrabState(characterRoot));
         }
     }
 }

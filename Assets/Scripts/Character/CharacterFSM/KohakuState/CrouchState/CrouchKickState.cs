@@ -12,6 +12,7 @@ namespace Character.CharacterFSM.KohakuState
         {
             PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
+            CharacterAnimator.PlayAnimation("StandingIdle", CharacterAnimator.Layer.UpperLayer, true);
             CharacterAnimator.PlayAnimation("CrouchKick", CharacterAnimator.Layer.LowerLayer,true);
         }
 

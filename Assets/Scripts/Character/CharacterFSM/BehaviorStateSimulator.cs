@@ -17,15 +17,19 @@ namespace Character.CharacterFSM
 
         protected ComboManager ComboManagerInstance;
         
-        public BehaviorStateSimulator(GameObject characterObject, GameObject wall, BehaviorStateSetInterface stateSet, ComboManager comboManager)
+        public BehaviorStateSimulator(GameObject characterObject, GameObject wall, ComboManager comboManager)
         {
-            StateSet = stateSet;
             RootCharacterObject = characterObject.transform.root.gameObject;
             ComboManagerInstance = comboManager;
             Wall = wall;
             
-            CurrentState = StateSet.GetStateInfo(BehaviorEnumSet.State.StandingIdle);
             //_currentState.Enter();
+        }
+        
+        public void Initialize(BehaviorStateSetInterface stateSet)
+        {
+            StateSet = stateSet;
+            CurrentState = StateSet.GetStateInfo(BehaviorEnumSet.State.StandingIdle);
         }
         
         public virtual void ChangeState(BehaviorEnumSet.State nextState)

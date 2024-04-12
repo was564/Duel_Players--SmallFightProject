@@ -34,6 +34,8 @@ namespace Character.CharacterFSM.KohakuState.SkillState
 
         private Vector3 _finalVelocity;
         
+        private float _yOffsetForLand = 0.2f;
+        
         public override void Enter()
         {
             PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
@@ -57,7 +59,7 @@ namespace Character.CharacterFSM.KohakuState.SkillState
 
         public override BehaviorEnumSet.State UpdateState()
         {
-            if (this.CharacterTransform.position.y <= this.PlayerCharacter.PositionYOffsetForLand)
+            if (this.CharacterTransform.position.y <= this.PlayerCharacter.PositionYOffsetForLand + _yOffsetForLand)
                 return BehaviorEnumSet.State.Land;
             else return BehaviorEnumSet.State.Null;
         }

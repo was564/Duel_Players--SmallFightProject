@@ -24,9 +24,8 @@ namespace Character
         
         public bool IsCanceled { get; set; } = false;
         
-        public ComboManager(PlayerCharacter player, BehaviorStateSetInterface stateSet)
+        public ComboManager(PlayerCharacter player)
         {
-            _stateSet = stateSet;
             _player = player;
             _enemyCharacter = player.EnemyObject.GetComponent<PlayerCharacter>();
             
@@ -53,6 +52,11 @@ namespace Character
             _countStatesCancel.Add(BehaviorEnumSet.State.StandingKick236Skill, 0);
             _countStatesCancel.Add(BehaviorEnumSet.State.StandingPunch623Skill, 0);
             _countStatesCancel.Add(BehaviorEnumSet.State.StandingKick623Skill, 0);
+        }
+
+        public void Initialize(BehaviorStateSetInterface stateSet)
+        {
+            _stateSet = stateSet;
         }
 
         public void CountStateCancel(BehaviorEnumSet.State state)

@@ -29,8 +29,8 @@ public class BehaviorStateManager : BehaviorStateSimulator
     protected ComboManager ComboManagerInstance;
     */
 
-    public BehaviorStateManager(GameObject characterObject, GameObject wall, BehaviorStateSetInterface stateSet, ComboManager comboManager)
-        : base(characterObject, wall, stateSet, comboManager)
+    public BehaviorStateManager(GameObject characterObject, GameObject wall, ComboManager comboManager)
+        : base(characterObject, wall, comboManager)
     {
         
     }

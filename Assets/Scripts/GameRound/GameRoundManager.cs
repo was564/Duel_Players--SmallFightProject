@@ -93,6 +93,15 @@ public class GameRoundManager : MonoObserverInterface
         _text = _resultPanel.GetComponentInChildren<TextMeshProUGUI>();
         _resultPanel.SetActive(false);
         
+        /*
+        if(_playersControlManager.GetIsInitializedPlayers())
+            _playersControlManager.InitializePlayersInStartingGame();
+        else
+        {
+            Debug.Log("Initialize Failure");
+        }
+        */
+        
         RoundRemainTime = InitRemainTime;
         StartRoundFromIntro();
         

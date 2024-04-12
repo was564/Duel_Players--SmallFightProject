@@ -53,7 +53,7 @@ namespace Character.CharacterFSM.KohakuState
                 if (PlayerCharacter.IsHitContinuous)
                     _enemyRigidbody.velocity = Vector3.right * ((CharacterTransform.forward.x < 0.0f ? -1.0f : 1.0f) * (3.0f));
 
-                PlayerCharacter.IsGuarded = false;
+                //PlayerCharacter.IsGuarded = false;
             }
             
             if (math.abs(CharacterTransform.position.x) > _wallAcknowledgeDistance)

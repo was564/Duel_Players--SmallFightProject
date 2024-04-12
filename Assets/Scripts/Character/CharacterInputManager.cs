@@ -41,10 +41,12 @@ public class CharacterInputManager : MonoBehaviour
         _inputInBattle.Enable();
         
         _moveInputAction = _inputInBattle.FindAction("Move");
-
+        
+        // Input 키 추가는 해당 코드와 PlayerCharacter에 DecideBehaviorByInput 코드에 추가만 하면 된다.
         _inputActions[BehaviorEnumSet.Button.Jump] = _inputInBattle.FindAction("Jump");
         _inputActions[BehaviorEnumSet.Button.Punch] = _inputInBattle.FindAction("Punch");
         _inputActions[BehaviorEnumSet.Button.Kick] = _inputInBattle.FindAction("Kick");
+        _inputActions[BehaviorEnumSet.Button.Grab] = _inputInBattle.FindAction("Grab");
         _inputActions[BehaviorEnumSet.Button.Guard] = _inputInBattle.FindAction("Guard");
         _inputActions[BehaviorEnumSet.Button.Assist] = _inputInBattle.FindAction("Assist");
         

@@ -15,7 +15,7 @@ namespace Character.CharacterFSM.KohakuState
             //CharacterRigidBody.velocity = Vector3.left * ((CharacterTransform.forward.x < 0.0f ? -1.0f : 1.0f) * _backMoveSpeedByAttack);
 
             CharacterAnimator.PlayAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer, true);
-            CharacterAnimator.PlayAnimation("StandingIdle", CharacterAnimator.Layer.LowerLayer, true);
+            CharacterAnimator.PlayAnimation("StandingHit", CharacterAnimator.Layer.LowerLayer, true);
         }
 
         public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)

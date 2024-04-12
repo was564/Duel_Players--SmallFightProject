@@ -63,6 +63,9 @@ namespace Character.CharacterFSM.KohakuState
                 case BehaviorEnumSet.Behavior.Guard:
                     return BehaviorEnumSet.State.StandingGuard;
                 
+                case BehaviorEnumSet.Behavior.Grab:
+                    return BehaviorEnumSet.State.GrabStart;
+                
                 default:
                     return BehaviorEnumSet.State.Null;
             }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using BehaviorTree;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,9 +10,9 @@ namespace Character.PlayerMode
     {
         private BehaviorTreeManager _behaviorTreeManager;
 
-        // coroutine stop bug
+        // coroutine stop issue
         // https://discussions.unity.com/t/stopcoroutine-is-not-stopping-my-coroutines/134523/2
-        private Coroutine _coroutineUpdate;
+        private Stack<Coroutine> _coroutineStack = new Stack<Coroutine>();
         private int _coroutineStopTime = -60;
         
         public AIMode(PlayerCharacter character)
@@ -22,7 +23,8 @@ namespace Character.PlayerMode
 
         public override void Enter()
         {
-            _coroutineUpdate = Character.StartCoroutine(CoroutineUpdate());
+            if(_coroutineStack.Count == 0)
+                _coroutineStack.Push(Character.StartCoroutine(CoroutineUpdate()));
         }
 
         public override void Update()
@@ -35,7 +37,11 @@ namespace Character.PlayerMode
 
         public override void Quit()
         {
-            Character.StopCoroutine(_coroutineUpdate);
+            if (_coroutineStack.Count > 0)
+            {
+                Character.StopCoroutine(_coroutineStack.Peek());
+                _coroutineStack.Pop();
+            }
             _coroutineStopTime = FrameManager.CurrentFrame;
         }
         
@@ -43,11 +49,20 @@ namespace Character.PlayerMode
         {
             // When Starting
             int coroutineBetweenStartAndStopTime = FrameManager.CurrentFrame - _coroutineStopTime;
-            if (coroutineBetweenStartAndStopTime < 60) yield return new WaitForSeconds((float)coroutineBetweenStartAndStopTime/60.0f);
+            if (coroutineBetweenStartAndStopTime < 60) 
+                // 0.016667f is 1/60, 0.1f is border time
+                yield return new WaitForSeconds((float)coroutineBetweenStartAndStopTime * 0.016667f + 0.1f);
+            if (_coroutineStack.Count >= 2)
+            {
+                if(_coroutineStack.Count > 0)
+                    _coroutineStack.Pop();
             
-            
+                yield return null;
+            }
+                
             while (true)
             {
+                
                 Node.ResultNode result = _behaviorTreeManager.BehaviorTreeUpdate();
                 Debug.Log(Character.name + result);
                 switch (result)
@@ -63,6 +78,8 @@ namespace Character.PlayerMode
                         break;
                 }
             }
+            
+            yield return null;
         }
     }
 }

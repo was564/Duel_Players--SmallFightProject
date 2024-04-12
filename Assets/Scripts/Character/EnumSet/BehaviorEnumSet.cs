@@ -11,6 +11,7 @@
         Crouch,
         Punch,
         Kick,
+        Grab,
         Guard,
         Assist,
         Size
@@ -42,6 +43,12 @@
         StandingPunch623Skill,
         StandingKick623Skill,
         AttackEndIndex, // 21
+        
+        GrabStart,
+        GrabWait,
+        BeCaught,
+        GrabEscape,
+        GrabAttack,
         
         DashOnGround,
         BackStepOnGroundState,
@@ -114,6 +121,7 @@
         Crouch,
         Stand,
         Guard,
+        Grab,
         StandingPunch236Skill,
         StandingKick236Skill,
         StandingPunch623Skill,

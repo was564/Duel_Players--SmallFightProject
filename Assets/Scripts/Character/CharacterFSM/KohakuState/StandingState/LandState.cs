@@ -34,14 +34,15 @@ namespace Character.CharacterFSM.KohakuState
                 return BehaviorEnumSet.State.StandingIdle;
             else
             {
+                /*
                 Vector3 characterPosition = this.CharacterTransform.position;
-                
                 float positionY = Mathf.Lerp(
-                    this.PlayerCharacter.PositionYOffsetForLand, 
-                    0.0f, 
+                    this.PlayerCharacter.PositionYOffsetForLand,
+                    0.0f,
                     CharacterAnimator.GetCurrentAnimationDuration(CharacterAnimator.Layer.LowerLayer));
                 characterPosition.y = positionY;
                 this.CharacterTransform.position = characterPosition;
+                */
             }
 
             return BehaviorEnumSet.State.Null;
