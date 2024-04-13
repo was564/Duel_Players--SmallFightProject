@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    public enum CameraState
+    {
+        Normal = 0,
+        FreeMoving,
+        SkillMoving,
+        Size
+    }
+    
     private List<Transform> _playerTransforms = new List<Transform>();
 
     [SerializeField] private float _depthZOffset = -4.0f;
@@ -12,8 +20,12 @@ public class CameraManager : MonoBehaviour
     
     private Vector2 _leftBottomBorderPosition;
     private Vector2 _rightTopBorderPosition;
+
+    private CameraState _cameraState;
+    private float _cameraSpeed = 10.0f;
     
-    
+    private Vector3 _cameraTargetPosition;
+    private Vector3 _cameraTargetRotation;
     
     // Start is called before the first frame update
     void Start()
@@ -33,24 +45,64 @@ public class CameraManager : MonoBehaviour
         _rightTopBorderPosition.y = 100.0f;
         
         this.transform.position = Vector3.forward * _depthZOffset;
+        _cameraState = CameraState.Normal;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 nextPosition = this.transform.position;
+        UpdateTargetPosition();
         
-        float positionY = _playerTransforms.Max(player => player.position.y);
-        float positionX = _playerTransforms.Average(player => player.position.x);
+        UpdateCamera();
+    }
 
-        if (positionX < _leftBottomBorderPosition.x) positionX = _leftBottomBorderPosition.x;
-        else if (positionX > _rightTopBorderPosition.x) positionX = _rightTopBorderPosition.x;
+    private void UpdateCamera()
+    {
+        float distance = Vector3.Distance(_cameraTargetPosition, this.transform.position);
+        if (distance < _cameraSpeed * Time.deltaTime)
+            this.transform.position = _cameraTargetPosition;
+        else
+        {
+            Vector3 direction = (_cameraTargetPosition - this.transform.position).normalized;
+            this.transform.position += direction * (_cameraSpeed * Time.deltaTime);
+        }
+    }
+    
 
-        if (positionY < _leftBottomBorderPosition.y) positionY = _leftBottomBorderPosition.y;
-        else if (positionY > _rightTopBorderPosition.y) positionY = _rightTopBorderPosition.y;
+    private void UpdateTargetPosition()
+    {
+        switch (_cameraState)
+        {
+            case CameraState.Normal:
+                Vector3 targetPosition = this.transform.position;
         
-        nextPosition.x = positionX;
-        nextPosition.y = positionY;
-        this.transform.position = nextPosition;
+                float positionY = _playerTransforms.Max(player => player.position.y);
+                float positionX = _playerTransforms.Average(player => player.position.x);
+
+                if (positionX < _leftBottomBorderPosition.x) positionX = _leftBottomBorderPosition.x;
+                else if (positionX > _rightTopBorderPosition.x) positionX = _rightTopBorderPosition.x;
+
+                if (positionY < _leftBottomBorderPosition.y) positionY = _leftBottomBorderPosition.y;
+                else if (positionY > _rightTopBorderPosition.y) positionY = _rightTopBorderPosition.y;
+        
+                targetPosition.x = positionX;
+                targetPosition.y = positionY;
+                _cameraTargetPosition = targetPosition;
+                break;
+            case CameraState.FreeMoving:
+                
+                break;
+            case CameraState.SkillMoving:
+                
+                break;
+            
+            default:
+                break;
+        }
+    }
+    
+    public void SetTargetPoint(Vector3 targetPosition)
+    {
+        _cameraTargetPosition = targetPosition;
     }
 }
