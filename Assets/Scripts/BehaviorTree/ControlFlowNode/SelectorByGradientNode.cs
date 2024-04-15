@@ -5,7 +5,7 @@ namespace BehaviorTree
 {
     public class SelectorByGradientNode : CompositeNode
     {
-        protected List<float> _gradientList = new List<float>();
+        protected List<int> _gradientList = new List<int>();
         
         public SelectorByGradientNode(int nodeId) : base(nodeId)
         {
@@ -16,7 +16,7 @@ namespace BehaviorTree
         {
             int maxRand = 0;
             _gradientList.ForEach(gradient => maxRand += (int)gradient);
-            int randGradient = UnityEngine.Random.Range(0, maxRand);
+            int randGradient = Random.Range(0, maxRand);
 
             int borderGradient = 0;
             for (int i = 0; i < _gradientList.Count; i++)
@@ -36,13 +36,13 @@ namespace BehaviorTree
         public override void AddChild(Node child)
         {
             _children.Add(child);
-            _gradientList.Add((int)Mathf.Pow(_children.Count, 2));
+            _gradientList.Add(returnGradient(_children.Count));
         }
 
         public override void AddChild(Node child, int index)
         {
             _children.Insert(index, child);
-            _gradientList.Add((int)Mathf.Pow(_children.Count, 2));
+            _gradientList.Add(returnGradient(_children.Count));
         }
         
         public override void RemoveChild(int nodeId)
@@ -55,7 +55,13 @@ namespace BehaviorTree
                     break;
                 }
         }
-        
+
+        private int returnGradient(int index)
+        {
+            //return (int)Mathf.Pow(index, 2);
+            return index * 2;
+        }
+
         /*
         private void AdjustGradient(int resultChildIndex)
         {
@@ -64,7 +70,7 @@ namespace BehaviorTree
             {
                 if (index == resultChildIndex)
                     continue;
-                
+
                 _gradientList[index] += 1;
             }
         }

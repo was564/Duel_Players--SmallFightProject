@@ -164,20 +164,24 @@ namespace BehaviorTree
             addNode(new SelectorByGradientNode(23));
             setChild(9, 23); // sequence -> selector by gradient
             
+            /*
             addNode(new RandomSelectorNode(18));
             setChild(23, 18); // Sequence -> random selector
+            */
+            addNode(new StateExecutionNode(24, BehaviorEnumSet.State.GrabStart, _player));
+            setChild(23, 24); // selector by gradient -> state
+            
             addNode(new StateExecutionNode(19, BehaviorEnumSet.State.StandingKick, _player));
-            setChild(18, 19); // random selector -> state
+            setChild(23, 19); // random selector -> state
             addNode(new StateExecutionNode(20, BehaviorEnumSet.State.StandingPunch, _player));
-            setChild(18, 20); // random selector -> state
+            setChild(23, 20); // random selector -> state
 
             addNode(new IfNode(21, () => Math.Abs(_player.transform.position.x - _enemy.transform.position.x) < 0.9f));
-            setChild(18, 21); // random selector -> if
+            setChild(23, 21); // random selector -> if
             addNode(new StateExecutionNode(22, BehaviorEnumSet.State.BackStepOnGroundState, _player));
             setChild(21, 22); // if -> state
 
-            addNode(new StateExecutionNode(24, BehaviorEnumSet.State.GrabStart, _player));
-            setChild(23, 24); // selector by gradient -> state
+            
         }
     }
 }

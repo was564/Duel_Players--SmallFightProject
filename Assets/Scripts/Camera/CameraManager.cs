@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    public enum CameraMode
+    {
+        Default = 0,
+        SkillMoving,
+        Size
+    }
+    
     private List<Transform> _playerTransforms = new List<Transform>();
 
     [SerializeField] private float _depthZOffset = -4.0f;
@@ -12,6 +19,8 @@ public class CameraManager : MonoBehaviour
     
     private Vector2 _leftBottomBorderPosition;
     private Vector2 _rightTopBorderPosition;
+
+    private CameraMode _cameraMode;
     
     
     
@@ -52,5 +61,20 @@ public class CameraManager : MonoBehaviour
         nextPosition.x = positionX;
         nextPosition.y = positionY;
         this.transform.position = nextPosition;
+    }
+
+    private void updateGoalPosition()
+    {
+        switch (_cameraMode)
+        {
+            case CameraMode.Default:
+                
+                break;
+            case CameraMode.SkillMoving:
+                break;
+            
+            default:
+                break;
+        }
     }
 }
