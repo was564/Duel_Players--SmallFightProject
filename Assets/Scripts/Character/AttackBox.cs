@@ -65,33 +65,33 @@ public class AttackBox : MonoBehaviour
             switch (enemyPlayer.CurrentCharacterPositionState)
             {
                 case PassiveStateEnumSet.CharacterPositionState.OnGround:
-                    stateManager.ChangeState(BehaviorEnumSet.State.StandingHit);
                     enemyRigidBody.velocity = Vector3.left 
                                               * (((_playerCharacter.transform.position.x - _playerCharacter.EnemyObject.transform.position.x) > 0.0f ? 1.0f : -1.0f) 
                                                  * _backMoveSpeedByAttack);
+                    stateManager.ChangeState(BehaviorEnumSet.State.StandingHit);
                     break;
                 case PassiveStateEnumSet.CharacterPositionState.Crouch:
-                    stateManager.ChangeState(BehaviorEnumSet.State.CrouchHit);
                     enemyRigidBody.velocity = Vector3.left 
                                               * (((_playerCharacter.transform.position.x - _playerCharacter.EnemyObject.transform.position.x) > 0.0f ? 1.0f : -1.0f) 
                                                  * _backMoveSpeedByAttack);
+                    stateManager.ChangeState(BehaviorEnumSet.State.CrouchHit);
                     break;
                 case PassiveStateEnumSet.CharacterPositionState.InAir:
-                    stateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
                     Vector3 resultDirection = _hitInAirAwayDirection;
                     resultDirection.x *= (enemyPlayer.transform.position - enemyPlayer.EnemyObject.transform.position).x > 0.0f ? 1.0f : -1.0f;
                     enemyRigidBody.velocity = resultDirection;
+                    stateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
                     break;
             }
             
         }
         else if (HitReactLevel == BehaviorEnumSet.HitReactLevel.HitFlyOut)
         {
-            stateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
             enemyRigidBody.velocity = Vector3.left 
                                       * (((_playerCharacter.transform.position.x - _playerCharacter.EnemyObject.transform.position.x) > 0.0f ? 1.0f : -1.0f) 
                                          * _backFlyOutSpeedByAttack.x)
                                       + (Vector3.up * _backFlyOutSpeedByAttack.y);
+            stateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
         }
         
     }

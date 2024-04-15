@@ -23,7 +23,7 @@ namespace GameRound
         {
             if(InputManager.IsPressedMenuKey())
             {
-                RoundStateManager.ChangeState(GameRoundManager.GameState.NormalPlay);
+                RoundStateManager.ChangeState(RoundStateManager.PreviousStateName);
                 return;
             }
 
@@ -31,14 +31,17 @@ namespace GameRound
             {
                 _menuManager.SelectMenuOption();
             }
+            
             else
             {
                 short result = InputManager.GetPressedMoveKey();
                 switch (result)
                 {
+                    // up key
                     case 1:
                         _menuManager.MenuScrollUp();
                         break;
+                    // down key
                     case -1:
                         _menuManager.MenuScrollDown();
                         break;

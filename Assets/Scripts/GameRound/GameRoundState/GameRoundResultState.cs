@@ -1,12 +1,17 @@
-﻿namespace GameRound
+﻿using UnityEngine;
+
+namespace GameRound
 {
     public class GameRoundResultState : GameRoundStateInterface
     {
         private bool _isDraw;
-        private bool _isShowResults;
-        
-        public GameRoundResultState(GameRoundStateManager manager) 
-            : base(manager, GameRoundManager.GameState.Result) { }
+        private MenuInGame _menuManager;
+
+        public GameRoundResultState(GameRoundStateManager manager)
+            : base(manager, GameRoundManager.GameState.Result)
+        {
+            _menuManager = GameObject.FindObjectOfType<MenuInGame>();
+        }
 
         public override void Enter()
         {
@@ -14,6 +19,7 @@
             RoundManager.ApplySettingInStateByPausing(false);
             PlayersControlManager.InitializePlayersInRound(StateName);
             
+            if (RoundManager.IsGameEnded) return;
             switch (PlayersControlManager.CountDownPlayers())
             {
                 case 0:
@@ -27,22 +33,20 @@
                     break;
             }
 
-            _isShowResults = false;
+            if (_isDraw) RoundManager.DrawRound();
+            else RoundManager.EndRound(
+                (PlayersInRoundControlManager.CharacterIndex)((short)PlayersControlManager.GetDownPlayerIndex() ^ 1));
         }
         
         public override void Update()
         {
-            if (_isShowResults)
-            {
-                _isShowResults = true;
-                return;
-            }
             
-            if (_isDraw) RoundManager.DrawRound();
-            else RoundManager.EndRound(
-                (PlayersInRoundControlManager.CharacterIndex)((short)PlayersControlManager.GetDownPlayerIndex() ^ 1));
+            
 
-            _isShowResults = true;
+            if (InputManager.IsPressedMenuEnterKey())
+            {
+                _menuManager.SelectMenuOption();
+            }
         }
         
         public override void Quit()

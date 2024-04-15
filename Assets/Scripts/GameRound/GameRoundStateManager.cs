@@ -8,6 +8,7 @@ namespace GameRound
         private Dictionary<GameRoundManager.GameState, GameRoundStateInterface> _states;
         
         private GameRoundStateInterface _currentRoundState;
+        public GameRoundManager.GameState PreviousStateName { get; private set; }
         
         public GameRoundManager RoundManager { get; private set; }
         
@@ -32,6 +33,7 @@ namespace GameRound
         public void ChangeState(GameRoundManager.GameState state)
         {
             _currentRoundState.Quit();
+            PreviousStateName = _currentRoundState.StateName;
             _currentRoundState = _states[state];
             _currentRoundState.Enter();
         }
