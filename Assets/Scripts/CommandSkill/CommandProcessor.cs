@@ -146,10 +146,14 @@ public class CommandProcessor : MonoBehaviour
         List<BehaviorEnumSet.InputSet> command,
         BehaviorEnumSet.Behavior attackTrigger,
         List<PassiveStateEnumSet.CharacterPositionState> availableCommandPositionStates,
-        BehaviorEnumSet.Behavior behavior)
+        BehaviorEnumSet.Behavior behavior, BehaviorEnumSet.AttackLevel attackLevel = BehaviorEnumSet.AttackLevel.Technique)
     {
-        _characterCommandSet.Add(
-            new CommandStructure(command, attackTrigger, availableCommandPositionStates, behavior));
+        CommandStructure newCommand = new CommandStructure(command, attackTrigger, availableCommandPositionStates, behavior);
+        
+        if(attackLevel == BehaviorEnumSet.AttackLevel.SpecialMove)
+            _characterCommandSet.Insert(0, newCommand);
+        else if (attackLevel == BehaviorEnumSet.AttackLevel.Technique)
+            _characterCommandSet.Add(newCommand);
     }
     
     public void ResetCommandToUnAvailable()

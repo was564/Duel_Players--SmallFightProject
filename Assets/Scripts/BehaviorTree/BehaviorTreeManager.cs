@@ -130,7 +130,7 @@ namespace BehaviorTree
             setChild(3, 5); // random selector -> selector
             
             addNode(new IfNode(6, () => _enemyJudgeBoxController.
-                GetAttackBox(_enemy.StateManager.CurrentState.StateName).AttackPosition == BehaviorEnumSet.AttackPosition.Crouch));
+                CompareAttackBoxByAttackPosition(_enemy.StateManager.CurrentState.StateName, BehaviorEnumSet.AttackPosition.Crouch)));
             setChild(5, 6); // selector -> if
             addNode(new StateExecutionNode(7, BehaviorEnumSet.State.CrouchGuard, _player));
             setChild(6, 7); // if -> state

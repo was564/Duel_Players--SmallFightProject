@@ -17,7 +17,14 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
     private PlayerCharacter _enemyCharacter;
     
     public Rigidbody RigidBody { get; private set; }
+    public BoxCollider CharacterCollider { get; private set; }
     private bool _isLookingRight;
+
+    public GameObject SpecialSkillBall;
+    
+    public GameObject SpecialSkillBallInstance { get; private set; }
+    
+    private List<GameObject> _modelObjectsForRender = new List<GameObject>();
     
     private CharacterInputManager _inputManager;
     private CommandProcessor _commandProcessor;
@@ -56,12 +63,49 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
     public int PlayerUniqueIndex { get; set; }
 
     private List<MonoObserverInterface> _observers = new List<MonoObserverInterface>();
+    
+    
+
+    private void OnCollisionEnter(Collision other)
+    {   // 플레이어와 적이 머리 위와 다리 아래로 충돌 했을 때 공중에 멈추지 않게 위치를 조정하는 함수
+        if (!other.gameObject.CompareTag("Player") && !other.gameObject.CompareTag("Enemy")) return;
+        // 공중에 있는 플레이어가 해당 코드를 처리한다. (this가 공중에 있는 플레이어)
+        if (this.transform.position.y < other.transform.position.y) return;
+
+        BoxCollider otherCollider = this._enemyCharacter.CharacterCollider;
+        // 플레이어가 적의 머리 위의 포지션이 아니라면 실행하지 않음
+        if(this.transform.position.y + this.CharacterCollider.center.y - this.CharacterCollider.size.y * 0.5f 
+           < other.transform.position.y + otherCollider.center.y + otherCollider.size.y * 0.5f - 0.05f) return;
+        
+        // 공중에 있는 플레이어가 땅에 있는 적과의 포지션을 보고 위치를 이동
+        if (this.transform.position.x > _enemyCharacter.transform.position.x)
+        {
+            Vector3 playerPosition = this.transform.position;
+            playerPosition.x = _enemyCharacter.transform.position.x + (CharacterCollider.size.x + otherCollider.size.x) * 0.5f;
+            this.transform.position = playerPosition;
+        }
+        else
+        {
+            Vector3 playerPosition = this.transform.position;
+            playerPosition.x = _enemyCharacter.transform.position.x - (CharacterCollider.size.x + otherCollider.size.x) * 0.5f;
+            this.transform.position = playerPosition;
+        }
+    }
 
     public bool IsInitializedStartMethod { get; private set; } = false;
     void Start()
     {
-        _wall = GameObject.FindWithTag("Wall");
+        SpecialSkillBallInstance = Instantiate(SpecialSkillBall, this.transform);
+        SpecialSkillBallInstance.tag = this.tag;
+        SpecialSkillBallInstance.GetComponent<ChasingBall>().Target = EnemyObject.transform;
+
+        foreach (var go in this.transform.GetComponentsInChildren<Transform>())
+        {
+            if(go.CompareTag("ModelRenderer")) _modelObjectsForRender.Add(go.gameObject);
+        }
         
+        _wall = GameObject.FindWithTag("Wall");
+        CharacterCollider = this.GetComponent<BoxCollider>();
         RegisterObserver(GameObject.FindObjectOfType<GameRoundManager>());
         RigidBody = this.GetComponent<Rigidbody>();
         _inputManager = this.GetComponent<CharacterInputManager>();
@@ -79,6 +123,14 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         Initialize();
     }
 
+    public void SetModelObjectsVisible(bool isVisible)
+    {
+        foreach (var modelObject in _modelObjectsForRender)
+        {
+            modelObject.SetActive(isVisible);
+        }
+    }
+    
     public void Initialize()
     {
         BehaviorStateSetInterface stateSet = BehaviorStateSetManager.GetStateSet(
@@ -320,7 +372,7 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
     
     public void ResetHp()
     {
-        Hp = 100;
+        Hp = 250;
     }
     
     public void LookAtEnemy()

@@ -2536,8 +2536,8 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: -0.0000060796738
+        time: 0.033333335
+        value: -0.000006198883
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2557,8 +2557,8 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: -0.0007839799
+        time: 0.016666668
+        value: -0.00078201294
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -3977,9 +3977,9 @@ AnimationClip:
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
     m_LoopBlendPositionXZ: 0
-    m_KeepOriginalOrientation: 0
-    m_KeepOriginalPositionY: 1
-    m_KeepOriginalPositionXZ: 0
+    m_KeepOriginalOrientation: 1
+    m_KeepOriginalPositionY: 0
+    m_KeepOriginalPositionXZ: 1
     m_HeightFromFeet: 0
     m_Mirror: 0
   m_EditorCurves:
@@ -6502,8 +6502,8 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: -0.0000060796738
+        time: 0.033333335
+        value: -0.000006198883
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -6523,8 +6523,8 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: -0.0007839799
+        time: 0.016666668
+        value: -0.00078201294
         inSlope: 0
         outSlope: 0
         tangentMode: 0

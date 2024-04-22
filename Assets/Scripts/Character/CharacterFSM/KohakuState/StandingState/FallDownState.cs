@@ -4,9 +4,20 @@ namespace Character.CharacterFSM.KohakuState
 {
     public class FallDownState : BehaviorStateInterface
     {
-        public FallDownState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.FallDown, characterRoot, 
-                BehaviorEnumSet.AttackLevel.Hit, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
+        private ParticleSystem _fallDownDustEffect;
+        
+        public FallDownState(GameObject characterRoot) :
+            base(BehaviorEnumSet.State.FallDown, characterRoot,
+                BehaviorEnumSet.AttackLevel.Hit, PassiveStateEnumSet.CharacterPositionState.OnGround)
+        {
+            foreach (var childTransform in characterRoot.transform.GetComponentsInChildren<ParticleSystem>())
+            {
+                if (childTransform.tag.Equals("FallDownParticle"))
+                    _fallDownDustEffect = childTransform.GetComponent<ParticleSystem>();
+            }
+            
+            _fallDownDustEffect.Stop();
+        }
 
         private int stateStartingFrame;
         [SerializeField]
@@ -19,6 +30,8 @@ namespace Character.CharacterFSM.KohakuState
              
             CharacterAnimator.PlayAnimation("FallDown", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimation("FallDown", CharacterAnimator.Layer.LowerLayer);
+            
+            _fallDownDustEffect.Play();
         }
 
         public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Character.CharacterFSM.KohakuState
 {
@@ -50,11 +51,13 @@ namespace Character.CharacterFSM.KohakuState
         {
             if(EnemyCharacterScript.StateManager.CurrentState.StateName == BehaviorEnumSet.State.GrabEscape)
             {
+                CharacterJudgeBoxController.GetAttackBox(BehaviorEnumSet.State.GrabAttack).PlayGuardEffect();
                 return BehaviorEnumSet.State.GrabEscape;
             }
             
             if(FrameManager.CurrentFrame - _startFrameThisState > _waitFrameForEscape)
             {
+                EnemyCharacterScript.StateManager.ChangeState(BehaviorEnumSet.State.StandingStopHit);
                 return BehaviorEnumSet.State.GrabAttack;
             }
             

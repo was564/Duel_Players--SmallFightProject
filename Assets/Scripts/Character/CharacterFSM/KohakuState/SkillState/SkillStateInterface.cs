@@ -13,10 +13,15 @@ namespace Character.CharacterFSM.KohakuState.SkillState
             : base(stateName, characterRoot, attackLevel, positionInitialState)
         {
             CommandManager = characterRoot.GetComponent<CommandProcessor>();
+            CameraManager = GameObject.FindObjectOfType<CameraManager>();
+            FrameManager = GameObject.FindObjectOfType<FrameManager>();
         }
 
+        protected CameraManager CameraManager;
+        protected FrameManager FrameManager;
+        
         protected CommandProcessor CommandManager;
-    
+        
         public abstract List<BehaviorEnumSet.InputSet> MoveCommand { get; protected set; }
     
         public abstract BehaviorEnumSet.Behavior AttackTrigger { get; protected set; }

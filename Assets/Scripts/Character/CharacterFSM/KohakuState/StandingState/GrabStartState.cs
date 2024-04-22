@@ -43,6 +43,7 @@ namespace Character.CharacterFSM.KohakuState
                && EnemyCharacterScript.StateManager.CurrentState.AttackLevel < (int)BehaviorEnumSet.AttackLevel.Guard
                && Mathf.Abs(PlayerCharacter.EnemyObject.transform.position.x - PlayerCharacter.transform.position.x) < 1.0f)
             {
+                CharacterJudgeBoxController.GetAttackBox(BehaviorEnumSet.State.GrabAttack).PlayHitEffect();
                 return BehaviorEnumSet.State.GrabWait;
             }
             

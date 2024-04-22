@@ -58,10 +58,11 @@ namespace Character.CharacterFSM.KohakuState
             }
 
             if(!_isAttacked
-                && CharacterAnimator.GetCurrentAnimationDuration(CharacterAnimator.Layer.UpperLayer) >= 0.5f
+                && CharacterAnimator.GetCurrentAnimationDuration(CharacterAnimator.Layer.UpperLayer) >= 0.45f
                )
             {
                 _enemyCharacterScript.StateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
+                CharacterJudgeBoxController.GetAttackBox(BehaviorEnumSet.State.StandingKick623Skill).PlayHitEffect();
                 _enemyCharacterScript.RigidBody.velocity = _enemyVelocityWhenHit;
                 _enemyCharacterScript.DecreaseHp(5);
                 _isAttacked = true;

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Character.CharacterFSM;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -22,10 +23,18 @@ namespace Character
 
         private PlayerCharacter _enemyCharacter;
         
+        private CharacterAnimator _enemyCharacterAnimator;
+        
+        private TextMeshProUGUI _text;
+
+        private int _comboCount;
+        
         public bool IsCanceled { get; set; } = false;
         
         public ComboManager(PlayerCharacter player)
         {
+            _comboCount = 0;
+            
             _player = player;
             _enemyCharacter = player.EnemyObject.GetComponent<PlayerCharacter>();
             
@@ -40,6 +49,7 @@ namespace Character
             _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingKick236Skill, 1);
             _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingPunch623Skill, 1);
             _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingKick623Skill, 1);
+            _limitStatesCancelCountInTheCombo.Add(BehaviorEnumSet.State.StandingPunch6246SpecialSkillEnter, 1);
             
             _countStatesCancel.Add(BehaviorEnumSet.State.Jump, 0);
             _countStatesCancel.Add(BehaviorEnumSet.State.StandingPunch, 0);
@@ -52,11 +62,18 @@ namespace Character
             _countStatesCancel.Add(BehaviorEnumSet.State.StandingKick236Skill, 0);
             _countStatesCancel.Add(BehaviorEnumSet.State.StandingPunch623Skill, 0);
             _countStatesCancel.Add(BehaviorEnumSet.State.StandingKick623Skill, 0);
+            _countStatesCancel.Add(BehaviorEnumSet.State.StandingPunch6246SpecialSkillEnter, 0);
         }
 
         public void Initialize(BehaviorStateSetInterface stateSet)
         {
             _stateSet = stateSet;
+            _enemyCharacterAnimator = _enemyCharacter.GetComponent<CharacterAnimator>();
+            foreach (var text in GameObject.FindObjectsOfType<TextMeshProUGUI>())
+            {
+                if (text.CompareTag(_player.tag) && LayerMask.NameToLayer("InGameUI") == text.gameObject.layer)
+                    _text = text;
+            }
         }
 
         public void CountStateCancel(BehaviorEnumSet.State state)
@@ -119,6 +136,9 @@ namespace Character
                 case BehaviorEnumSet.Behavior.StandingKick623Skill:
                     nextState = BehaviorEnumSet.State.StandingKick623Skill;
                     break;
+                case BehaviorEnumSet.Behavior.StandingPunch6246SpecialSkill:
+                    nextState = BehaviorEnumSet.State.StandingPunch6246SpecialSkillEnter;
+                    break;
                 default:
                     nextState = BehaviorEnumSet.State.Null;
                     break;
@@ -136,6 +156,7 @@ namespace Character
             }
         }
 
+        private float _enemyAnimationDuration = 2f;
         public void UpdateComboManager()
         {
             if (!_enemyCharacter.IsHitContinuous)
@@ -145,8 +166,22 @@ namespace Character
                 {
                     _countStatesCancel[keys[index]] = 0;
                 }
-                
+
+                _comboCount = 0;
+                _enemyAnimationDuration = 0;
                 IsCanceled = false;
+                return;
+            }
+        
+            if (PlayerStateCheckingMethodSet.IsHittedState(_enemyCharacter.StateManager.CurrentState.StateName))
+            {
+                float duration = _enemyCharacterAnimator.GetCurrentAnimationDuration(CharacterAnimator.Layer.UpperLayer);
+                if(duration < _enemyAnimationDuration)
+                {
+                    _enemyAnimationDuration = duration;
+                    _comboCount++;
+                    _text.text = _comboCount + " Combo";
+                }
             }
         }
     }

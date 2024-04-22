@@ -5,20 +5,22 @@ public class AttackBox : MonoBehaviour
     private CharacterJudgeBoxController _myCharacterJudgeBoxController;
     private BoxCollider _attackBoxCollider;
     private PlayerCharacter _playerCharacter;
+
+    private ParticleSystem _hitParticle;
+    private ParticleSystem _guardParticle;
     
-    public ParticleSystem HitParticle { get; private set; }
-    public ParticleSystem GuardParticle { get; private set; }
-    
+    [SerializeField] private int Damage;
     [SerializeField] private BehaviorEnumSet.State StateNameForUnique;
     [SerializeField] public BehaviorEnumSet.AttackPosition AttackPosition;
     [SerializeField] private BehaviorEnumSet.HitReactLevel HitReactLevel;
     
-    public int Damage { get; private set; } = 5;
+    // public int Damage { get; private set; } = 5;
     
     private float _backMoveSpeedByAttack = 2.0f;
     private Vector3 _hitInAirAwayDirection = new Vector3(1.5f, 5.0f, 0);
     private Vector2 _backFlyOutSpeedByAttack = new Vector2(4.0f, 1.5f);
-    
+
+    private bool _haveCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -26,39 +28,52 @@ public class AttackBox : MonoBehaviour
         _myCharacterJudgeBoxController = this.transform.root.GetComponent<CharacterJudgeBoxController>();
         _playerCharacter = _myCharacterJudgeBoxController.GetComponent<PlayerCharacter>();
         _attackBoxCollider = this.GetComponent<BoxCollider>();
+        _haveCollider = (_attackBoxCollider != null); // collider == null operation expensive
         DisableAttackBox();
         
         _myCharacterJudgeBoxController.BindAttackBoxByAttackName(StateNameForUnique, this);
 
-        foreach (var childTransform in this.transform.GetComponentsInChildren<Transform>())
+        foreach (var childTransform in this.transform.GetComponentsInChildren<ParticleSystem>())
         {
             if (childTransform.tag.Equals("GuardParticle"))
-                GuardParticle = childTransform.GetComponent<ParticleSystem>();
+                _guardParticle = childTransform.GetComponent<ParticleSystem>();
             else if (childTransform.tag.Equals("HitParticle"))
-                HitParticle = childTransform.GetComponent<ParticleSystem>();
+                _hitParticle = childTransform.GetComponent<ParticleSystem>();
         }
 
-        GuardParticle.transform.position += Vector3.back * 0.5f;
-        HitParticle.transform.position += Vector3.back * 0.5f;
+        _guardParticle.transform.position += Vector3.back * 0.5f;
+        _hitParticle.transform.position += Vector3.back * 0.5f;
         
-        GuardParticle.Stop();
-        HitParticle.Stop();
+        _guardParticle.Stop();
+        _hitParticle.Stop();
     }
 
     public void DisableAttackBox()
     {
-        _attackBoxCollider.enabled = false;
+        if(_haveCollider)
+            _attackBoxCollider.enabled = false;
     }
 
     public void EnableAttackBox()
     {
-        _attackBoxCollider.enabled = true;
+        if(_haveCollider)
+            _attackBoxCollider.enabled = true;
+    }
+    
+    public void PlayHitEffect()
+    {
+        _hitParticle.Play();
+    }
+    
+    public void PlayGuardEffect()
+    {
+        _guardParticle.Play();
     }
 
     public void ReactWhenHitByAttack(PlayerCharacter enemyPlayer, BehaviorStateManager stateManager, Rigidbody enemyRigidBody)
     {
         enemyPlayer.DecreaseHp(Damage);
-        HitParticle.Play();
+        PlayHitEffect();
         
         if (HitReactLevel == BehaviorEnumSet.HitReactLevel.HitInPlace)
         {

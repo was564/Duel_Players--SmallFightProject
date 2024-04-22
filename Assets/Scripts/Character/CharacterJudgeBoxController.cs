@@ -28,6 +28,12 @@ public class CharacterJudgeBoxController : MonoBehaviour
         return _attackBoxTable[attackName];
     }
     
+    public bool CompareAttackBoxByAttackPosition(BehaviorEnumSet.State attackName, BehaviorEnumSet.AttackPosition attackPosition)
+    {
+        if (!_attackBoxTable.ContainsKey(attackName)) return false;
+        return _attackBoxTable[attackName].AttackPosition == attackPosition;
+    }
+    
     public void EnableAttackBoxByAttackName(BehaviorEnumSet.State attackName)
     {
         _attackBoxTable[attackName].EnableAttackBox();

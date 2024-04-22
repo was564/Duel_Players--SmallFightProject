@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9143771049114508531}
   - component: {fileID: 8498036641730588611}
   - component: {fileID: 4733901002042778144}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 7425757647344797311}
   - component: {fileID: 2197187495584013642}
   - component: {fileID: 6379564820881584759}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: TimerPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6892170423810025811}
   - component: {fileID: 3508243598342520762}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,8 +242,8 @@ RectTransform:
   - {fileID: 9143771049114508531}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}

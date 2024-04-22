@@ -60,6 +60,9 @@ namespace Character.CharacterFSM.KohakuState
                 case BehaviorEnumSet.Behavior.StandingKick623Skill:
                     return BehaviorEnumSet.State.StandingKick623Skill;
                 
+                case BehaviorEnumSet.Behavior.StandingPunch6246SpecialSkill:
+                    return BehaviorEnumSet.State.StandingPunch6246SpecialSkillEnter;
+                
                 case BehaviorEnumSet.Behavior.Guard:
                     return BehaviorEnumSet.State.StandingGuard;
                 

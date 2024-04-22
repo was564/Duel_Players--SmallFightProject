@@ -40,9 +40,6 @@ namespace GameRound
         
         public override void Update()
         {
-            
-            
-
             if (InputManager.IsPressedMenuEnterKey())
             {
                 _menuManager.SelectMenuOption();

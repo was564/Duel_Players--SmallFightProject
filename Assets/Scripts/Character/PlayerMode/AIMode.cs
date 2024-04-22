@@ -78,8 +78,6 @@ namespace Character.PlayerMode
                         break;
                 }
             }
-            
-            yield return null;
         }
     }
 }

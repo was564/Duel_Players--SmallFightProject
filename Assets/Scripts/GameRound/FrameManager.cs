@@ -51,6 +51,15 @@ public class FrameManager : MonoBehaviour
         }
     }
 
+    public void PauseOtherCharactersInFrame(int frame, int characterId)
+    {
+        foreach (var key in _charactersList.Keys)
+        {
+            if (key == characterId) continue;
+            _charactersList[key].ActivatePassiveState(PassiveStateEnumSet.PassiveState.FrameStopping, frame);
+        }
+    }
+    
     public void ResumeAllCharacters()
     {
         foreach (var key in _charactersList.Keys)

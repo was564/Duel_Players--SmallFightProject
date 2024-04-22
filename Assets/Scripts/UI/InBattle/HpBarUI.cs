@@ -11,13 +11,16 @@ public class HpBarUI : MonoBehaviour
     private RectTransform _hpBackBoard;
 
     public PlayerCharacter playerCharacterParameter { get; set; }
+    public bool IsRightSideBar { get; set; }
     private RawImage _hpRenderer;
 
     private Color _hpColor;
     
     private float _barWidth;
 
-    private float _characterHp;
+    private int _characterHp;
+    private int _characterMaxHp;
+    private float _characterHpRate; // 1 / _characterMaxHp
 
     private Vector2 _initHpGuagePosition;
 
@@ -30,6 +33,8 @@ public class HpBarUI : MonoBehaviour
         _hpRenderer.color = _hpColor;
         
         _characterHp = playerCharacterParameter.Hp;
+        _characterMaxHp = playerCharacterParameter.Hp;
+        _characterHpRate = 1f / (float)_characterMaxHp;
         _barWidth = this.GetComponent<RectTransform>().rect.width;
         
         _hpGuage.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _barWidth - 5.0f);
@@ -44,8 +49,14 @@ public class HpBarUI : MonoBehaviour
         else SetVisibleHp(true); 
         
         _characterHp = playerCharacterParameter.Hp;
-        _hpGuage.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _characterHp * 0.01f * (_barWidth - 5.0f));
-        _hpGuage.anchoredPosition = _initHpGuagePosition - Vector2.left * ((100.0f - _characterHp) * 0.01f * (_barWidth - 5.0f) * 0.5f);
+        _hpGuage.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (float)_characterHp * _characterHpRate * (_barWidth - 5.0f));
+        
+        if(IsRightSideBar)
+            _hpGuage.anchoredPosition = 
+                _initHpGuagePosition - Vector2.left * ((float)(_characterMaxHp - _characterHp) * _characterHpRate * (_barWidth - 5.0f) * 0.5f);
+        else
+            _hpGuage.anchoredPosition = 
+                _initHpGuagePosition + Vector2.left * ((float)(_characterMaxHp - _characterHp) * _characterHpRate * (_barWidth - 5.0f) * 0.5f);
     }
 
     private void SetVisibleHp(bool isVisible)

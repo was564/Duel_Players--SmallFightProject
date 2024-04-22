@@ -5,12 +5,19 @@ namespace Character.CharacterFSM.KohakuState.SkillState
 {
     public class DashOnGroundState : SkillStateInterface
     {
-        
+        private ParticleSystem _dashDustEffect;
         
         public DashOnGroundState(GameObject characterRoot)
             : base(BehaviorEnumSet.State.DashOnGround, characterRoot, 
                 BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.OnGround)
         {
+            foreach (var childTransform in characterRoot.transform.GetComponentsInChildren<ParticleSystem>())
+            {
+                if (childTransform.tag.Equals("RunParticle"))
+                    _dashDustEffect = childTransform.GetComponent<ParticleSystem>();
+            }
+            _dashDustEffect.Stop();
+            
             MoveCommand = new List<BehaviorEnumSet.InputSet>()
             {
                 BehaviorEnumSet.InputSet.Forward,
@@ -46,6 +53,8 @@ namespace Character.CharacterFSM.KohakuState.SkillState
             CharacterRigidBody.velocity = _finalVelocity;
             CharacterAnimator.PlayAnimationSmoothly("Dash", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimationSmoothly("Dash", CharacterAnimator.Layer.LowerLayer);
+            
+            _dashDustEffect.Play();
         }
 
         public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
@@ -82,6 +91,9 @@ namespace Character.CharacterFSM.KohakuState.SkillState
                 case BehaviorEnumSet.Behavior.StandingPunch623Skill:
                     return BehaviorEnumSet.State.StandingPunch623Skill;
                 
+                case BehaviorEnumSet.Behavior.StandingPunch6246SpecialSkill:
+                    return BehaviorEnumSet.State.StandingPunch6246SpecialSkillEnter;
+                
                 default:
                     return BehaviorEnumSet.State.Null;
             }
@@ -97,6 +109,7 @@ namespace Character.CharacterFSM.KohakuState.SkillState
         public override void Quit()
         {
             CharacterAnimator.PlayAnimationSmoothly("StandingIdle", CharacterAnimator.Layer.LowerLayer);
+            _dashDustEffect.Stop();
         }
     }
 }

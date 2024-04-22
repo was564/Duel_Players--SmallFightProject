@@ -42,7 +42,9 @@
         StandingKick236Skill,
         StandingPunch623Skill,
         StandingKick623Skill,
-        AttackEndIndex, // 21
+        StandingPunch6246SpecialSkillEnter,
+        StandingPunch6246SpecialSkillAttack,
+        AttackEndIndex, // 23
         
         GrabStart,
         GrabWait,
@@ -59,6 +61,7 @@
         AirGuard,
         GuardEndIndex,
         
+        StandingStopHit,
         FallDown,
         GetUp,
         IntroPose,
@@ -126,6 +129,7 @@
         StandingKick236Skill,
         StandingPunch623Skill,
         StandingKick623Skill,
+        StandingPunch6246SpecialSkill,
         Dash,
         BackStep,
         Punch,

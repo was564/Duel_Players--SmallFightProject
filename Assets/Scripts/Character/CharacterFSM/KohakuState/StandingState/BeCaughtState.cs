@@ -2,18 +2,10 @@
 
 namespace Character.CharacterFSM.KohakuState
 {
-    public class BeCaughtState : BehaviorStateInterface
+    public class BeCaughtState : StandingStopHitState
     {
-        public BeCaughtState(GameObject characterRoot) : base(BehaviorEnumSet.State.BeCaught, characterRoot,
-            BehaviorEnumSet.AttackLevel.SpecialMove, PassiveStateEnumSet.CharacterPositionState.OnGround)
+        public BeCaughtState(GameObject characterRoot) : base(characterRoot)
         {
-        }
-
-        public override void Enter()
-        {
-            CharacterAnimator.SetPoseInAnimation("StandingHit", CharacterAnimator.Layer.UpperLayer, 0.5f);
-            CharacterAnimator.SetPoseInAnimation("StandingHit", CharacterAnimator.Layer.LowerLayer, 0.5f);
-            CharacterAnimator.PauseAnimation();
         }
 
         public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)
@@ -26,16 +18,6 @@ namespace Character.CharacterFSM.KohakuState
                 default:
                     return BehaviorEnumSet.State.Null;
             }
-        }
-
-        public override BehaviorEnumSet.State UpdateState()
-        {
-            return BehaviorEnumSet.State.Null;
-        }
-
-        public override void Quit()
-        {
-            CharacterAnimator.ResumeAnimation();
         }
     }
 }

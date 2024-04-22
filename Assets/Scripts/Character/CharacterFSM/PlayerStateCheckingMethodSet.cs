@@ -16,5 +16,12 @@ namespace Character.CharacterFSM
                     (int)state < (int)BehaviorEnumSet.State.AttackEndIndex);
         }
 
+        public static bool IsHittedState(BehaviorEnumSet.State state)
+        {
+            return (state == BehaviorEnumSet.State.StandingHit ||
+                    state == BehaviorEnumSet.State.CrouchHit ||
+                    state == BehaviorEnumSet.State.InAirHit);
+        }
+        
     }
 }

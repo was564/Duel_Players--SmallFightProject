@@ -4,9 +4,20 @@ namespace Character.CharacterFSM.KohakuState
 {
     public class LandState : BehaviorStateInterface
     {
-        public LandState(GameObject characterRoot) : 
-            base(BehaviorEnumSet.State.Land, characterRoot, 
-                BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.OnGround) {}
+        private ParticleSystem _landDustEffect;
+
+        public LandState(GameObject characterRoot) :
+            base(BehaviorEnumSet.State.Land, characterRoot,
+                BehaviorEnumSet.AttackLevel.Move, PassiveStateEnumSet.CharacterPositionState.OnGround)
+        {
+            foreach (var childTransform in characterRoot.transform.GetComponentsInChildren<ParticleSystem>())
+            {
+                if (childTransform.tag.Equals("LandParticle"))
+                    _landDustEffect = childTransform.GetComponent<ParticleSystem>();
+            }
+            
+            _landDustEffect.Stop();
+        }
 
         public override void Enter()
         {
@@ -17,6 +28,8 @@ namespace Character.CharacterFSM.KohakuState
             
             CharacterAnimator.PlayAnimationSmoothly("Land", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimationSmoothly("Land", CharacterAnimator.Layer.LowerLayer);
+            
+            _landDustEffect.Play();
         }
         
         public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)

@@ -113,11 +113,11 @@ public class HitBox : MonoBehaviour
             GuardState currentGuardState = _stateManager.CurrentState as GuardState;
             currentGuardState.ContinuousFrameByBlockAttack = _blockingFrameForGuard;
             _playerCharacter.IsGuarded = true;
-            attackInfo.GuardParticle.Play();
+            attackInfo.PlayGuardEffect();
         }
         else
         {
-            attackInfo.GuardParticle.Play();
+            attackInfo.PlayGuardEffect();
         }
     }
 }
