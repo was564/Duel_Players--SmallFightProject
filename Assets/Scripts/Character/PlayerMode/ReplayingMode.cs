@@ -46,6 +46,10 @@ namespace Character.PlayerMode
 
                     BehaviorEnumSet.State nextState = (BehaviorEnumSet.State)entry.State;
                     
+                    Character.transform.position = new Vector3(entry.PositionX, entry.PositionY);
+                    Character.RigidBody.velocity = new Vector3(entry.VelocityX, entry.VelocityY);
+                    Character.DecreaseHp(Character.Hp - entry.Hp);
+                    
                     if (entry.FrameStopped) 
                     {
                         if (PlayerStateCheckingMethodSet.IsGuardedState(nextState) ||
@@ -55,10 +59,6 @@ namespace Character.PlayerMode
                         _frameManager.PauseAllCharactersInFrame(FrameManager.PauseFrameWhenHit);
                     }
                     else Character.StateManager.ChangeState(nextState);
-                    
-                    Character.transform.position = new Vector3(entry.PositionX, entry.PositionY);
-                    Character.RigidBody.velocity = new Vector3(entry.VelocityX, entry.VelocityY);
-                    Character.DecreaseHp(Character.Hp - entry.Hp);
                     
                     break;
                 }
