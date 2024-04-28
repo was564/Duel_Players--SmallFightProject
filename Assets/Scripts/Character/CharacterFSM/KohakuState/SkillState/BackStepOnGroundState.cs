@@ -60,13 +60,16 @@ namespace Character.CharacterFSM.KohakuState.SkillState
         public override BehaviorEnumSet.State UpdateState()
         {
             if (this.CharacterTransform.position.y <= this.PlayerCharacter.PositionYOffsetForLand + _yOffsetForLand)
+            {
+                CharacterRigidBody.velocity = Vector3.zero;
                 return BehaviorEnumSet.State.Land;
+            }
             else return BehaviorEnumSet.State.Null;
         }
 
         public override void Quit()
         {
-            CharacterRigidBody.velocity = Vector3.zero;
+            
         }
     }
 }

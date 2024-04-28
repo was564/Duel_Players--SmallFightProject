@@ -22020,7 +22020,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 1
   m_Events:
-  - time: 0.11666667
+  - time: 0.1
     functionName: EnableAttackBoxByAttackName
     data: 
     objectReferenceParameter: {fileID: 0}

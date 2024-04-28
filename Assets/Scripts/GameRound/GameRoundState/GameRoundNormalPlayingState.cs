@@ -10,7 +10,7 @@ namespace GameRound
         public override void Enter()
         {
             //Debug.Log(FrameManager.CurrentFrame);
-            RoundStateManager.FrameManager.IsFramePaused = false;
+            FrameManager.IsFramePaused = false;
             RoundManager.ApplySettingInStateByPausing(false);
         }
         
@@ -29,7 +29,7 @@ namespace GameRound
         
         public override void Quit()
         {
-            RoundStateManager.FrameManager.IsFramePaused = true;
+            FrameManager.IsFramePaused = true;
         }
     }
 }

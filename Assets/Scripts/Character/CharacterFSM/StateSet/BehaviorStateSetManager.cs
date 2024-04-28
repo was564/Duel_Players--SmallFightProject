@@ -17,6 +17,7 @@ namespace Character.CharacterFSM
         
         public static BehaviorStateSetInterface GetStateSet(BehaviorStateSetIndex name, GameObject characterRoot)
         {
+            
             GameObject wall = GameObject.FindGameObjectWithTag("Wall");
             switch (name)
             {

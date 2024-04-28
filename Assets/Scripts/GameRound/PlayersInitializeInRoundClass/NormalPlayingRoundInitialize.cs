@@ -6,20 +6,20 @@ namespace GameRound.PlayersInitializeInRoundClass
 {
     public class NormalPlayingRoundInitialize : PlayersInitializeInRoundFactory
     {
-        public NormalPlayingRoundInitialize(List<PlayerCharacter> players)
+        public NormalPlayingRoundInitialize(Dictionary<PlayerCharacter.CharacterIndex, PlayerCharacter> players)
             : base(players) {}
         
         protected override void InitializePlayersPosition()
         {
-            Players[(int)PlayersInRoundControlManager.CharacterIndex.Player].transform.position = Vector3.left;
-            Players[(int)PlayersInRoundControlManager.CharacterIndex.Enemy].transform.position = Vector3.right;
+            Players[PlayerCharacter.CharacterIndex.Player].transform.position = Vector3.left;
+            Players[PlayerCharacter.CharacterIndex.Enemy].transform.position = Vector3.right;
         }
 
         protected override void InitializePlayersInitState()
         {
             foreach (var player in Players)
             {
-                player.StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
+                player.Value.StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
             }
         }
 

@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42668b7d79930043ac158655ee384e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pauseFrame: 15
+  _pauseFrame: 10
 --- !u!1 &8856108334308285202
 GameObject:
   m_ObjectHideFlags: 0

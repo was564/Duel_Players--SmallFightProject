@@ -15,7 +15,7 @@ namespace GameRound
 
         public override void Enter()
         {
-            RoundStateManager.FrameManager.IsFramePaused = true;
+            FrameManager.IsFramePaused = true;
             RoundManager.ApplySettingInStateByPausing(false);
             PlayersControlManager.InitializePlayersInRound(StateName);
             
@@ -35,7 +35,7 @@ namespace GameRound
 
             if (_isDraw) RoundManager.DrawRound();
             else RoundManager.EndRound(
-                (PlayersInRoundControlManager.CharacterIndex)((short)PlayersControlManager.GetDownPlayerIndex() ^ 1));
+                (PlayerCharacter.CharacterIndex)((short)PlayersControlManager.GetDownPlayerIndex() ^ 1));
         }
         
         public override void Update()

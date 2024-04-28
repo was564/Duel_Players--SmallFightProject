@@ -19,7 +19,9 @@ public class FrameManager : MonoBehaviour
 
     public static int CurrentFrame { get; private set; } = 0;
 
-    public bool IsFramePaused { get; set; } = false;
+    public static bool IsFramePaused { get; set; } = false;
+    
+    public static int PauseFrameWhenHit = 10;
     
     private void Awake()
     {

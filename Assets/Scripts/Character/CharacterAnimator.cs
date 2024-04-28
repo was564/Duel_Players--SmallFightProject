@@ -11,6 +11,8 @@ public class CharacterAnimator : MonoBehaviour
     private Dictionary<string, bool> _initializedParametersValueInAnimator = new Dictionary<string, bool>();
     private Transform _characterRootTransform;
 
+    private float _initSpeed = 1.5f;
+    
     public enum Layer
     {
         UpperLayer,
@@ -165,6 +167,6 @@ public class CharacterAnimator : MonoBehaviour
 
     public void ResumeAnimation()
     {
-        _animator.speed = 1.0f;
+        _animator.speed = _initSpeed;
     }
 }

@@ -37,6 +37,11 @@ namespace Character.PlayerMode
             return _currentMode.ModeName;
         }
         
+        public void SetReplayingInputQueue(Queue<EntryState> queue)
+        {
+            ((ReplayingMode)_playerModes[PlayerMode.Replaying]).ReplayingInputQueue = queue;
+        }
+        
         public void Update()
         {
             _currentMode.Update();

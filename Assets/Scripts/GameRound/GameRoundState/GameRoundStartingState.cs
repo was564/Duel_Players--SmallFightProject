@@ -5,6 +5,8 @@
         public GameRoundStartingState(GameRoundStateManager manager) 
             : base(manager, GameRoundManager.GameState.Start) { }
 
+        
+        
         public override void Enter()
         {
             RoundManager.ApplySettingInStateByPausing(false);

@@ -6,32 +6,36 @@ namespace GameRound.PlayersInitializeInRoundClass
 {
     public class StartingRoundInitialize : PlayersInitializeInRoundFactory
     {
-        public StartingRoundInitialize(List<PlayerCharacter> players)
+        public StartingRoundInitialize(Dictionary<PlayerCharacter.CharacterIndex, PlayerCharacter> players)
             : base(players) {}
         
         protected override void InitializePlayersPosition()
         {
-            Players[(int)PlayersInRoundControlManager.CharacterIndex.Player].transform.position = Vector3.left;
-            Players[(int)PlayersInRoundControlManager.CharacterIndex.Enemy].transform.position = Vector3.right;
+            Players[PlayerCharacter.CharacterIndex.Player].transform.position = Vector3.left;
+            Players[PlayerCharacter.CharacterIndex.Enemy].transform.position = Vector3.right;
         }
 
         protected override void InitializePlayersInitState()
         {
-            
             foreach (var player in Players)
             {
-                player.ResetHp();
-                player.StateManager.ChangeState(BehaviorEnumSet.State.IntroPose);
+                player.Value.ResetHp();
+                player.Value.StateManager.ChangeState(BehaviorEnumSet.State.IntroPose);
+            }
+
+            foreach (var player in Players)
+            {
+                player.Value.GetComponent<CharacterAnimator>().ResumeAnimation();
             }
         }
 
         protected override void InitializePlayersMode()
         {
-            Players[(int)PlayersInRoundControlManager.CharacterIndex.Player].SetPlayerMode(PlayerModeManager.PlayerMode.NormalPlaying);
-            Players[(int)PlayersInRoundControlManager.CharacterIndex.Enemy].SetPlayerMode(PlayerModeManager.PlayerMode.AI);
+            Players[PlayerCharacter.CharacterIndex.Player].SetPlayerMode(PlayerModeManager.PlayerMode.NormalPlaying);
+            Players[PlayerCharacter.CharacterIndex.Enemy].SetPlayerMode(PlayerModeManager.PlayerMode.AI);
 
-            Players[(int)PlayersInRoundControlManager.CharacterIndex.Player].IsAcceptArtificialInput = false;
-            Players[(int)PlayersInRoundControlManager.CharacterIndex.Enemy].IsAcceptArtificialInput = false;
+            Players[PlayerCharacter.CharacterIndex.Player].IsAcceptArtificialInput = false;
+            Players[PlayerCharacter.CharacterIndex.Enemy].IsAcceptArtificialInput = false;
         }
     }
 }

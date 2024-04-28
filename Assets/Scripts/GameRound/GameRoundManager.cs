@@ -59,20 +59,19 @@ public class GameRoundManager : MonoObserverInterface
     
     private bool _isGameRecorded = false;
 
-    private RoundInfoManager _roundInfoManager;
-
+    
+    private RoundRecordManager _gameRoundRecordManager;
     
     
     // Start is called before the first frame update
     void Start()
     {
-        
-        _roundInfoManager = new RoundInfoManager();
 
         _frameManager = GameObject.FindObjectOfType<FrameManager>();
         _playersControlManager = new PlayersInRoundControlManager();
         
         _gameRoundStateManager = new GameRoundStateManager(this, _playersControlManager, _frameManager);
+        _gameRoundRecordManager = new RoundRecordManager();
         
         /*
         PlayerCharacter player = GameObject.FindGameObjectWithTag("Player").transform.root.GetComponent<PlayerCharacter>();
@@ -116,6 +115,8 @@ public class GameRoundManager : MonoObserverInterface
     void Update()
     {
         _gameRoundStateManager.Update();
+        
+        //_gameRoundRecordManager.Update();
         
         /*
         if(IsGameStopped || IsGameEnded) return;
@@ -166,8 +167,13 @@ public class GameRoundManager : MonoObserverInterface
     {
         StartRoundFromIntro();
         _playersControlManager.BlockAllPlayersInput();
+        _playersControlManager.InitializePlayersInRound(GameState.Replay);
+        _playersControlManager.ChangeModeToStopOfAllPlayers();
+        _playersControlManager.ChangePreviousModeOfAllPlayers();
         _isGameRecorded = false;
-        //_roundInfoManager.LoadPreviousRoundInfoFromJson(_playersInputQueueForReplay, _enemyInputQueueForReplay);
+        _gameRoundRecordManager.LoadPreviousRoundInfoFromJsonToPlayers();
+        
+        InitializeRound(GameState.Replay);
     }
 
     public void DecreaseRemainTimePerFrame(int frame)
@@ -186,26 +192,31 @@ public class GameRoundManager : MonoObserverInterface
         _isGameRecorded = true;
         IsGameEnded = false;
         
+        _gameRoundRecordManager.Clear();
         _resultPanel.SetActive(false);
         _playersControlManager.AcceptAllPlayersInput();
         
         RoundRemainTime = InitRemainTime;
+        _frameManager.ResetFrame();
         
-        _gameRoundStateManager.ChangeState(GameState.Start);
-        _playersControlManager.InitializePlayersInRound(GameState.Start);
+        InitializeRound(GameState.Start);
+    }
+    
+    private void InitializeRound(GameState state)
+    {
+        _gameRoundStateManager.ChangeState(state);
         _playersControlManager.ChangeModeToStopOfAllPlayers();
         _playersControlManager.ChangePreviousModeOfAllPlayers();
     }
     
-    public void EndRound(PlayersInRoundControlManager.CharacterIndex winCharacterIndex)
+    public void EndRound(PlayerCharacter.CharacterIndex winCharacterIndex)
     {
         IsGameEnded = true;
         _playersControlManager.BlockAllPlayersInput();
         _text.text = "Player " + (int)winCharacterIndex + " Win";
         _resultPanel.SetActive(true);
         
-        _roundInfoManager.SaveRoundInfoToJson();
-        _roundInfoManager.Clear();
+        _gameRoundRecordManager.SaveRoundInfoToJson();
         
         //_gameRoundStateManager.ChangeState(GameState.Wait);
     }
@@ -217,8 +228,7 @@ public class GameRoundManager : MonoObserverInterface
         _text.text = "Draw";
         _resultPanel.SetActive(true);
         
-        _roundInfoManager.SaveRoundInfoToJson();
-        _roundInfoManager.Clear();
+        _gameRoundRecordManager.SaveRoundInfoToJson();
     }
 
     public override void Notify()
@@ -243,88 +253,5 @@ public class GameRoundManager : MonoObserverInterface
         */
     }
     
-    /*
-    public void EnqueueRoundInput(string tagName, BehaviorEnumSet.Button button, int frame)
-    {
-        _roundInfoManager.EnqueueEntryInput(tagName, button);
-    }
-
-
-    private BehaviorEnumSet.State _previousPlayerState = BehaviorEnumSet.State.Null;
-    private BehaviorEnumSet.State _previousEnemyState = BehaviorEnumSet.State.Null;
-
-    public void EnqueueRoundState(CharacterIndex index, BehaviorEnumSet.State state, int frame, Vector2 position, Vector2 velocity)
-    {
-        bool doEnqueue = true;
-        switch (index)
-        {
-            case CharacterIndex.Player:
-                if (state == _previousPlayerState) doEnqueue = false;
-                break;
-            case CharacterIndex.Enemy:
-                if (state == _previousEnemyState) doEnqueue = false;
-                break;
-            default:
-                return;
-        }
-        if(doEnqueue) _roundInfoManager.EnqueueEntryState(index, state, position, velocity);
-    }
-
-    private void RecordGameByState()
-    {
-        for (CharacterIndex index = 0; index < CharacterIndex.Size; index++)
-        {
-            PlayerCharacter player = _players[(int)index];
-
-        }
-    }
-
-    private Queue<int> _playersInputQueueForReplay = new Queue<int>();
-    private Queue<int> _enemyInputQueueForReplay = new Queue<int>();
-    private CharacterInputManager _playerInput;
-    private CharacterInputManager _enemyInput;
-    private void ReplayGameByInput()
-    {
-        bool endedPlayerInputEnqueue = false;
-        bool endedEnemyInputEnqueue = false;
-        while (true)
-        {
-            if (!endedEnemyInputEnqueue)
-            {
-                if (_enemyInputQueueForReplay.Count == 0)
-                {
-                    endedEnemyInputEnqueue = true;
-                }
-                else
-                {
-                    BehaviorEnumSet.Button enemyInput = (BehaviorEnumSet.Button)_enemyInputQueueForReplay.Dequeue();
-                    if (enemyInput == BehaviorEnumSet.Button.Null)
-                    {
-                        endedEnemyInputEnqueue = true;
-                    }
-                    else _enemyInput.EnqueueInputQueue(enemyInput);
-                }
-            }
-            if (!endedPlayerInputEnqueue)
-            {
-                if (_playersInputQueueForReplay.Count == 0)
-                {
-                    endedPlayerInputEnqueue = true;
-                }
-                else
-                {
-                    BehaviorEnumSet.Button playerInput = (BehaviorEnumSet.Button)_playersInputQueueForReplay.Dequeue();
-                    if (playerInput == BehaviorEnumSet.Button.Null)
-                    {
-                        endedPlayerInputEnqueue = true;
-                    }
-                    else _playerInput.EnqueueInputQueue(playerInput);
-                }
-            }
-
-            if (endedPlayerInputEnqueue && endedEnemyInputEnqueue)
-                break;
-        }
-    }
-    */
+    
 }

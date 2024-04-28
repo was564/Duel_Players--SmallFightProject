@@ -7,7 +7,7 @@
 
         public override void Enter()
         {
-            RoundStateManager.FrameManager.IsFramePaused = true;
+            FrameManager.IsFramePaused = true;
             PlayersControlManager.BlockAllPlayersInput();
             RoundManager.ApplySettingInStateByPausing(false);
         }

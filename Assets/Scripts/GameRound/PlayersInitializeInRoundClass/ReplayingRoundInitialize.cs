@@ -6,20 +6,20 @@ namespace GameRound.PlayersInitializeInRoundClass
 {
     public class ReplayingRoundInitialize : PlayersInitializeInRoundFactory
     {
-        public ReplayingRoundInitialize(List<PlayerCharacter> players)
+        public ReplayingRoundInitialize(Dictionary<PlayerCharacter.CharacterIndex, PlayerCharacter> players)
             : base(players) {}
         
         protected override void InitializePlayersPosition()
         {
-            Players[(int)PlayersInRoundControlManager.CharacterIndex.Player].transform.position = Vector3.left;
-            Players[(int)PlayersInRoundControlManager.CharacterIndex.Enemy].transform.position = Vector3.right;
+            Players[PlayerCharacter.CharacterIndex.Player].transform.position = Vector3.left;
+            Players[PlayerCharacter.CharacterIndex.Enemy].transform.position = Vector3.right;
         }
 
         protected override void InitializePlayersInitState()
         {
             foreach (var player in Players)
             {
-                player.StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
+                player.Value.StateManager.ChangeState(BehaviorEnumSet.State.StandingIdle);
             }
         }
 
@@ -27,8 +27,8 @@ namespace GameRound.PlayersInitializeInRoundClass
         {
             foreach (var player in Players)
             {
-                player.SetPlayerMode(PlayerModeManager.PlayerMode.Replaying);
-                player.IsAcceptArtificialInput = false;
+                player.Value.SetPlayerMode(PlayerModeManager.PlayerMode.Replaying);
+                player.Value.IsAcceptArtificialInput = false;
             }
         }
     }

@@ -7,17 +7,14 @@ namespace GameRound
 {
     public class PlayersInRoundControlManager
     {
-        public enum CharacterIndex
-        {
-            Player = 0,
-            Enemy,
-            Size
-        }
+        
 
         private Dictionary<GameRoundManager.GameState, PlayersInitializeInRoundFactory> _initializationRoundStates;
-        
-        private List<PlayerCharacter> _players = new List<PlayerCharacter>();
-        private List<PlayerModeManager.PlayerMode> _previousStates = new List<PlayerModeManager.PlayerMode>();
+
+        private Dictionary<PlayerCharacter.CharacterIndex, PlayerCharacter> _players;
+        // private List<PlayerCharacter> _players = new List<PlayerCharacter>();
+        // private List<PlayerModeManager.PlayerMode> _previousStates = new List<PlayerModeManager.PlayerMode>();
+        private Dictionary<PlayerCharacter.CharacterIndex, PlayerModeManager.PlayerMode> _previousStates;
         private CharacterInputManager[] _inputManagers;
         
         //private PlayersInitializeInRoundFactory _playersInitializationManager;
@@ -28,14 +25,18 @@ namespace GameRound
             PlayerCharacter enemy = GameObject.FindGameObjectWithTag("Enemy").transform.root.GetComponent<PlayerCharacter>();
             _inputManagers = GameObject.FindObjectsOfType<CharacterInputManager>();
 
-            _previousStates = new List<PlayerModeManager.PlayerMode>(2) 
-                { PlayerModeManager.PlayerMode.GamePause, PlayerModeManager.PlayerMode.GamePause };
+            _players = new Dictionary<PlayerCharacter.CharacterIndex, PlayerCharacter>(2);
+            _previousStates = new Dictionary<PlayerCharacter.CharacterIndex, PlayerModeManager.PlayerMode>(2)
+            {
+                {PlayerCharacter.CharacterIndex.Player, PlayerModeManager.PlayerMode.GamePause},
+                {PlayerCharacter.CharacterIndex.Enemy, PlayerModeManager.PlayerMode.GamePause}
+            };
             
-            _players.Insert((int)CharacterIndex.Player, player);
-            player.PlayerUniqueIndex = _players.Count;
+            _players.Add(PlayerCharacter.CharacterIndex.Player, player);
+            player.PlayerUniqueIndex = PlayerCharacter.CharacterIndex.Player;
        
-            _players.Insert((int)CharacterIndex.Enemy, enemy);
-            enemy.PlayerUniqueIndex = _players.Count;
+            _players.Add(PlayerCharacter.CharacterIndex.Enemy, enemy);
+            enemy.PlayerUniqueIndex = PlayerCharacter.CharacterIndex.Enemy;
 
             _initializationRoundStates = new Dictionary<GameRoundManager.GameState, PlayersInitializeInRoundFactory>();
             _initializationRoundStates.Add(GameRoundManager.GameState.Start, new StartingRoundInitialize(_players));
@@ -63,33 +64,33 @@ namespace GameRound
         
         public void ChangeModeOfAllPlayers(PlayerModeManager.PlayerMode mode)
         {
-            for (int i = 0; i < _players.Count; i++)
+            foreach (var player in _players)
             {
-                _previousStates[i] = _players[i].GetPlayerMode();
-                _players[i].SetPlayerMode(mode);
+                _previousStates[player.Key] = _players[player.Key].GetPlayerMode();
+                _players[player.Key].SetPlayerMode(mode);
             }
         }
 
-        public void ChangeModeOfPlayer(CharacterIndex index, PlayerModeManager.PlayerMode mode)
+        public void ChangeModeOfPlayer(PlayerCharacter.CharacterIndex index, PlayerModeManager.PlayerMode mode)
         {
-            _previousStates[(int)index] = _players[(int)index].GetPlayerMode();
-            _players[(int)index].SetPlayerMode(mode);
+            _previousStates[index] = _players[index].GetPlayerMode();
+            _players[index].SetPlayerMode(mode);
         }
 
         public void ChangeModeToStopOfAllPlayers()
         {
-            for (int i=0;i<_players.Count;i++)
+            foreach (var player in _players)
             {
-                _previousStates[i] = _players[i].GetPlayerMode();
-                _players[i].SetPlayerMode(PlayerModeManager.PlayerMode.GamePause);
+                _previousStates[player.Key] = player.Value.GetPlayerMode();
+                player.Value.SetPlayerMode(PlayerModeManager.PlayerMode.GamePause);
             }
         }
         
         public void ChangePreviousModeOfAllPlayers()
         {
-            for (int i=0;i<_players.Count;i++)
+            foreach (var player in _players)
             {
-                _players[i].SetPlayerMode(_previousStates[i]);
+                player.Value.SetPlayerMode(_previousStates[player.Key]);
             }
         }
         
@@ -97,7 +98,7 @@ namespace GameRound
         {
             foreach (var player in _players)
             {
-                player.IsEndedPoseAnimation = false;
+                player.Value.IsEndedPoseAnimation = false;
             }
         }
         
@@ -116,12 +117,17 @@ namespace GameRound
                 manager.IsAvailableInput = true;
             }
         }
+
+        public void AssignReplayingInputQueueToPlayer(PlayerCharacter.CharacterIndex characterIndex, Queue<EntryState> inputQueue)
+        {
+            _players[characterIndex].SetReplayingInputQueue(inputQueue);
+        }
         
         public bool GetIsInitializedPlayers()
         {
             foreach (var player in _players)
             {
-                if (!player.IsInitializedStartMethod)
+                if (!player.Value.IsInitializedStartMethod)
                     return false;
             }
 
@@ -132,13 +138,14 @@ namespace GameRound
         {
             foreach (var player in _players)
             {
-                player.Initialize();
+                player.Value.Initialize();
             }
         }
         
         public float GetDistanceBetweenPlayers()
         {
-            return Mathf.Abs(_players[(int)CharacterIndex.Player].transform.position.x - _players[(int)CharacterIndex.Enemy].transform.position.x);
+            return Mathf.Abs(
+                _players[PlayerCharacter.CharacterIndex.Player].transform.position.x - _players[PlayerCharacter.CharacterIndex.Enemy].transform.position.x);
         }
         
         public int CountAnimationEndedOfAllPlayers()
@@ -146,7 +153,7 @@ namespace GameRound
             int count = 0;
             foreach (var player in _players)
             {
-                if (player.IsEndedPoseAnimation) count++;
+                if (player.Value.IsEndedPoseAnimation) count++;
             }
 
             return count;
@@ -156,28 +163,28 @@ namespace GameRound
         {
             int count = 0;
             foreach (var player in _players) 
-                if (player.Hp <= 0) count++;
+                if (player.Value.Hp <= 0) count++;
             
             return count;
         }
         
         // this method can get only one down player's index
         // please Check CountDownPlayers() result is 1 before calling this method
-        public CharacterIndex GetDownPlayerIndex()
+        public PlayerCharacter.CharacterIndex GetDownPlayerIndex()
         {
-            if (_players[(int)CharacterIndex.Player].Hp <= 0) return CharacterIndex.Player;
-            if (_players[(int)CharacterIndex.Enemy].Hp <= 0) return CharacterIndex.Enemy;
-            return CharacterIndex.Size;
+            if (_players[PlayerCharacter.CharacterIndex.Player].Hp <= 0) return PlayerCharacter.CharacterIndex.Player;
+            if (_players[PlayerCharacter.CharacterIndex.Enemy].Hp <= 0) return PlayerCharacter.CharacterIndex.Enemy;
+            return PlayerCharacter.CharacterIndex.Size;
         }
 
-        public CharacterIndex GetLowestHpCharacterIndex()
+        public PlayerCharacter.CharacterIndex GetLowestHpCharacterIndex()
         {
-            int playerHp = _players[(int)CharacterIndex.Player].Hp;
-            int enemyHp = _players[(int)CharacterIndex.Enemy].Hp;
+            int playerHp = _players[PlayerCharacter.CharacterIndex.Player].Hp;
+            int enemyHp = _players[PlayerCharacter.CharacterIndex.Enemy].Hp;
             
-            if (playerHp > enemyHp) return CharacterIndex.Enemy;
-            else if (playerHp == enemyHp) return CharacterIndex.Size;
-            else return CharacterIndex.Player;
+            if (playerHp > enemyHp) return PlayerCharacter.CharacterIndex.Enemy;
+            else if (playerHp == enemyHp) return PlayerCharacter.CharacterIndex.Size;
+            else return PlayerCharacter.CharacterIndex.Player;
         }
     }
 }

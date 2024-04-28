@@ -173,7 +173,7 @@ namespace Character
                 return;
             }
         
-            if (PlayerStateCheckingMethodSet.IsHittedState(_enemyCharacter.StateManager.CurrentState.StateName))
+            if (PlayerStateCheckingMethodSet.IsHitState(_enemyCharacter.StateManager.CurrentState.StateName))
             {
                 float duration = _enemyCharacterAnimator.GetCurrentAnimationDuration(CharacterAnimator.Layer.UpperLayer);
                 if(duration < _enemyAnimationDuration)

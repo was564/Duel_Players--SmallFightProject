@@ -10,6 +10,13 @@ using UnityEngine.Serialization;
 
 public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
 {
+    public enum CharacterIndex
+    {
+        Player = 0,
+        Enemy,
+        Size
+    }
+    
     [SerializeField] public GameObject EnemyObject;
 
     private GameObject _wall;
@@ -60,12 +67,11 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
     // for checking end point of intro animation and outro animation
     public bool IsEndedPoseAnimation { get; set; } = false;
     
-    public int PlayerUniqueIndex { get; set; }
+    public CharacterIndex PlayerUniqueIndex { get; set; }
 
     private List<MonoObserverInterface> _observers = new List<MonoObserverInterface>();
-    
-    
 
+    
     private void OnCollisionEnter(Collision other)
     {   // 플레이어와 적이 머리 위와 다리 아래로 충돌 했을 때 공중에 멈추지 않게 위치를 조정하는 함수
         if (!other.gameObject.CompareTag("Player") && !other.gameObject.CompareTag("Enemy")) return;
@@ -91,6 +97,7 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
             this.transform.position = playerPosition;
         }
     }
+    
 
     public bool IsInitializedStartMethod { get; private set; } = false;
     void Start()
@@ -368,6 +375,11 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
     public PlayerModeManager.PlayerMode GetPlayerMode()
     {
         return _playerModeManager.GetCurrentModeName();
+    }
+    
+    public void SetReplayingInputQueue(Queue<EntryState> queue)
+    {
+        _playerModeManager.SetReplayingInputQueue(queue);
     }
     
     public void ResetHp()

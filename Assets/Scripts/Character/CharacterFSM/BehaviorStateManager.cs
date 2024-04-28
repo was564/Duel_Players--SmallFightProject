@@ -29,10 +29,20 @@ public class BehaviorStateManager : BehaviorStateSimulator
     protected ComboManager ComboManagerInstance;
     */
 
+    private PlayerCharacter _playerCharacter;
+    
+    public delegate void StateChangeEvent(PlayerCharacter.CharacterIndex character);
+    public event StateChangeEvent OnStateChanged = delegate {  };
+    
+    public void RegisterNotifyObserver(StateChangeEvent notifyObserver)
+    {
+        OnStateChanged += notifyObserver;
+    }
+    
     public BehaviorStateManager(GameObject characterObject, GameObject wall, ComboManager comboManager)
         : base(characterObject, wall, comboManager)
     {
-        
+        _playerCharacter = RootCharacterObject.GetComponent<PlayerCharacter>();
     }
 
     public override void UpdateState()
@@ -48,5 +58,12 @@ public class BehaviorStateManager : BehaviorStateSimulator
         CurrentState.Quit();
         CurrentState = StateSet.GetStateInfo(nextState);
         CurrentState.Enter();
+        
+        NotifyObservers();
+    }
+    
+    private void NotifyObservers()
+    {
+        OnStateChanged(_playerCharacter.PlayerUniqueIndex);
     }
 }

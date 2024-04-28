@@ -15,6 +15,8 @@ public class ChasingBall : MonoBehaviour
         {
             if(particle.CompareTag("FireParticle")) _fireParticle = particle;
         }
+
+        this.transform.parent = this.transform.root.parent;
         
         this.gameObject.SetActive(false);
     }
@@ -45,6 +47,7 @@ public class ChasingBall : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag == this.tag) return;
         this.gameObject.SetActive(false);
     }
 }

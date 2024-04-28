@@ -5,9 +5,9 @@ namespace GameRound
 {
     public abstract class PlayersInitializeInRoundFactory
     {
-        protected List<PlayerCharacter> Players;
+        protected Dictionary<PlayerCharacter.CharacterIndex, PlayerCharacter> Players;
         
-        public PlayersInitializeInRoundFactory(List<PlayerCharacter> players)
+        public PlayersInitializeInRoundFactory(Dictionary<PlayerCharacter.CharacterIndex, PlayerCharacter> players)
         {
             Players = players;
         }
@@ -18,11 +18,11 @@ namespace GameRound
             
             foreach (var player in Players)
             {
-                player.ComboManagerInstance.IsCanceled = true;
-                player.IsGuarded = false;
+                player.Value.ComboManagerInstance.IsCanceled = true;
+                player.Value.IsGuarded = false;
                 
-                player.GetComponent<CharacterJudgeBoxController>().EnableHitBox();
-                player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                player.Value.GetComponent<CharacterJudgeBoxController>().EnableHitBox();
+                player.Value.GetComponent<Rigidbody>().velocity = Vector3.zero;
             }
             InitializePlayersMode();
             InitializePlayersInitState();

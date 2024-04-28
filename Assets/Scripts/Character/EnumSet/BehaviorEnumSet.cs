@@ -20,16 +20,16 @@
     public enum State
     {
         Null = -1,
-        StandingIdle,
-        Forward,
-        Backward,
-        StandingHit,
-        CrouchHit,
-        InAirHit,
-        Jump,
-        InAirIdle,
-        Land,
-        CrouchIdle,
+        StandingIdle,   // 0
+        Forward,        // 1
+        Backward,       // 2
+        StandingHit,    // 3
+        CrouchHit,      // 4
+        InAirHit,       // 5
+        Jump,           // 6
+        InAirIdle,      // 7
+        Land,           // 8
+        CrouchIdle,     // 9
         
         AttackStartIndex, // 10
         StandingPunch,

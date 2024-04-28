@@ -17,10 +17,12 @@ public class HitBox : MonoBehaviour
     private FrameManager _gameManager;
 
     private Rigidbody _rigidbody;
-
-    [SerializeField] private int _pauseFrame = 8;
+    
     private float _backMoveSpeedByAttack = 2.0f;
     private int _blockingFrameForGuard = 12;
+    
+    public delegate void HitBoxEvent(PlayerCharacter.CharacterIndex characterIndex);
+    public event HitBoxEvent OnHitBoxTriggered = delegate {  };
     
     // Start is called before the first frame update
     void Start()
@@ -34,6 +36,11 @@ public class HitBox : MonoBehaviour
         _stateManager = _playerCharacter.StateManager;
     }
 
+    public void RegisterNotifyObserver(HitBoxEvent notifyObserver)
+    {
+        OnHitBoxTriggered += notifyObserver;
+    }
+    
     private void OnTriggerEnter(Collider col)
     {
         if (!col.tag.Equals(this.tag))
@@ -43,12 +50,14 @@ public class HitBox : MonoBehaviour
             attackInfo.DisableAttackBox();
             
             _rigidbody.velocity = Vector3.left * (this.transform.forward.x < 0.0f ? -1.0f : 1.0f) * _backMoveSpeedByAttack;
-
+            
             if (CheckGuardSuccess(attackInfo))
                 ReactGuardAction(attackInfo);
             else attackInfo.ReactWhenHitByAttack(_playerCharacter, _stateManager, _rigidbody);
             
-            _gameManager.PauseAllCharactersInFrame(_pauseFrame);
+            _gameManager.PauseAllCharactersInFrame(FrameManager.PauseFrameWhenHit);
+            
+            OnHitBoxTriggered(_playerCharacter.PlayerUniqueIndex);
         }
     }
 

@@ -12,7 +12,7 @@
         {
             //_isEndedWaiting = false;
             //_waitFrame = 0;
-            RoundStateManager.FrameManager.IsFramePaused = true;
+            FrameManager.IsFramePaused = true;
             RoundManager.ApplySettingInStateByPausing(false);
             PlayersControlManager.InitializePlayersInRound(StateName);
         }

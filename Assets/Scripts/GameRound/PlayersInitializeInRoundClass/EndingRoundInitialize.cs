@@ -5,7 +5,7 @@ namespace GameRound.PlayersInitializeInRoundClass
 {
     public class EndingRoundInitialize : PlayersInitializeInRoundFactory
     {
-        public EndingRoundInitialize(List<PlayerCharacter> players)
+        public EndingRoundInitialize(Dictionary<PlayerCharacter.CharacterIndex, PlayerCharacter> players)
             : base(players) {}
         
         protected override void InitializePlayersPosition()
@@ -18,7 +18,7 @@ namespace GameRound.PlayersInitializeInRoundClass
             PlayerCharacter losePlayer = null, winPlayer = null;
 
             // reference : https://stackoverflow.com/questions/804706/swap-two-variables-without-using-a-temporary-variable
-            (losePlayer, winPlayer) = (Players[0], Players[1]);
+            (losePlayer, winPlayer) = (Players[PlayerCharacter.CharacterIndex.Player], Players[PlayerCharacter.CharacterIndex.Enemy]);
 
             if (losePlayer.Hp > winPlayer.Hp)
                 (losePlayer, winPlayer) = (winPlayer, losePlayer);
@@ -39,8 +39,8 @@ namespace GameRound.PlayersInitializeInRoundClass
         {
             foreach (var player in Players)
             {
-                player.SetPlayerMode(PlayerModeManager.PlayerMode.NormalPlaying);
-                player.IsAcceptArtificialInput = false;
+                player.Value.SetPlayerMode(PlayerModeManager.PlayerMode.NormalPlaying);
+                player.Value.IsAcceptArtificialInput = false;
             }
         }
     }

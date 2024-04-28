@@ -9057,14 +9057,14 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.11666667
+  - time: 0.1
     functionName: EnableAttackBoxByAttackName
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 14
     messageOptions: 0
-  - time: 0.15
+  - time: 0.16666667
     functionName: DisableAttackBoxByAttackName
     data: 
     objectReferenceParameter: {fileID: 0}

@@ -329,7 +329,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 6175
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -373,8 +373,7 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 0
   m_CameraType: 0
-  m_Cameras:
-  - {fileID: 1566044686}
+  m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -2051,7 +2050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1566044684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2250,7 +2249,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 1566044686}
+  m_Camera: {fileID: 330585545}
   m_PlaneDistance: 0.4
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -2628,7 +2627,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 330585545}
-  m_PlaneDistance: 0.4
+  m_PlaneDistance: 3
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -2802,11 +2801,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 5289638902948078310, guid: 029a43b50a40c1140a3876e9f6e25ccb,
-        type: 3}
-      propertyPath: _pauseFrame
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6479053881858870967, guid: 029a43b50a40c1140a3876e9f6e25ccb,
         type: 3}
@@ -6271,11 +6265,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3947683632663410886, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
-        type: 3}
-      propertyPath: _pauseFrame
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4366017341616276572, guid: 4d1ea9f7558ab5f44829a6a2a2536ae5,
         type: 3}

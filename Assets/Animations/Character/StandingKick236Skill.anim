@@ -46318,7 +46318,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 18
     messageOptions: 0
-  - time: 0.26666668
+  - time: 0.33333334
     functionName: DisableAttackBoxByAttackName
     data: 
     objectReferenceParameter: {fileID: 0}

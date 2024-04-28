@@ -12,14 +12,11 @@ namespace GameRound
         
         public GameRoundManager RoundManager { get; private set; }
         
-        public FrameManager FrameManager { get; private set; }
-        
         public PlayersInRoundControlManager PlayersControlManager { get; private set; }
         
         public GameRoundStateManager(GameRoundManager roundManager, PlayersInRoundControlManager controlManager, FrameManager frameManager)
         {
             RoundManager = roundManager;
-            FrameManager = frameManager;
             PlayersControlManager = controlManager;
             InitStates();
             _currentRoundState = _states[GameRoundManager.GameState.Start];

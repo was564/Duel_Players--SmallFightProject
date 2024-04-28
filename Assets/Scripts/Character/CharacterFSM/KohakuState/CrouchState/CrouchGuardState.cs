@@ -34,7 +34,9 @@ namespace Character.CharacterFSM.KohakuState
 
         public override BehaviorEnumSet.State UpdateState()
         {
+            PlayerCharacter.LookAtEnemy();
             return base.UpdateState();
+            
         }
 
         public override void Quit()
