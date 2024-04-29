@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using BehaviorTree;
 using Character;
 using Character.CharacterFSM;
-using Character.CharacterPassiveState;
 using Character.PlayerMode;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
 {
@@ -27,9 +24,9 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
     public BoxCollider CharacterCollider { get; private set; }
     private bool _isLookingRight;
 
-    public GameObject SpecialSkillBall;
-    
-    public GameObject SpecialSkillBallInstance { get; private set; }
+    //public GameObject SpecialSkillBall;
+
+    public GameObject SpecialSkillBallInstance;
     
     private List<GameObject> _modelObjectsForRender = new List<GameObject>();
     
@@ -52,9 +49,13 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         = PassiveStateEnumSet.CharacterPositionState.Size;
     
     public int Hp { get; private set; } = 100;
+    
+    public int SkillGauge { get; private set; } = 0;
 
     public bool IsHitContinuous { get; set; } = false;
     public bool IsGuarded { get; set; } = false;
+    
+    public bool IsDoubleJumped { get; set; } = false;
 
     public bool IsAcceptArtificialInput = false;
 
@@ -81,7 +82,7 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         BoxCollider otherCollider = this._enemyCharacter.CharacterCollider;
         // 플레이어가 적의 머리 위의 포지션이 아니라면 실행하지 않음
         if(this.transform.position.y + this.CharacterCollider.center.y - this.CharacterCollider.size.y * 0.5f 
-           < other.transform.position.y + otherCollider.center.y + otherCollider.size.y * 0.5f - 0.05f) return;
+           <= other.transform.position.y + otherCollider.center.y + otherCollider.size.y * 0.5f - 0.1f) return;
         
         // 공중에 있는 플레이어가 땅에 있는 적과의 포지션을 보고 위치를 이동
         if (this.transform.position.x > _enemyCharacter.transform.position.x)
@@ -97,12 +98,11 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
             this.transform.position = playerPosition;
         }
     }
-    
 
     public bool IsInitializedStartMethod { get; private set; } = false;
     void Start()
     {
-        SpecialSkillBallInstance = Instantiate(SpecialSkillBall, this.transform);
+        //SpecialSkillBallInstance = Instantiate(SpecialSkillBall, this.transform);
         SpecialSkillBallInstance.tag = this.tag;
         SpecialSkillBallInstance.GetComponent<ChasingBall>().Target = EnemyObject.transform;
 
@@ -126,8 +126,6 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         _stateSimulatorInStoppedFrame = new BehaviorStateSimulator(this.gameObject, _wall, ComboManagerInstance);
         
         IsInitializedStartMethod = true;
-        
-        Initialize();
     }
 
     public void SetModelObjectsVisible(bool isVisible)
@@ -290,10 +288,15 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         Hp -= damage;
         if (Hp <= 0)
         {
-            IsEndedPoseAnimation = true;
             StateManager.ChangeState(BehaviorEnumSet.State.InAirHit);
             Notify();
         }
+    }
+    
+    public void IncreaseSkillGauge(int gauge)
+    {
+        SkillGauge += gauge;
+        if (SkillGauge >= 100) SkillGauge = 100;
     }
 
     // this function provide auto setting position and rigidbody
@@ -305,6 +308,7 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         switch (state)
         {
             case PassiveStateEnumSet.CharacterPositionState.OnGround:
+                IsDoubleJumped = false;
                 RigidBody.useGravity = false;
                 RigidBody.constraints =
                     RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ |
@@ -377,6 +381,11 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
         return _playerModeManager.GetCurrentModeName();
     }
     
+    public PlayerModeManager.PlayerMode GetPreviousPlayerMode()
+    {
+        return _playerModeManager.GetPreviousMode();
+    }
+    
     public void SetReplayingInputQueue(Queue<EntryState> queue)
     {
         _playerModeManager.SetReplayingInputQueue(queue);
@@ -384,7 +393,12 @@ public class PlayerCharacter : MonoPublisherInterface, ControlPlayerInterface
     
     public void ResetHp()
     {
-        Hp = 250;
+        Hp = 150;
+    }
+    
+    public void ResetSkillGauge()
+    {
+        SkillGauge = 0;
     }
     
     public void LookAtEnemy()

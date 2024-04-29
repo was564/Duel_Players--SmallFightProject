@@ -40,7 +40,8 @@ namespace GameRound
 
             _initializationRoundStates = new Dictionary<GameRoundManager.GameState, PlayersInitializeInRoundFactory>();
             _initializationRoundStates.Add(GameRoundManager.GameState.Start, new StartingRoundInitialize(_players));
-            _initializationRoundStates.Add(GameRoundManager.GameState.NormalPlay, new NormalPlayingRoundInitialize(_players));
+            _initializationRoundStates.Add(GameRoundManager.GameState.SingleNormalPlay, new SingleNormalPlayingRoundInitialize(_players));
+            _initializationRoundStates.Add(GameRoundManager.GameState.MultiNormalPlay, new MultiNormalPlayingRoundInitialize(_players));
             _initializationRoundStates.Add(GameRoundManager.GameState.Replay, new ReplayingRoundInitialize(_players));
             _initializationRoundStates.Add(GameRoundManager.GameState.End, new EndingRoundInitialize(_players));
             

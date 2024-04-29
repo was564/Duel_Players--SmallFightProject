@@ -13,6 +13,9 @@ TagManager:
   - RunParticle
   - ModelRenderer
   - FireParticle
+  - BackGroundAudio
+  - EffectAudio
+  - Result
   layers:
   - Default
   - TransparentFX

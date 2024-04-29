@@ -1,21 +1,29 @@
 ﻿using System;
+using Character.PlayerMode;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChasingBall : MonoBehaviour
 {
+    private PlayerCharacter _owner;
+    
     private ParticleSystem _fireParticle;
 
+    private SphereCollider _collider;
+    
     public Transform Target { get; set; }
     
     private float _speed = 2.0f;
-    private void Start()
+    public void Start()
     {
         foreach (var particle in transform.GetComponentsInChildren<ParticleSystem>())
         {
             if(particle.CompareTag("FireParticle")) _fireParticle = particle;
         }
 
+        _owner = this.transform.root.GetComponent<PlayerCharacter>();
+        _collider = this.GetComponent<SphereCollider>();
+        
         this.transform.parent = this.transform.root.parent;
         
         this.gameObject.SetActive(false);
@@ -23,6 +31,9 @@ public class ChasingBall : MonoBehaviour
 
     private void OnEnable()
     {
+        if (_owner == null) return;
+        _collider.enabled = _owner.GetPlayerMode() != PlayerModeManager.PlayerMode.Replaying;
+        
         if(_fireParticle != null) _fireParticle.Play();
     }
     
@@ -42,6 +53,11 @@ public class ChasingBall : MonoBehaviour
             Vector3 position = this.transform.position + direction * (_speed * Time.deltaTime);
             position.y = Target.position.y + 0.5f;
             this.transform.position = position;
+        }
+
+        if (_collider.enabled == false && distance < 0.5f)
+        {
+            this.gameObject.SetActive(false);
         }
     }
 

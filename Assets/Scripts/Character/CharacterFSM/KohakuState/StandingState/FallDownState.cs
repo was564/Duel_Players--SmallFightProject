@@ -5,11 +5,13 @@ namespace Character.CharacterFSM.KohakuState
     public class FallDownState : BehaviorStateInterface
     {
         private ParticleSystem _fallDownDustEffect;
+        private SoundManager _soundManager;
         
         public FallDownState(GameObject characterRoot) :
             base(BehaviorEnumSet.State.FallDown, characterRoot,
                 BehaviorEnumSet.AttackLevel.Hit, PassiveStateEnumSet.CharacterPositionState.OnGround)
         {
+            _soundManager = GameObject.FindObjectOfType<SoundManager>();
             foreach (var childTransform in characterRoot.transform.GetComponentsInChildren<ParticleSystem>())
             {
                 if (childTransform.tag.Equals("FallDownParticle"))
@@ -31,6 +33,7 @@ namespace Character.CharacterFSM.KohakuState
             CharacterAnimator.PlayAnimation("FallDown", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimation("FallDown", CharacterAnimator.Layer.LowerLayer);
             
+            _soundManager.PlayEffect(SoundManager.SoundSet.Fall);
             _fallDownDustEffect.Play();
         }
 
@@ -45,7 +48,11 @@ namespace Character.CharacterFSM.KohakuState
 
         public override BehaviorEnumSet.State UpdateState()
         {
-            if (PlayerCharacter.Hp <= 0) return BehaviorEnumSet.State.Null;
+            if (PlayerCharacter.Hp <= 0)
+            {
+                PlayerCharacter.IsEndedPoseAnimation = true;
+                return BehaviorEnumSet.State.Null;
+            }
             stateStartingFrame += 1;
             if (stateStartingFrame >= lyingDownFrame)
                 return BehaviorEnumSet.State.GetUp;

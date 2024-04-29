@@ -63,6 +63,8 @@ namespace Character.CharacterFSM.KohakuState
 
         public override void Quit()
         {
+            PlayerCharacter.IsDoubleJumped = false;
+            
             Vector3 characterPosition = this.CharacterTransform.position;
             characterPosition.y = 0;
             this.CharacterTransform.position = characterPosition;

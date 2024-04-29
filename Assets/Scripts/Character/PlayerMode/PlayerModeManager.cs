@@ -19,17 +19,26 @@ namespace Character.PlayerMode
         
         private PlayerModeInterface _currentMode;
         
+        private PlayerMode _previousMode;
+        
         public PlayerModeManager(PlayerCharacter character)
         {
             InitPlayerModes(character);
             _currentMode = _playerModes[PlayerMode.NormalPlaying];
+            _previousMode = PlayerMode.NormalPlaying;
         }
         
         public void SetMode(PlayerMode mode)
         {
             _currentMode.Quit();
+            _previousMode = _currentMode.ModeName;
             _currentMode = _playerModes[mode];
             _currentMode.Enter();
+        }
+        
+        public PlayerMode GetPreviousMode()
+        {
+            return _previousMode;
         }
         
         public PlayerMode GetCurrentModeName()

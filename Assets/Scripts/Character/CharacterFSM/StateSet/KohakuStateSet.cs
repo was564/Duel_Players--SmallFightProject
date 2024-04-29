@@ -49,6 +49,8 @@ namespace Character.CharacterFSM.KohakuState
             BindState(BehaviorEnumSet.State.StandingStopHit, new StandingStopHitState(characterRoot));
             BindState(BehaviorEnumSet.State.StandingPunch6246SpecialSkillEnter, new StandingPunch6246SpecialSkillEnterState(characterRoot));
             BindState(BehaviorEnumSet.State.StandingPunch6246SpecialSkillAttack, new StandingPunch6246SpecialSkillAttackState(characterRoot));
+            BindState(BehaviorEnumSet.State.DoubleJump, new AiringJumpState(characterRoot));
+            BindState(BehaviorEnumSet.State.DashInAir, new AiringDashState(characterRoot));
         }
     }
 }

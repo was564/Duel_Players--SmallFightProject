@@ -11,6 +11,7 @@ namespace Character.CharacterFSM.KohakuState
         
         public override void Enter()
         {
+            base.Enter();
             
             PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             

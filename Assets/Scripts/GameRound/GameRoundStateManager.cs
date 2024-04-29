@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GameRound.PlayersInitializeInRoundClass;
 using UnityEngine;
 
 namespace GameRound
@@ -38,7 +39,8 @@ namespace GameRound
         private void InitStates()
         {
             _states = new Dictionary<GameRoundManager.GameState, GameRoundStateInterface>();
-            _states.Add(GameRoundManager.GameState.NormalPlay, new GameRoundNormalPlayingState(this));
+            _states.Add(GameRoundManager.GameState.SingleNormalPlay, new GameRoundSingleNormalPlayingState(this));
+            _states.Add(GameRoundManager.GameState.MultiNormalPlay, new GameRoundMultiNormalPlayingState(this));
             _states.Add(GameRoundManager.GameState.Start, new GameRoundStartingState(this));
             _states.Add(GameRoundManager.GameState.Replay, new GameRoundReplayingState(this));
             _states.Add(GameRoundManager.GameState.Pause, new GameRoundPausingState(this));

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using UI.InMenu.MenuOptions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -39,17 +37,17 @@ public class MenuInGame : MonoBehaviour
         _menuList.Add(new GameEndOption(Instantiate(MenuOptionPrefab, _canvas) as GameObject));
         _menuList.Add(new ResumeOption(Instantiate(MenuOptionPrefab, _canvas) as GameObject));
         _menuList.Add(new RestartOption(Instantiate(MenuOptionPrefab, _canvas) as GameObject));
-        _menuList.Add(new ReplayOption(Instantiate(MenuOptionPrefab, _canvas) as GameObject));
-        _menuList.Add(new SaveRoundOption(Instantiate(MenuOptionPrefab, _canvas) as GameObject));
+        //_menuList.Add(new ReplayOption(Instantiate(MenuOptionPrefab, _canvas) as GameObject));
+        //_menuList.Add(new SaveRoundOption(Instantiate(MenuOptionPrefab, _canvas) as GameObject));
 
         _menuPanel.anchoredPosition = Vector2.zero;
-        _menuPanel.Rotate(Vector3.forward * 20.0f);
+        //_menuPanel.Rotate(Vector3.forward * 20.0f);
         for (int index = 0; index < _menuList.Count; index++)
         {
             RectTransform optionPosition = _menuList[index].Transform;
-            optionPosition.anchoredPosition =
-                (Vector2.up * optionPosition.rect.height * 1.5f * (index - (_menuList.Count * 0.5f))) +
-                ((Vector2.right * 30.0f) * ((_menuList.Count * 0.5f) - index));
+            optionPosition.anchoredPosition = Vector2.zero;
+            optionPosition.anchoredPosition += Vector2.up * optionPosition.rect.height * 1.5f * (index - (_menuList.Count * 0.5f));
+            //optionPosition.anchoredPosition += (Vector2.right * 30.0f) * ((_menuList.Count * 0.5f) - index);
         }
 
         SyncPositionPanelAndMenuOption();
@@ -75,6 +73,11 @@ public class MenuInGame : MonoBehaviour
         _menuList[_selectingIndexInMenu].OnSelect();
     }
 
+    public void EnterMainMenuScene()
+    {
+        _menuList[0].OnSelect();
+    }
+    
     public void OnEnableMenu()
     {
         _menuPanel.gameObject.SetActive(true);

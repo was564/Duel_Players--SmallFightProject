@@ -545,7 +545,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.5872602
+        value: -0.8573806
         inSlope: -0.5583169
         outSlope: -0.5583169
         tangentMode: 0
@@ -2662,8 +2662,8 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: -0.567286
+        time: 0.35
+        value: -1.1017994
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -4511,7 +4511,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.5872602
+        value: -0.8573806
         inSlope: -0.5583169
         outSlope: -0.5583169
         tangentMode: 0
@@ -6628,8 +6628,8 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: -0.567286
+        time: 0.35
+        value: -1.1017994
         inSlope: 0
         outSlope: 0
         tangentMode: 0

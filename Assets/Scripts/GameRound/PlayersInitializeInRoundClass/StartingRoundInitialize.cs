@@ -32,7 +32,7 @@ namespace GameRound.PlayersInitializeInRoundClass
         protected override void InitializePlayersMode()
         {
             Players[PlayerCharacter.CharacterIndex.Player].SetPlayerMode(PlayerModeManager.PlayerMode.NormalPlaying);
-            Players[PlayerCharacter.CharacterIndex.Enemy].SetPlayerMode(PlayerModeManager.PlayerMode.AI);
+            Players[PlayerCharacter.CharacterIndex.Enemy].SetPlayerMode(PlayerModeManager.PlayerMode.NormalPlaying);
 
             Players[PlayerCharacter.CharacterIndex.Player].IsAcceptArtificialInput = false;
             Players[PlayerCharacter.CharacterIndex.Enemy].IsAcceptArtificialInput = false;

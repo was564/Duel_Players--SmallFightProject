@@ -4,8 +4,6 @@
     {
         public GameRoundStartingState(GameRoundStateManager manager) 
             : base(manager, GameRoundManager.GameState.Start) { }
-
-        
         
         public override void Enter()
         {
@@ -19,7 +17,10 @@
             if (PlayersControlManager.CountAnimationEndedOfAllPlayers() < 2) return;
             
             
-            RoundStateManager.ChangeState(GameRoundManager.GameState.NormalPlay);
+            PlayersControlManager.InitializePlayersInRound(RoundManager.GetSelectedGameState());
+            RoundStateManager.ChangeState(RoundManager.GetSelectedGameState());
+            //PlayersControlManager.ChangeModeToStopOfAllPlayers();
+            //PlayersControlManager.ChangePreviousModeOfAllPlayers();
         }
         
         public override void Quit()

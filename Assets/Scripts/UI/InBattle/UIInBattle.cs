@@ -6,10 +6,12 @@ using UnityEngine;
 public class UIInBattle : MonoBehaviour
 {
     public GameObject HPBarPrefab;
+    public GameObject SkillGaugeBarPrefab;
     public GameObject TimerPrefab;
     public GameObject ComboTextPrefab;
 
-    private RectTransform _canvas;
+    private RectTransform _inBattleCanvas;
+    private RectTransform _inMenuCanvas;
 
     private float _canvasWidth;
     private float _canvasHeight;
@@ -17,6 +19,9 @@ public class UIInBattle : MonoBehaviour
     private GameObject _leftPlayerHpBar;
     private GameObject _rightPlayerHpBar;
 
+    private GameObject _leftPlayerSkillGaugeBar;
+    private GameObject _rightPlayerSkillGaugeBar;
+    
     private GameObject _timer;
 
     private GameObject _leftPlayerComboText;
@@ -34,26 +39,36 @@ public class UIInBattle : MonoBehaviour
     {
         foreach (var canvas in GameObject.FindObjectsOfType<Canvas>())
         {
-            if(canvas.gameObject.layer == LayerMask.NameToLayer("InGameUI")) _canvas = canvas.GetComponent<RectTransform>();
+            if(canvas.gameObject.layer == LayerMask.NameToLayer("InGameUI")) _inBattleCanvas = canvas.GetComponent<RectTransform>();
+            if(canvas.gameObject.layer == LayerMask.NameToLayer("UI")) _inMenuCanvas = canvas.GetComponent<RectTransform>();
+            
         }
         
-        _canvasWidth = _canvas.rect.width;
-        _canvasHeight = _canvas.rect.height;
+        _canvasWidth = _inBattleCanvas.rect.width;
+        _canvasHeight = _inBattleCanvas.rect.height;
 
-        _leftPlayerComboText = Instantiate(ComboTextPrefab, Vector3.zero, Quaternion.identity, _canvas) as GameObject;
-        _rightPlayerComboText = Instantiate(ComboTextPrefab, Vector3.zero, Quaternion.identity, _canvas) as GameObject;
+        _leftPlayerComboText = Instantiate(ComboTextPrefab, Vector3.zero, Quaternion.identity, _inBattleCanvas) as GameObject;
+        _rightPlayerComboText = Instantiate(ComboTextPrefab, Vector3.zero, Quaternion.identity, _inBattleCanvas) as GameObject;
         
-        _leftPlayerHpBar = Instantiate(HPBarPrefab, Vector3.zero, Quaternion.identity, _canvas) as GameObject;
-        _rightPlayerHpBar = Instantiate(HPBarPrefab, Vector3.zero, Quaternion.identity, _canvas) as GameObject;
+        _leftPlayerHpBar = Instantiate(HPBarPrefab, Vector3.zero, Quaternion.identity, _inBattleCanvas) as GameObject;
+        _rightPlayerHpBar = Instantiate(HPBarPrefab, Vector3.zero, Quaternion.identity, _inBattleCanvas) as GameObject;
         HpBarUI leftHpBar, rightHpBar;
         leftHpBar = _leftPlayerHpBar.GetComponent<HpBarUI>();
         rightHpBar = _rightPlayerHpBar.GetComponent<HpBarUI>();
         leftHpBar.IsRightSideBar = false;
         rightHpBar.IsRightSideBar = true;
         
+        _leftPlayerSkillGaugeBar = Instantiate(SkillGaugeBarPrefab, Vector3.zero, Quaternion.identity, _inMenuCanvas) as GameObject;
+        _rightPlayerSkillGaugeBar = Instantiate(SkillGaugeBarPrefab, Vector3.zero, Quaternion.identity, _inMenuCanvas) as GameObject;
+        SkillGuageBarUI leftSkillGaugeBar, rightSkillGaugeBar;
+        leftSkillGaugeBar = _leftPlayerSkillGaugeBar.GetComponent<SkillGuageBarUI>();
+        rightSkillGaugeBar = _rightPlayerSkillGaugeBar.GetComponent<SkillGuageBarUI>();
+        leftSkillGaugeBar.IsRightSideBar = false;
+        rightSkillGaugeBar.IsRightSideBar = true;
+        
         _camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         
-        _timer = Instantiate(TimerPrefab, Vector3.zero, Quaternion.identity, _canvas) as GameObject;
+        _timer = Instantiate(TimerPrefab, Vector3.zero, Quaternion.identity, _inBattleCanvas) as GameObject;
         _player = GameObject.FindGameObjectWithTag("Player").transform.root.gameObject;
         _enemy = GameObject.FindGameObjectWithTag("Enemy").transform.root.gameObject;
         
@@ -62,15 +77,19 @@ public class UIInBattle : MonoBehaviour
         
         if (Vector3.Cross(playerDirection, enemyDirection).y > 0.0f)
         {
-            leftHpBar.playerCharacterParameter = _player.GetComponent<PlayerCharacter>();
-            rightHpBar.playerCharacterParameter = _enemy.GetComponent<PlayerCharacter>();
+            leftHpBar.PlayerCharacterParameter = _player.GetComponent<PlayerCharacter>();
+            rightHpBar.PlayerCharacterParameter = _enemy.GetComponent<PlayerCharacter>();
+            leftSkillGaugeBar.PlayerCharacterParameter = _player.GetComponent<PlayerCharacter>();
+            rightSkillGaugeBar.PlayerCharacterParameter = _enemy.GetComponent<PlayerCharacter>();
             _leftPlayerComboText.tag = _player.tag;
             _rightPlayerComboText.tag = _enemy.tag;
         }
         else
         {
-            leftHpBar.playerCharacterParameter = _enemy.GetComponent<PlayerCharacter>();
-            rightHpBar.playerCharacterParameter = _player.GetComponent<PlayerCharacter>();
+            leftHpBar.PlayerCharacterParameter = _enemy.GetComponent<PlayerCharacter>();
+            rightHpBar.PlayerCharacterParameter = _player.GetComponent<PlayerCharacter>();
+            leftSkillGaugeBar.PlayerCharacterParameter = _enemy.GetComponent<PlayerCharacter>();
+            rightSkillGaugeBar.PlayerCharacterParameter = _player.GetComponent<PlayerCharacter>();
             _leftPlayerComboText.tag = _enemy.tag;
             _rightPlayerComboText.tag = _player.tag;
         }
@@ -108,7 +127,6 @@ public class UIInBattle : MonoBehaviour
         leftHpBarOffset.anchoredPosition3D = Vector3.zero;
         timerOffset.anchoredPosition3D = Vector3.zero;
         rightHpBarOffset.anchoredPosition3D = Vector3.zero;
-
         
         leftHpBarOffset.anchoredPosition3D += Vector3.up * (_canvasHeight - padderHeight);
         leftHpBarOffset.anchoredPosition3D += Vector3.right * ((leftHpBarOffset.rect.width * 0.5f) + padderWidth);
@@ -119,6 +137,20 @@ public class UIInBattle : MonoBehaviour
         rightHpBarOffset.anchoredPosition3D += Vector3.up * (_canvasHeight - padderHeight);
         rightHpBarOffset.anchoredPosition3D += Vector3.right * (leftHpBarOffset.rect.width + (padderWidth * 3.0f) + timerDiameter + rightHpBarOffset.rect.width * 0.5f);
         
+        
+        RectTransform leftSkillGaugeBarOffset = _leftPlayerSkillGaugeBar.GetComponent<RectTransform>();
+        RectTransform rightSkillGaugeBarOffset = _rightPlayerSkillGaugeBar.GetComponent<RectTransform>();
+        leftSkillGaugeBarOffset.anchoredPosition3D = Vector3.zero;
+        rightSkillGaugeBarOffset.anchoredPosition3D = Vector3.zero;
+        
+        leftSkillGaugeBarOffset.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, barWidth * 0.8f);
+        rightSkillGaugeBarOffset.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, barWidth * 0.8f);
+        
+        leftSkillGaugeBarOffset.anchoredPosition3D += Vector3.up * (padderHeight);
+        leftSkillGaugeBarOffset.anchoredPosition3D += Vector3.right * ((leftHpBarOffset.rect.width * 0.5f) + padderWidth);
+        
+        rightSkillGaugeBarOffset.anchoredPosition3D += Vector3.up * (padderHeight);
+        rightSkillGaugeBarOffset.anchoredPosition3D += Vector3.right * (leftHpBarOffset.rect.width + (padderWidth * 3.0f) + timerDiameter + rightHpBarOffset.rect.width * 0.5f);
     }
 
     // Update is called once per frame

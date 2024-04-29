@@ -11,6 +11,7 @@ public class HitBox : MonoBehaviour
     //private CharacterAnimator _animator;
     private BehaviorStateManager _stateManager;
     private PlayerCharacter _playerCharacter;
+    private PlayerCharacter _enemyCharacter;
     
     private BoxCollider _hitBox;
 
@@ -29,6 +30,7 @@ public class HitBox : MonoBehaviour
     {
         //_animator = this.GetComponentInParent<CharacterAnimator>();
         _playerCharacter = this.transform.root.GetComponent<PlayerCharacter>();
+        _enemyCharacter = _playerCharacter.EnemyObject.GetComponent<PlayerCharacter>();
         _hitBox = this.GetComponent<BoxCollider>();
         _gameManager = GameObject.FindObjectOfType<FrameManager>();
         _rigidbody = this.transform.root.GetComponent<Rigidbody>();
@@ -47,6 +49,7 @@ public class HitBox : MonoBehaviour
         {
             AttackBox attackInfo = col.GetComponent<AttackBox>();
             _playerCharacter.IsHitContinuous = true;
+            _enemyCharacter.IncreaseSkillGauge(4);
             attackInfo.DisableAttackBox();
             
             _rigidbody.velocity = Vector3.left * (this.transform.forward.x < 0.0f ? -1.0f : 1.0f) * _backMoveSpeedByAttack;

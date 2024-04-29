@@ -74,6 +74,16 @@ namespace Character
                 if (text.CompareTag(_player.tag) && LayerMask.NameToLayer("InGameUI") == text.gameObject.layer)
                     _text = text;
             }
+
+            _enemyCharacter.GetComponentInChildren<HitBox>().RegisterNotifyObserver(IncreaseComboCount);
+        }
+
+        private void IncreaseComboCount(PlayerCharacter.CharacterIndex index)
+        {
+            if (index == _player.PlayerUniqueIndex) return;
+            
+            if(PlayerStateCheckingMethodSet.IsHitState(_enemyCharacter.StateManager.CurrentState.StateName))
+                _comboCount += 1;
         }
 
         public void CountStateCancel(BehaviorEnumSet.State state)
@@ -137,6 +147,9 @@ namespace Character
                     nextState = BehaviorEnumSet.State.StandingKick623Skill;
                     break;
                 case BehaviorEnumSet.Behavior.StandingPunch6246SpecialSkill:
+                    if (_player.SkillGauge < 50)
+                        return BehaviorEnumSet.State.StandingPunch623Skill;
+                    _player.IncreaseSkillGauge(-50);
                     nextState = BehaviorEnumSet.State.StandingPunch6246SpecialSkillEnter;
                     break;
                 default:
@@ -170,19 +183,11 @@ namespace Character
                 _comboCount = 0;
                 _enemyAnimationDuration = 0;
                 IsCanceled = false;
-                return;
             }
-        
-            if (PlayerStateCheckingMethodSet.IsHitState(_enemyCharacter.StateManager.CurrentState.StateName))
-            {
-                float duration = _enemyCharacterAnimator.GetCurrentAnimationDuration(CharacterAnimator.Layer.UpperLayer);
-                if(duration < _enemyAnimationDuration)
-                {
-                    _enemyAnimationDuration = duration;
-                    _comboCount++;
-                    _text.text = _comboCount + " Combo";
-                }
-            }
+
+            _text.gameObject.SetActive(_comboCount > 1);
+            
+            _text.text = _comboCount + "\nCombo";
         }
     }
 }

@@ -66,6 +66,9 @@ namespace Character.CharacterFSM.KohakuState
                     return BehaviorEnumSet.State.StandingKick623Skill;
                 
                 case BehaviorEnumSet.Behavior.StandingPunch6246SpecialSkill:
+                    if (PlayerCharacter.SkillGauge < 50)
+                        return BehaviorEnumSet.State.StandingPunch623Skill;
+                    PlayerCharacter.IncreaseSkillGauge(-50);
                     return BehaviorEnumSet.State.StandingPunch6246SpecialSkillEnter;
                 
                 case BehaviorEnumSet.Behavior.Grab:

@@ -19,7 +19,6 @@ namespace GameRound
             RoundManager.ApplySettingInStateByPausing(false);
             PlayersControlManager.InitializePlayersInRound(StateName);
             
-            if (RoundManager.IsGameEnded) return;
             switch (PlayersControlManager.CountDownPlayers())
             {
                 case 0:

@@ -23,7 +23,7 @@ public class AttackBox : MonoBehaviour
     private bool _haveCollider;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         _myCharacterJudgeBoxController = this.transform.root.GetComponent<CharacterJudgeBoxController>();
         _playerCharacter = _myCharacterJudgeBoxController.GetComponent<PlayerCharacter>();

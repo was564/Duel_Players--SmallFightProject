@@ -5,6 +5,8 @@ namespace Character.CharacterFSM.KohakuState
 {
     public abstract class GuardState : BehaviorStateInterface
     {
+        private SoundManager _soundManager;
+        
         public GuardState(GameObject characterRoot, GameObject wall, BehaviorEnumSet.State guardStateName,
             BehaviorEnumSet.State nextState, PassiveStateEnumSet.CharacterPositionState positionInitialState) :
             base(guardStateName, characterRoot, BehaviorEnumSet.AttackLevel.Guard, positionInitialState)
@@ -12,6 +14,7 @@ namespace Character.CharacterFSM.KohakuState
             _wallAcknowledgeDistance = math.abs(wall.transform.position.x) - 1.0f;
             _enemyRigidbody = PlayerCharacter.EnemyObject.transform.root.GetComponent<Rigidbody>();
             _nextState = nextState;
+            _soundManager = GameObject.FindObjectOfType<SoundManager>();
         }
 
         private BehaviorEnumSet.State _nextState;
@@ -31,6 +34,8 @@ namespace Character.CharacterFSM.KohakuState
             PlayerCharacter.IsGuarded = true;
             ContinuousFrameByBlockAttack = 0;
             CharacterAnimator.PlayAnimation("Guard", CharacterAnimator.Layer.UpperLayer, true);
+            
+            _soundManager.PlayEffect(SoundManager.SoundSet.Guard);
         }
 
         public override BehaviorEnumSet.State GetResultStateByHandleInput(BehaviorEnumSet.Behavior behavior)

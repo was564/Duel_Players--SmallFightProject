@@ -11,6 +11,8 @@ namespace Character.CharacterFSM.KohakuState
         
         public override void Enter()
         {
+            base.Enter();
+            
             PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             
             CharacterRigidBody.velocity = Vector3.left * ((CharacterTransform.forward.x < 0.0f ? -1.0f : 1.0f) * _backMoveSpeedByAttack);

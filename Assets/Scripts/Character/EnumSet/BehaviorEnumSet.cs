@@ -52,7 +52,10 @@
         GrabEscape,
         GrabAttack,
         
+        DoubleJump,
+        
         DashOnGround,
+        DashInAir,
         BackStepOnGroundState,
         
         GuardStartIndex,

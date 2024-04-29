@@ -24,6 +24,8 @@ public class RoundRecordManager
     
     private Dictionary<PlayerCharacter.CharacterIndex, PlayerCharacter> _players;
 
+    public bool IsGameRecorded { get; set; } = true;
+    
     public RoundRecordManager()
     {
         Type = DataType.State;
@@ -59,6 +61,8 @@ public class RoundRecordManager
     
     public void SaveRoundInfoToJson()
     {
+        if (!IsGameRecorded) return;
+        
         string json = JsonUtility.ToJson(_roundDataByState, true);
 
         File.WriteAllText("./Assets/RoundJson/PreviousRound.json", json);

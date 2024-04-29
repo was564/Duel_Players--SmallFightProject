@@ -7,7 +7,8 @@
         
         public override void Update()
         {
-            Character.DecideBehaviorByInput();
+            if(Character.GetPreviousPlayerMode() == PlayerModeManager.PlayerMode.NormalPlaying)
+                Character.DecideBehaviorByInput();
             Character.UpdatePassiveState();
         }
     }

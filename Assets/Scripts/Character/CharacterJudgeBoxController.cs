@@ -7,6 +7,8 @@ public class CharacterJudgeBoxController : MonoBehaviour
     private PlayerCharacter _playerCharacter;
     private HitBox _hitBox;
     
+    public bool CanTurnOnAttackBox { get; set; } = true;
+    
     private Dictionary<BehaviorEnumSet.State, AttackBox> _attackBoxTable =
         new Dictionary<BehaviorEnumSet.State, AttackBox>();
     
@@ -36,7 +38,8 @@ public class CharacterJudgeBoxController : MonoBehaviour
     
     public void EnableAttackBoxByAttackName(BehaviorEnumSet.State attackName)
     {
-        _attackBoxTable[attackName].EnableAttackBox();
+        if(CanTurnOnAttackBox)
+            _attackBoxTable[attackName].EnableAttackBox();
     }
     
     public void DisableAttackBoxByAttackName(BehaviorEnumSet.State attackName)

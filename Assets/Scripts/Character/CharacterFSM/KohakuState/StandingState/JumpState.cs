@@ -12,8 +12,10 @@ namespace Character.CharacterFSM.KohakuState
         {
             PlayerCharacter.ChangeCharacterPosition(CharacterPositionInitialState);
             PlayerCharacter.LookAtEnemy();
-            
-            CharacterRigidBody.velocity += (Vector3.up * 8.0f);
+
+            Vector3 characterVelocity = CharacterRigidBody.velocity;
+            characterVelocity.y = 6.0f;
+            CharacterRigidBody.velocity = characterVelocity;
             
             CharacterAnimator.PlayAnimation("Jump", CharacterAnimator.Layer.UpperLayer);
             CharacterAnimator.PlayAnimation("Jump", CharacterAnimator.Layer.LowerLayer);
