@@ -1,0 +1,20 @@
+{
+    "Round": [
+        {
+            "Time": 0.0,
+            "Button": 0
+        },
+        {
+            "Time": 0.0,
+            "Button": 1
+        },
+        {
+            "Time": 0.0,
+            "Button": 2
+        },
+        {
+            "Time": 0.5,
+            "Button": 0
+        }
+    ]
+}

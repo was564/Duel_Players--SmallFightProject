@@ -3,21 +3,33 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Wall
+  - GuardParticle
+  - HitParticle
+  - LandParticle
+  - FallDownParticle
+  - RunParticle
+  - ModelRenderer
+  - FireParticle
+  - BackGroundAudio
+  - EffectAudio
+  - Result
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - InGameUI
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - AttackArea
+  - HitArea
+  - PlayerCollider
+  - Wall
+  - Object
+  - BackGround
+  - Canvas
   - 
   - 
   - 
@@ -40,4 +52,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Wall
+    uniqueID: 3842652221
+    locked: 0
+  - name: UI
+    uniqueID: 319205939
+    locked: 0
+  - name: PlayerCollider
+    uniqueID: 1333346121
     locked: 0
